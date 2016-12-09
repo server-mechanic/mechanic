@@ -19,7 +19,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
 
-PROJECT_DIR=$(cd `dirname $0/..`; pwd)
+PROJECT_DIR=$(cd `dirname $0`/..; pwd)
 TESTS_DIR=$PROJECT_DIR/integration-tests
 BUILD_DIR=$PROJECT_DIR/target
 
