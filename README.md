@@ -3,6 +3,7 @@
 ### Server Evolution Made Easy.
 
 [![Build Status](https://travis-ci.org/server-mechanic/mechanic.svg)](https://travis-ci.org/server-mechanic/mechanic)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 ## License
 Copyright (C) 2016 [Cornelius Buschka](https://github.com/cbuschka).
