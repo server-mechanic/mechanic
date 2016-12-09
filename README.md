@@ -2,6 +2,8 @@
 
 ### Server Evolution Made Easy.
 
+[![Build Status](https://travis-ci.org/server-mechanic/mechanic.svg)](https://travis-ci.org/server-mechanic/mechanic)
+
 ## License
 Copyright (C) 2016 [Cornelius Buschka](https://github.com/cbuschka).
 
