@@ -1,0 +1,16 @@
+1
+.
+./etc
+./etc/mechanic
+./etc/mechanic/migration.d
+./etc/mechanic/migration.d/fail
+./fail.dat
+./usr
+./usr/sbin
+./usr/sbin/mechanic
+./var
+./var/lib
+./var/lib/mechanic
+./var/lib/mechanic/state
+./var/lib/mechanic/state/fail.tmp
+./var/lib/mechanic/state/fail.tmp/log

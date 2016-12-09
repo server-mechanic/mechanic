@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "feeling free to fail"
+touch $TEST_ROOT/fail.dat
+
+exit 1
