@@ -3,7 +3,7 @@
 ### Server Evolution Made Easy.
 
 ## License
-Copyright (C) 2016 [Cornelius Buschka](https://github.com/cbuschka)
+Copyright (C) 2016 [Cornelius Buschka](https://github.com/cbuschka).
 
 Licensed under the GNU General Public License v3.0 (the "License");
 you may not use this file except in compliance with the License.
