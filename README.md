@@ -1,12 +1,13 @@
-# Mechanic
+# Server Mechanic [![Build Status](https://travis-ci.org/server-mechanic/mechanic.svg)](https://travis-ci.org/server-mechanic/mechanic) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 ### Server Evolution Made Easy.
 
-[![Build Status](https://travis-ci.org/server-mechanic/mechanic.svg)](https://travis-ci.org/server-mechanic/mechanic)
-[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+![Server Mechanic](https://server-mechanic.github.io/website/images/mechanic.png "Server Mechanic")
+
+#### Evolve your containers, virtual machines and bare metal servers more easily.
 
 ## License
-Copyright (C) 2016 [Cornelius Buschka](https://github.com/cbuschka).
+Copyright (c) 2016 by [Cornelius Buschka](https://github.com/cbuschka).
 
 Licensed under the GNU General Public License v3.0 (the "License");
 you may not use this file except in compliance with the License.
