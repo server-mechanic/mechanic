@@ -89,37 +89,21 @@ func applyMigration(migration *Migration, inventory *Inventory) (error) {
 func ApplyMigrationAndMarkAsDone(migration *Migration, inventory *Inventory) (error) {
 	log.Printf("Applying migration %s.\n", migration.name)
 
+	if err := MarkMigrationStarted(migration.name, inventory); err != nil {
+		return err
+	}
+
 	if err := applyMigration(migration, inventory); err != nil {
+		if err2 := MarkMigrationFailed(migration.name, inventory); err2 != nil {
+			return err2
+		}
+
 		return err
 	} else {
-		if err := markMigrationDone(migration.name, inventory); err != nil {
+		if err := MarkMigrationDone(migration.name, inventory); err != nil {
 			return err
 		}
 	}
-
-	return nil
-}
-
-func markMigrationDone(migrationName string, inventory*Inventory) (error) {
-	migrationDoneFilePath := getMigrationDonePath(migrationName, inventory)
-
-	if err := createFile(migrationDoneFilePath); err != nil {
-		return err
-	}
-	return nil
-}
-
-func getMigrationDonePath(migrationName string, inventory *Inventory) (string) {
-	return inventory.stateDir + "/" + migrationName + ".done";
-}
-
-func createFile(path string) (error) {
-	file, err := os.Create(path)
-	if err != nil {
-		return err
-	}
-
-	defer file.Close()
 
 	return nil
 }

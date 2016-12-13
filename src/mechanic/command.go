@@ -72,6 +72,7 @@ func Run() {
 
 	if ( command.verbose ) {
 		log.Printf("mechanic etc dir:   %s\n", inventory.etcDir);
+		log.Printf("mechanic var dir: %s\n", inventory.varDir);
 		log.Printf("mechanic state dir: %s\n", inventory.stateDir);
 	}
 

@@ -7,7 +7,8 @@ clean:
 
 build:
 	mkdir -p ${PWD}/target/
-	GOPATH=${PWD} go build -o target/mechanic src/mechanic.go
+	GOPATH=${PWD} go get github.com/mattn/go-sqlite3/ 
+	GOPATH=${PWD} go build -compiler gccgo -gccgoflags '-static-libgo -lpthread -pthread -lsqlite3' -o target/mechanic src/mechanic.go
 
 .PHONY:	integration-tests
 integration-tests:
