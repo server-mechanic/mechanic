@@ -55,7 +55,11 @@ func GetMigrations(inventory *Inventory) ([]Migration, error) {
 }
 
 func GetInventory() (*Inventory, error) {
-	inventory := Inventory{varDir: "/var/lib/mechanic/", stateDir: "/var/lib/mechanic/state", etcDir: "/etc/mechanic", db: nil}
+	inventory := Inventory{
+		varDir: "/var/lib/mechanic/",
+		stateDir: "/var/lib/mechanic/state",
+		etcDir: "/etc/mechanic",
+		db: nil }
 
 	envRootDir := os.Getenv("MECHANIC_ROOT_DIR");
 	if ( envRootDir != "" ) {

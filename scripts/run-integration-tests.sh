@@ -25,7 +25,7 @@ BUILD_DIR=$PROJECT_DIR/target
 
 for TEST_DIR in $(find $TESTS_DIR -mindepth 1 -maxdepth 1 -type d); do
   TEST_NAME=$(basename $TEST_DIR)
-  echo "Running test $TEST_NAME..."
+  echo "Running test $TEST_NAME... (TEST_TMP_DIR: $TEST_TMP_DIR)"
   TEST_TMP_DIR=$(mktemp -d)
   TEST_TMP_RESULT=$(mktemp)
   cp -R $TEST_DIR/input/* $TEST_TMP_DIR
@@ -34,7 +34,7 @@ for TEST_DIR in $(find $TESTS_DIR -mindepth 1 -maxdepth 1 -type d); do
   TEST_ROOT=$TEST_TMP_DIR \
   MECHANIC_ROOT_DIR=$TEST_TMP_DIR \
   GOPATH=$PROJECT_DIR \
-  $TEST_TMP_DIR/usr/sbin/mechanic -v migrate -- /bin/true
+  $TEST_TMP_DIR/usr/sbin/mechanic -f $TEST_TMP_DIR/var/log/mechanic.log -v migrate -- /bin/true
   TEST_EXIT_CODE=$?
   echo $TEST_EXIT_CODE > $TEST_TMP_RESULT
   cd $TEST_TMP_DIR

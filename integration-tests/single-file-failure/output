@@ -15,3 +15,5 @@
 ./var/lib/mechanic/state
 ./var/lib/mechanic/state/fail.tmp
 ./var/lib/mechanic/state/fail.tmp/log
+./var/log
+./var/log/mechanic.log

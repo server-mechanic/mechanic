@@ -19,3 +19,5 @@
 ./var/lib/mechanic/state/002_nowme.sh.done
 ./var/lib/mechanic/state/003_nowme2.sh.done
 ./var/lib/mechanic/state/004_stderr.sh.done
+./var/log
+./var/log/mechanic.log

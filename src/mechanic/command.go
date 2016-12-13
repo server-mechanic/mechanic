@@ -24,27 +24,30 @@ import (
 	"os"
 	"log"
 	"strings"
+	"bufio"
+	"path"
 )
 
 type Command struct {
 	verbose         bool;
 	command         string;
 	followUpCommand []string;
+	logFilePath     string;
 }
 
 func migrate(command *Command, inventory *Inventory) (error) {
 	migrations, err := GetMigrations(inventory)
-	if( err != nil ) {
+	if ( err != nil ) {
 		return err
 	}
 
 	for _, migration := range migrations {
-		if( !migration.done ) {
+		if ( !migration.done ) {
 			if err := ApplyMigrationAndMarkAsDone(&migration, inventory); err != nil {
 				return err
 			}
 		} else {
-			if( command.verbose ) {
+			if ( command.verbose ) {
 				log.Printf("Migration %s already done.", migration.name)
 			}
 		}
@@ -52,7 +55,6 @@ func migrate(command *Command, inventory *Inventory) (error) {
 
 	return nil
 }
-
 
 func abort(exitCode int, format string, args  ...interface{}) {
 	log.Printf(format, args)
@@ -65,13 +67,28 @@ func Run() {
 		abort(1, "Invalid argument(s): %s", err)
 	}
 
+	if( command.logFilePath != "" && command.logFilePath != "-" ) {
+		logFileParentPath := path.Dir(command.logFilePath)
+		if err := os.MkdirAll(logFileParentPath, 0755); err != nil {
+			abort(1, "Cannot create parent dir for log file. %s", err)
+		}
+
+		logFile, err := os.OpenFile(command.logFilePath, os.O_CREATE | os.O_WRONLY | os.O_APPEND, 0660)
+		if err != nil {
+			abort(1, "Cannot open log file for writing. %s", err)
+		}
+
+		logWriter := bufio.NewWriter(logFile)
+		log.SetOutput(logWriter)
+	}
+
 	inventory, inventoryErr := GetInventory()
 	if inventoryErr != nil {
 		abort(1, "Getting inventory failed: %s", inventoryErr)
 	}
 
 	if ( command.verbose ) {
-		log.Printf("mechanic etc dir:   %s\n", inventory.etcDir);
+		log.Printf("mechanic etc dir: %s\n", inventory.etcDir);
 		log.Printf("mechanic var dir: %s\n", inventory.varDir);
 		log.Printf("mechanic state dir: %s\n", inventory.stateDir);
 	}
@@ -92,7 +109,9 @@ func parseArgs() (*Command, error) {
 	command := Command{}
 
 	doubleDashSeen := false
-	for _, arg := range os.Args[1:] {
+	for i := 1; i < len(os.Args); i++ {
+		arg := os.Args[i]
+		hasMoreArgs := len(os.Args)>i-1;
 		if ( !doubleDashSeen && arg == "--" ) {
 			doubleDashSeen = true;
 		} else if ( doubleDashSeen ) {
@@ -101,12 +120,18 @@ func parseArgs() (*Command, error) {
 			if ( strings.HasPrefix(arg, "-") ) {
 				if ( arg == "--verbose" || arg == "-v" ) {
 					command.verbose = true;
+				} else if ( arg == "--logFile" || arg == "-f") {
+					if( !hasMoreArgs ) {
+						return nil, errors.New("--logFile|-f requires file argument or -.")
+					}
+					i++;
+					command.logFilePath = os.Args[i];
 				} else {
 					return nil, errors.New("Unkown flag.");
 				}
 			} else {
 				if command.command == "" {
-					if( arg != "migrate" ) {
+					if ( arg != "migrate" ) {
 						return nil, errors.New("Only migrate is an allowed action.")
 					}
 					command.command = arg;
