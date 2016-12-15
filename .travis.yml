@@ -2,6 +2,7 @@ addons:
   apt:
     packages:
     - sqlite3
+    - gccgo
 language: go
 go:
   - 1.4
