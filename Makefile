@@ -1,4 +1,4 @@
-PACKAGE_VERSION := 1
+PACKAGE_VERSION := 0.1
 SCM_VERSION = $(shell git rev-parse HEAD)
  
 all:	clean build integration-tests
@@ -19,3 +19,9 @@ build:
 integration-tests:
 	@echo "Running integration tests..."; \
 	${PWD}/scripts/run-integration-tests.sh
+
+packages:	ubuntu-xenial
+
+ubuntu-xenial:
+	${PWD}/scripts/build-package.sh ubuntu-xenial $(PACKAGE_VERSION)-0ubuntu1
+
