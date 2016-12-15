@@ -34,15 +34,15 @@ type Command struct {
 	followUpCommand []string
 }
 
-func migrate(command *Command, inventory *Inventory) error {
-	migrations, err := GetMigrations(inventory)
+func (command *Command) migrate(inventory *Inventory) error {
+	migrations, err := inventory.GetMigrations()
 	if err != nil {
 		return err
 	}
 
 	for _, migration := range migrations {
-		if !migration.done {
-			if err := ApplyMigrationAndMarkAsDone(&migration, inventory); err != nil {
+		if !migration.IsDone() {
+			if err := migration.ApplyMigrationAndMarkAsDone(inventory); err != nil {
 				return err
 			}
 		} else {
@@ -71,7 +71,9 @@ func Run() {
 		abort(1, "Invalid argument(s): %s", err)
 	}
 
-	if config.logFile != "" && config.logFile != "-" {
+	if config.logFile == "" || config.logFile == "-" {
+		log.SetOutput(os.Stderr)
+	} else {
 		logFileParentPath := path.Dir(config.logFile)
 		if err := os.MkdirAll(logFileParentPath, 0755); err != nil {
 			abort(1, "Cannot create parent dir for log file. %s", err)
@@ -86,18 +88,20 @@ func Run() {
 		log.SetOutput(logWriter)
 	}
 
-	inventory, inventoryErr := GetInventory()
+	inventory, inventoryErr := GetInventory(config)
 	if inventoryErr != nil {
 		abort(1, "Getting inventory failed: %s", inventoryErr)
 	}
 
 	if command.verbose {
-		log.Printf("mechanic etc dir: %s\n", inventory.etcDir)
-		log.Printf("mechanic var dir: %s\n", inventory.varDir)
-		log.Printf("mechanic state dir: %s\n", inventory.stateDir)
+		log.Printf("mechanic etc dir: %s\n", config.GetEtcDir())
+		log.Printf("mechanic var dir: %s\n", config.GetVarDir())
+		log.Printf("mechanic state dir: %s\n", config.GetStateDir())
+		log.Printf("mechanic inventory db: %s\n", config.GetInventoryDbPath())
+		log.Printf("mechanic migrations dir: %s\n", config.GetMigrationsDir())
 	}
 
-	if err := migrate(command, inventory); err != nil {
+	if err := command.migrate(inventory); err != nil {
 		abort(1, "Migration failed: %s", err)
 	}
 

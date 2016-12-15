@@ -34,15 +34,11 @@ type Migration struct {
 }
 
 func getMigrationFilePath(migrationName string, inventory *Inventory) string {
-	return filepath.Clean(getMigrationDirPath(inventory) + "/" + migrationName)
-}
-
-func getMigrationDirPath(inventory *Inventory) string {
-	return filepath.Join(inventory.etcDir + "/migration.d/")
+	return filepath.Clean(inventory.config.GetMigrationsDir() + "/" + migrationName)
 }
 
 func getMigrationTempDirPath(migrationName string, inventory *Inventory) string {
-	return inventory.stateDir + "/" + migrationName + ".tmp"
+	return inventory.config.GetStateDir() + "/" + migrationName + ".tmp"
 }
 
 func runWithLog(cmdPath string, logFile *os.File) error {
@@ -61,7 +57,7 @@ func runWithLog(cmdPath string, logFile *os.File) error {
 	return nil
 }
 
-func applyMigration(migration *Migration, inventory *Inventory) error {
+func (migration *Migration) applyMigration(inventory *Inventory) error {
 
 	migrationTempDirPath := getMigrationTempDirPath(migration.name, inventory)
 	if err := os.MkdirAll(migrationTempDirPath, 0755); err != nil {
@@ -86,21 +82,25 @@ func applyMigration(migration *Migration, inventory *Inventory) error {
 	return nil
 }
 
-func ApplyMigrationAndMarkAsDone(migration *Migration, inventory *Inventory) error {
+func (migration *Migration) IsDone() bool {
+	return migration.done
+}
+
+func (migration *Migration) ApplyMigrationAndMarkAsDone(inventory *Inventory) error {
 	log.Printf("Applying migration %s.\n", migration.name)
 
-	if err := MarkMigrationStarted(migration.name, inventory); err != nil {
+	if err := inventory.MarkMigrationStarted(migration.name); err != nil {
 		return err
 	}
 
-	if err := applyMigration(migration, inventory); err != nil {
-		if err2 := MarkMigrationFailed(migration.name, inventory); err2 != nil {
+	if err := migration.applyMigration(inventory); err != nil {
+		if err2 := inventory.MarkMigrationFailed(migration.name); err2 != nil {
 			return err2
 		}
 
 		return err
 	} else {
-		if err := MarkMigrationDone(migration.name, inventory); err != nil {
+		if err := inventory.MarkMigrationDone(migration.name); err != nil {
 			return err
 		}
 	}
