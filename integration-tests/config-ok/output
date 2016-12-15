@@ -3,7 +3,6 @@
 ./etc
 ./etc/mechanic
 ./etc/mechanic.conf
-./etc/mechanic/migration.d
 ./usr
 ./usr/sbin
 ./usr/sbin/mechanic
