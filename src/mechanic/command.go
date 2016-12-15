@@ -32,7 +32,6 @@ type Command struct {
 	verbose         bool;
 	command         string;
 	followUpCommand []string;
-	logFilePath     string;
 }
 
 func migrate(command *Command, inventory *Inventory) (error) {
@@ -62,18 +61,23 @@ func abort(exitCode int, format string, args  ...interface{}) {
 }
 
 func Run() {
-	command, err := parseArgs()
+	config, configErr := GetConfig()
+	if configErr != nil {
+		abort(1, "Reading config failed: %s", configErr);
+	}
+
+	command, err := parseArgs(config)
 	if err != nil {
 		abort(1, "Invalid argument(s): %s", err)
 	}
 
-	if( command.logFilePath != "" && command.logFilePath != "-" ) {
-		logFileParentPath := path.Dir(command.logFilePath)
+	if( config.logFile != "" && config.logFile != "-" ) {
+		logFileParentPath := path.Dir(config.logFile)
 		if err := os.MkdirAll(logFileParentPath, 0755); err != nil {
 			abort(1, "Cannot create parent dir for log file. %s", err)
 		}
 
-		logFile, err := os.OpenFile(command.logFilePath, os.O_CREATE | os.O_WRONLY | os.O_APPEND, 0660)
+		logFile, err := os.OpenFile(config.logFile, os.O_CREATE | os.O_WRONLY | os.O_APPEND, 0660)
 		if err != nil {
 			abort(1, "Cannot open log file for writing. %s", err)
 		}
@@ -104,7 +108,7 @@ func Run() {
 	os.Exit(0)
 }
 
-func parseArgs() (*Command, error) {
+func parseArgs(config *Config) (*Command, error) {
 
 	command := Command{}
 
@@ -125,9 +129,9 @@ func parseArgs() (*Command, error) {
 						return nil, errors.New("--logFile|-f requires file argument or -.")
 					}
 					i++;
-					command.logFilePath = os.Args[i];
+					config.logFile = os.Args[i];
 				} else {
-					return nil, errors.New("Unkown flag.");
+					return nil, errors.New("Unknown flag.");
 				}
 			} else {
 				if command.command == "" {
