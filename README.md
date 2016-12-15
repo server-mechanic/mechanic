@@ -8,13 +8,14 @@
 
 ## Features
 
-* Evolve your server step by step.
+* Evolve your servers step by step.
 * Write server migrations in your favorite language.
-* Minimal overhead, no central server required.
+* Focus on the migrations instead of developing reusable plugins.
+* Minimal overhead: no further components required.
 
 ## Contributing
 
-Server-Mechanic is an open source project run by volunteers, and contributions are welcome! Feel free to raise an issue or submit a pull request.
+Server-Mechanic is an open source project, and contributions are welcome! Feel free to raise an issue or submit a pull request.
 
 ## License
 Copyright (c) 2016 by [Cornelius Buschka](https://github.com/cbuschka).
