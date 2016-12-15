@@ -11,7 +11,7 @@
 * Evolve your servers step by step.
 * Write server migrations in your favorite language.
 * Focus on the migrations instead of developing reusable plugins.
-* Minimal overhead: no further components required.
+* Minimal overhead, no central server required.
 
 ## Contributing
 
