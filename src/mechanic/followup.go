@@ -24,7 +24,7 @@ import (
 	"syscall"
 )
 
-func RunFollowUpCommand(followUpCommand []string) (error) {
+func RunFollowUpCommand(followUpCommand []string) error {
 
 	if len(followUpCommand) > 0 {
 		env := os.Environ()

@@ -20,33 +20,33 @@
 package mechanic
 
 import (
-	"errors"
-	"os"
-	"log"
-	"strings"
 	"bufio"
+	"errors"
+	"log"
+	"os"
 	"path"
+	"strings"
 )
 
 type Command struct {
-	verbose         bool;
-	command         string;
-	followUpCommand []string;
+	verbose         bool
+	command         string
+	followUpCommand []string
 }
 
-func migrate(command *Command, inventory *Inventory) (error) {
+func migrate(command *Command, inventory *Inventory) error {
 	migrations, err := GetMigrations(inventory)
-	if ( err != nil ) {
+	if err != nil {
 		return err
 	}
 
 	for _, migration := range migrations {
-		if ( !migration.done ) {
+		if !migration.done {
 			if err := ApplyMigrationAndMarkAsDone(&migration, inventory); err != nil {
 				return err
 			}
 		} else {
-			if ( command.verbose ) {
+			if command.verbose {
 				log.Printf("Migration %s already done.", migration.name)
 			}
 		}
@@ -55,7 +55,7 @@ func migrate(command *Command, inventory *Inventory) (error) {
 	return nil
 }
 
-func abort(exitCode int, format string, args  ...interface{}) {
+func abort(exitCode int, format string, args ...interface{}) {
 	log.Printf(format, args)
 	os.Exit(exitCode)
 }
@@ -63,7 +63,7 @@ func abort(exitCode int, format string, args  ...interface{}) {
 func Run() {
 	config, configErr := GetConfig()
 	if configErr != nil {
-		abort(1, "Reading config failed: %s", configErr);
+		abort(1, "Reading config failed: %s", configErr)
 	}
 
 	command, err := parseArgs(config)
@@ -71,13 +71,13 @@ func Run() {
 		abort(1, "Invalid argument(s): %s", err)
 	}
 
-	if( config.logFile != "" && config.logFile != "-" ) {
+	if config.logFile != "" && config.logFile != "-" {
 		logFileParentPath := path.Dir(config.logFile)
 		if err := os.MkdirAll(logFileParentPath, 0755); err != nil {
 			abort(1, "Cannot create parent dir for log file. %s", err)
 		}
 
-		logFile, err := os.OpenFile(config.logFile, os.O_CREATE | os.O_WRONLY | os.O_APPEND, 0660)
+		logFile, err := os.OpenFile(config.logFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0660)
 		if err != nil {
 			abort(1, "Cannot open log file for writing. %s", err)
 		}
@@ -91,10 +91,10 @@ func Run() {
 		abort(1, "Getting inventory failed: %s", inventoryErr)
 	}
 
-	if ( command.verbose ) {
-		log.Printf("mechanic etc dir: %s\n", inventory.etcDir);
-		log.Printf("mechanic var dir: %s\n", inventory.varDir);
-		log.Printf("mechanic state dir: %s\n", inventory.stateDir);
+	if command.verbose {
+		log.Printf("mechanic etc dir: %s\n", inventory.etcDir)
+		log.Printf("mechanic var dir: %s\n", inventory.varDir)
+		log.Printf("mechanic state dir: %s\n", inventory.stateDir)
 	}
 
 	if err := migrate(command, inventory); err != nil {
@@ -115,32 +115,32 @@ func parseArgs(config *Config) (*Command, error) {
 	doubleDashSeen := false
 	for i := 1; i < len(os.Args); i++ {
 		arg := os.Args[i]
-		hasMoreArgs := len(os.Args)>i-1;
-		if ( !doubleDashSeen && arg == "--" ) {
-			doubleDashSeen = true;
-		} else if ( doubleDashSeen ) {
-			command.followUpCommand = append(command.followUpCommand, arg);
+		hasMoreArgs := len(os.Args) > i-1
+		if !doubleDashSeen && arg == "--" {
+			doubleDashSeen = true
+		} else if doubleDashSeen {
+			command.followUpCommand = append(command.followUpCommand, arg)
 		} else {
-			if ( strings.HasPrefix(arg, "-") ) {
-				if ( arg == "--verbose" || arg == "-v" ) {
-					command.verbose = true;
-				} else if ( arg == "--logFile" || arg == "-f") {
-					if( !hasMoreArgs ) {
+			if strings.HasPrefix(arg, "-") {
+				if arg == "--verbose" || arg == "-v" {
+					command.verbose = true
+				} else if arg == "--logFile" || arg == "-f" {
+					if !hasMoreArgs {
 						return nil, errors.New("--logFile|-f requires file argument or -.")
 					}
-					i++;
-					config.logFile = os.Args[i];
+					i++
+					config.logFile = os.Args[i]
 				} else {
-					return nil, errors.New("Unknown flag.");
+					return nil, errors.New("Unknown flag.")
 				}
 			} else {
 				if command.command == "" {
-					if ( arg != "migrate" ) {
+					if arg != "migrate" {
 						return nil, errors.New("Only migrate is an allowed action.")
 					}
-					command.command = arg;
+					command.command = arg
 				} else {
-					return nil, errors.New("Can execute a single command only.");
+					return nil, errors.New("Can execute a single command only.")
 				}
 			}
 		}

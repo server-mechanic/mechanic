@@ -20,25 +20,25 @@
 package mechanic
 
 import (
-	"os"
-	"path"
-	"io/ioutil"
 	"database/sql"
 	_ "github.com/mattn/go-sqlite3"
+	"io/ioutil"
+	"os"
+	"path"
 )
 
 type Inventory struct {
-	varDir   string;
-	stateDir string;
-	etcDir   string;
-	db       *sql.DB;
+	varDir   string
+	stateDir string
+	etcDir   string
+	db       *sql.DB
 }
 
 func GetMigrations(inventory *Inventory) ([]Migration, error) {
 	migrations := make([]Migration, 0)
 
 	migrationDir := path.Join(inventory.etcDir, "migration.d")
-	files, _ := ioutil.ReadDir(migrationDir);
+	files, _ := ioutil.ReadDir(migrationDir)
 	for _, f := range files {
 		migrationPath := path.Join(migrationDir, f.Name())
 
@@ -56,43 +56,43 @@ func GetMigrations(inventory *Inventory) ([]Migration, error) {
 
 func GetInventory() (*Inventory, error) {
 	inventory := Inventory{
-		varDir: "/var/lib/mechanic/",
+		varDir:   "/var/lib/mechanic/",
 		stateDir: "/var/lib/mechanic/state",
-		etcDir: "/etc/mechanic",
-		db: nil }
+		etcDir:   "/etc/mechanic",
+		db:       nil}
 
-	envRootDir := os.Getenv("MECHANIC_ROOT_DIR");
-	if ( envRootDir != "" ) {
-		inventory.etcDir = path.Clean(path.Join(envRootDir, inventory.etcDir));
-		inventory.stateDir = path.Clean(path.Join(envRootDir, inventory.stateDir));
-		inventory.varDir = path.Clean(path.Join(envRootDir, inventory.varDir));
+	envRootDir := os.Getenv("MECHANIC_ROOT_DIR")
+	if envRootDir != "" {
+		inventory.etcDir = path.Clean(path.Join(envRootDir, inventory.etcDir))
+		inventory.stateDir = path.Clean(path.Join(envRootDir, inventory.stateDir))
+		inventory.varDir = path.Clean(path.Join(envRootDir, inventory.varDir))
 	}
 
-	envEtcDir := os.Getenv("MECHANIC_ETC_DIR");
-	if ( envEtcDir != "" ) {
-		inventory.etcDir = path.Clean(envEtcDir);
+	envEtcDir := os.Getenv("MECHANIC_ETC_DIR")
+	if envEtcDir != "" {
+		inventory.etcDir = path.Clean(envEtcDir)
 	}
 
-	envVarDir := os.Getenv("MECHANIC_VAR_DIR");
-	if ( envVarDir != "" ) {
-		inventory.varDir = path.Clean(envVarDir);
+	envVarDir := os.Getenv("MECHANIC_VAR_DIR")
+	if envVarDir != "" {
+		inventory.varDir = path.Clean(envVarDir)
 	}
 
-	envStateDir := os.Getenv("MECHANIC_STATE_DIR");
-	if ( envStateDir != "" ) {
-		inventory.stateDir = path.Clean(envStateDir);
+	envStateDir := os.Getenv("MECHANIC_STATE_DIR")
+	if envStateDir != "" {
+		inventory.stateDir = path.Clean(envStateDir)
 	}
 
 	if err := initDirs(&inventory); err != nil {
 		return nil, err
 	}
 
-	db, err := initDb(inventory.varDir + "/inventory.db");
+	db, err := initDb(inventory.varDir + "/inventory.db")
 	if err != nil {
 		return nil, err
 	}
 
-	inventory.db = db;
+	inventory.db = db
 
 	return &inventory, nil
 }
@@ -114,7 +114,7 @@ func initDb(path string) (*sql.DB, error) {
 		start_time timestamp not null,
 		end_time timestamp,
 		status text check ( status in ( 'STARTED', 'FAILURE', 'SUCCESS' ) )
-	);`;
+	);`
 	_, err = db.Exec(createSql)
 	if err != nil {
 		return nil, err
@@ -157,9 +157,9 @@ func existsMigrationDoneFile(migrationName string, inventory *Inventory) (bool, 
 	return true, err
 }
 
-func updateMigrationAsDone(migrationName string, inventory *Inventory) (error) {
+func updateMigrationAsDone(migrationName string, inventory *Inventory) error {
 
-	updateSql := "update migration set status='SUCCESS', end_time=strftime('%Y-%m-%d %H:%M:%f', 'now') where name = ?";
+	updateSql := "update migration set status='SUCCESS', end_time=strftime('%Y-%m-%d %H:%M:%f', 'now') where name = ?"
 	stmt, err := inventory.db.Prepare(updateSql)
 	if err != nil {
 		return err
@@ -168,16 +168,16 @@ func updateMigrationAsDone(migrationName string, inventory *Inventory) (error) {
 
 	_, err2 := stmt.Exec(migrationName)
 	if err2 != nil {
-		return err2;
+		return err2
 	}
 
 	return nil
 }
 
-func insertMigrationStartEvent(migrationName string, inventory *Inventory) (error) {
+func insertMigrationStartEvent(migrationName string, inventory *Inventory) error {
 
 	insertSql := `insert or replace into migration ( id, name, start_time, end_time, status )
-		values ( (select id from migration where name = ?), ?, strftime('%Y-%m-%d %H:%M:%f', 'now'), NULL, 'STARTED' )`;
+		values ( (select id from migration where name = ?), ?, strftime('%Y-%m-%d %H:%M:%f', 'now'), NULL, 'STARTED' )`
 	stmt, err := inventory.db.Prepare(insertSql)
 	if err != nil {
 		return err
@@ -186,7 +186,7 @@ func insertMigrationStartEvent(migrationName string, inventory *Inventory) (erro
 
 	_, err2 := stmt.Exec(migrationName, migrationName)
 	if err2 != nil {
-		return err2;
+		return err2
 	}
 
 	return nil
@@ -194,7 +194,7 @@ func insertMigrationStartEvent(migrationName string, inventory *Inventory) (erro
 
 func isMigrationDoneInDb(migrationName string, inventory *Inventory) (bool, error) {
 
-	querySql := "select count(*) from migration where name=? and status='SUCCESS'";
+	querySql := "select count(*) from migration where name=? and status='SUCCESS'"
 	stmt, err := inventory.db.Prepare(querySql)
 	if err != nil {
 		return false, err
@@ -204,19 +204,19 @@ func isMigrationDoneInDb(migrationName string, inventory *Inventory) (bool, erro
 	row := stmt.QueryRow(migrationName)
 
 	var count int
-	err2 := row.Scan(&count);
+	err2 := row.Scan(&count)
 	if err2 != nil {
 		return false, err
 	}
 
-	return count > 0, nil;
+	return count > 0, nil
 }
 
-func MarkMigrationStarted(migrationName string, inventory *Inventory) (error) {
+func MarkMigrationStarted(migrationName string, inventory *Inventory) error {
 	return insertMigrationStartEvent(migrationName, inventory)
 }
 
-func MarkMigrationDone(migrationName string, inventory *Inventory) (error) {
+func MarkMigrationDone(migrationName string, inventory *Inventory) error {
 	if err := createMigrationDoneFile(migrationName, inventory); err != nil {
 		return err
 	}
@@ -224,9 +224,9 @@ func MarkMigrationDone(migrationName string, inventory *Inventory) (error) {
 	return updateMigrationAsDone(migrationName, inventory)
 }
 
-func MarkMigrationFailed(migrationName string, inventory *Inventory) (error) {
+func MarkMigrationFailed(migrationName string, inventory *Inventory) error {
 
-	updateSql := "update migration set status='FAILURE', end_time=strftime('%Y-%m-%d %H:%M:%f', 'now') where name=?";
+	updateSql := "update migration set status='FAILURE', end_time=strftime('%Y-%m-%d %H:%M:%f', 'now') where name=?"
 	stmt, err := inventory.db.Prepare(updateSql)
 	if err != nil {
 		return err
@@ -235,13 +235,13 @@ func MarkMigrationFailed(migrationName string, inventory *Inventory) (error) {
 
 	_, err2 := stmt.Exec(migrationName)
 	if err2 != nil {
-		return err2;
+		return err2
 	}
 
 	return nil
 }
 
-func createMigrationDoneFile(migrationName string, inventory*Inventory) (error) {
+func createMigrationDoneFile(migrationName string, inventory *Inventory) error {
 	migrationDoneFilePath := getMigrationDonePath(migrationName, inventory)
 
 	if err := createFile(migrationDoneFilePath); err != nil {
@@ -250,11 +250,11 @@ func createMigrationDoneFile(migrationName string, inventory*Inventory) (error) 
 	return nil
 }
 
-func getMigrationDonePath(migrationName string, inventory *Inventory) (string) {
-	return inventory.stateDir + "/" + migrationName + ".done";
+func getMigrationDonePath(migrationName string, inventory *Inventory) string {
+	return inventory.stateDir + "/" + migrationName + ".done"
 }
 
-func createFile(path string) (error) {
+func createFile(path string) error {
 	file, err := os.Create(path)
 	if err != nil {
 		return err

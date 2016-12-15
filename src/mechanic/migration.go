@@ -20,29 +20,29 @@
 package mechanic
 
 import (
-	"os/exec"
-	"os"
-	"path/filepath"
-	"log"
 	"bufio"
+	"log"
+	"os"
+	"os/exec"
+	"path/filepath"
 )
 
 type Migration struct {
-	name string;
-	path string;
-	done bool;
+	name string
+	path string
+	done bool
 }
 
-func getMigrationFilePath(migrationName string, inventory *Inventory) (string) {
+func getMigrationFilePath(migrationName string, inventory *Inventory) string {
 	return filepath.Clean(getMigrationDirPath(inventory) + "/" + migrationName)
 }
 
-func getMigrationDirPath(inventory *Inventory) (string) {
+func getMigrationDirPath(inventory *Inventory) string {
 	return filepath.Join(inventory.etcDir + "/migration.d/")
 }
 
-func getMigrationTempDirPath(migrationName string, inventory *Inventory) (string) {
-	return inventory.stateDir + "/" + migrationName + ".tmp";
+func getMigrationTempDirPath(migrationName string, inventory *Inventory) string {
+	return inventory.stateDir + "/" + migrationName + ".tmp"
 }
 
 func runWithLog(cmdPath string, logFile *os.File) error {
@@ -61,14 +61,14 @@ func runWithLog(cmdPath string, logFile *os.File) error {
 	return nil
 }
 
-func applyMigration(migration *Migration, inventory *Inventory) (error) {
+func applyMigration(migration *Migration, inventory *Inventory) error {
 
-	migrationTempDirPath := getMigrationTempDirPath(migration.name, inventory);
+	migrationTempDirPath := getMigrationTempDirPath(migration.name, inventory)
 	if err := os.MkdirAll(migrationTempDirPath, 0755); err != nil {
 		return err
 	}
 
-	logFile, err := os.OpenFile(migrationTempDirPath + "/log", os.O_CREATE | os.O_WRONLY | os.O_APPEND, 0660)
+	logFile, err := os.OpenFile(migrationTempDirPath+"/log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0660)
 	if err != nil {
 		return err
 	}
@@ -86,7 +86,7 @@ func applyMigration(migration *Migration, inventory *Inventory) (error) {
 	return nil
 }
 
-func ApplyMigrationAndMarkAsDone(migration *Migration, inventory *Inventory) (error) {
+func ApplyMigrationAndMarkAsDone(migration *Migration, inventory *Inventory) error {
 	log.Printf("Applying migration %s.\n", migration.name)
 
 	if err := MarkMigrationStarted(migration.name, inventory); err != nil {
