@@ -26,12 +26,19 @@ import (
 	"os"
 	"path"
 	"strings"
+	"fmt"
 )
 
 type Command struct {
 	verbose         bool
 	command         string
 	followUpCommand []string
+}
+
+func (command *Command) printVersion() error {
+	metadata := GetMetadata()
+	fmt.Fprintf(os.Stderr, "This is mechanic, version: %s (built from: %s).\n", metadata.PackageVersion, metadata.ScmVersion)
+	return nil
 }
 
 func (command *Command) migrate(inventory *Inventory) error {
@@ -71,42 +78,29 @@ func Run() {
 		abort(1, "Invalid argument(s): %s", err)
 	}
 
-	if config.logFile == "" || config.logFile == "-" {
-		log.SetOutput(os.Stderr)
-	} else {
-		logFileParentPath := path.Dir(config.logFile)
-		if err := os.MkdirAll(logFileParentPath, 0755); err != nil {
-			abort(1, "Cannot create parent dir for log file. %s", err)
+	if command.command == "version" {
+		command.printVersion()
+	} else if command.command == "migrate" {
+		initLog(config)
+
+		inventory, inventoryErr := GetInventory(config)
+		if inventoryErr != nil {
+			abort(1, "Getting inventory failed: %s", inventoryErr)
 		}
 
-		logFile, err := os.OpenFile(config.logFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0660)
-		if err != nil {
-			abort(1, "Cannot open log file for writing. %s", err)
+		if command.verbose {
+			dumpConfig(config)
 		}
 
-		logWriter := bufio.NewWriter(logFile)
-		log.SetOutput(logWriter)
-	}
+		if err := command.migrate(inventory); err != nil {
+			abort(1, "Migration failed: %s", err)
+		}
 
-	inventory, inventoryErr := GetInventory(config)
-	if inventoryErr != nil {
-		abort(1, "Getting inventory failed: %s", inventoryErr)
-	}
-
-	if command.verbose {
-		log.Printf("mechanic etc dir: %s\n", config.GetEtcDir())
-		log.Printf("mechanic var dir: %s\n", config.GetVarDir())
-		log.Printf("mechanic state dir: %s\n", config.GetStateDir())
-		log.Printf("mechanic inventory db: %s\n", config.GetInventoryDbPath())
-		log.Printf("mechanic migrations dir: %s\n", config.GetMigrationsDir())
-	}
-
-	if err := command.migrate(inventory); err != nil {
-		abort(1, "Migration failed: %s", err)
-	}
-
-	if err := RunFollowUpCommand(command.followUpCommand); err != nil {
-		abort(1, "Executing follow up command failed: %s", err)
+		if len(command.followUpCommand) > 0 {
+			if err := RunFollowUpCommand(command.followUpCommand); err != nil {
+				abort(1, "Executing follow up command failed: %s", err)
+			}
+		}
 	}
 
 	os.Exit(0)
@@ -139,10 +133,11 @@ func parseArgs(config *Config) (*Command, error) {
 				}
 			} else {
 				if command.command == "" {
-					if arg != "migrate" {
-						return nil, errors.New("Only migrate is an allowed action.")
+					if arg == "migrate" || arg == "version" {
+						command.command = arg
+					} else {
+						return nil, errors.New("Only migrate and version are allowed actions.")
 					}
-					command.command = arg
 				} else {
 					return nil, errors.New("Can execute a single command only.")
 				}
@@ -151,4 +146,32 @@ func parseArgs(config *Config) (*Command, error) {
 	}
 
 	return &command, nil
+}
+
+func dumpConfig(config *Config) {
+	log.Printf("mechanic etc dir: %s\n", config.GetEtcDir())
+	log.Printf("mechanic var dir: %s\n", config.GetVarDir())
+	log.Printf("mechanic state dir: %s\n", config.GetStateDir())
+	log.Printf("mechanic inventory db: %s\n", config.GetInventoryDbPath())
+	log.Printf("mechanic migrations dir: %s\n", config.GetMigrationsDir())
+}
+
+func initLog(config *Config) {
+
+	if config.logFile == "" || config.logFile == "-" {
+		log.SetOutput(os.Stderr)
+	} else {
+		logFileParentPath := path.Dir(config.logFile)
+		if err := os.MkdirAll(logFileParentPath, 0755); err != nil {
+			abort(1, "Cannot create parent dir for log file. %s", err)
+		}
+
+		logFile, err := os.OpenFile(config.logFile, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0660)
+		if err != nil {
+			abort(1, "Cannot open log file for writing. %s", err)
+		}
+
+		logWriter := bufio.NewWriter(logFile)
+		log.SetOutput(logWriter)
+	}
 }

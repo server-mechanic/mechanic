@@ -26,11 +26,7 @@ import (
 
 func RunFollowUpCommand(followUpCommand []string) error {
 
-	if len(followUpCommand) > 0 {
-		env := os.Environ()
-		err := syscall.Exec(followUpCommand[0], followUpCommand[0:], env)
-		return err
-	}
-
-	return nil
+	env := os.Environ()
+	err := syscall.Exec(followUpCommand[0], followUpCommand[0:], env)
+	return err
 }

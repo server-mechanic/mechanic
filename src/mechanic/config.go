@@ -40,7 +40,9 @@ func getDefaults() *Config {
 }
 
 func (config *Config) rebase(base string) {
-	config.logFile = base + config.logFile
+	if config.logFile != "" && config.logFile != "-" {
+		config.logFile = base + config.logFile
+	}
 	config.varDir = base + config.varDir
 	config.etcDir = base + config.etcDir
 }
