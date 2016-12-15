@@ -7,5 +7,5 @@ before_install:
   - docker build -t mechanic-build .
 
 script:
-  - docker run --rm --name mechanic-build -v $PWD/:/build mechanic-build /bin/bash -c "cd build && make" 
+  - docker run --rm --name mechanic-build -v $PWD/:/build mechanic-build /bin/bash -c "cd /build && make" 
 
