@@ -1,6 +1,8 @@
 PACKAGE_VERSION := 0.1
 SCM_VERSION = $(shell git rev-parse HEAD)
 
+default:	clean build test
+
 all:	clean build test packages
 
 .PHONY:	clean
