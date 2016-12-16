@@ -20,8 +20,11 @@ integration-tests:
 	@echo "Running integration tests..."; \
 	${PWD}/scripts/run-integration-tests.sh
 
-packages:	ubuntu-xenial
+packages:	ubuntu-xenial centos-7
 
 ubuntu-xenial:
 	${PWD}/scripts/build-package.sh ubuntu-xenial $(PACKAGE_VERSION)-0ubuntu1
+
+centos-7:
+	${PWD}/scripts/build-package.sh centos-7 $(PACKAGE_VERSION)
 
