@@ -1,4 +1,5 @@
 PACKAGE_VERSION := 0.1
+BUILD_NUMBER := 2
 SCM_VERSION = $(shell git rev-parse HEAD)
 
 default:	clean build test
@@ -22,14 +23,18 @@ test:
 	@echo "Running integration tests..."; \
 	${PWD}/scripts/run-integration-tests.sh
 
-packages:	ubuntu-xenial ubuntu-yakkety centos-7
+packages:	ubuntu-xenial ubuntu-yakkety fedora-25 centos-7
 
 ubuntu-xenial:
-	${PWD}/scripts/build-package.sh ubuntu-xenial $(PACKAGE_VERSION)-0ubuntu-xenial1
+	${PWD}/scripts/build-package.sh ubuntu-xenial $(PACKAGE_VERSION)-0ubuntu-xenial${BUILD_NUMBER}
 
 ubuntu-yakkety:
-	${PWD}/scripts/build-package.sh ubuntu-yakkety $(PACKAGE_VERSION)-0ubuntu-yakkety1
+	${PWD}/scripts/build-package.sh ubuntu-yakkety $(PACKAGE_VERSION)-0ubuntu-yakkety${BUILD_NUMBER}
 
 centos-7:
-	${PWD}/scripts/build-package.sh centos-7 $(PACKAGE_VERSION).centos7.1
+	${PWD}/scripts/build-package.sh centos-7 $(PACKAGE_VERSION).centos7.${BUILD_NUMBER}
+
+fedora-25:
+	${PWD}/scripts/build-package.sh fedora-25 $(PACKAGE_VERSION).fedora25.${BUILD_NUMBER}
+
 
