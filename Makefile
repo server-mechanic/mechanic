@@ -1,7 +1,7 @@
 PACKAGE_VERSION := 0.1
 SCM_VERSION = $(shell git rev-parse HEAD)
- 
-all:	clean build integration-tests
+
+all:	clean build test packages
 
 .PHONY:	clean
 clean:
@@ -16,7 +16,7 @@ build:
 	CGO_ENABLED=1 GOPATH=${PWD} go build -compiler gccgo -gccgoflags '-static-libgo -lpthread -pthread -lsqlite3' -o target/mechanic src/mechanic.go
 
 .PHONY:	integration-tests
-integration-tests:
+test:
 	@echo "Running integration tests..."; \
 	${PWD}/scripts/run-integration-tests.sh
 
