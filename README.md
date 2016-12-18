@@ -6,12 +6,22 @@
 
 #### Evolve your containers, virtual machines and bare metal servers more easily.
 
+## Status
+
+Still a prototype.
+
 ## Features
 
 * Evolve your servers step by step.
 * Write server migrations in your favorite language.
 * Focus on the migrations instead of developing reusable plugins.
 * Minimal overhead, no central server required.
+
+## TODOs
+
+* Increase test coverage by writing unit tests.
+* Restructure project to be more golang style.
+* Create examples.
 
 ## Contributing
 
