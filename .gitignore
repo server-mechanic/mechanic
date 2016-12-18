@@ -4,3 +4,5 @@ src/github.com/
 src/golang.org/
 pkg/
 .idea/
+coverage.txt
+profile.out
