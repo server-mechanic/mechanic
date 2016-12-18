@@ -9,3 +9,5 @@ before_install:
 script:
   - docker run --rm --name mechanic-build -v $PWD/:/build mechanic-build /bin/bash -c "cd /build && make" 
 
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
