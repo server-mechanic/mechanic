@@ -2,9 +2,9 @@ PACKAGE_VERSION := 0.1
 BUILD_NUMBER := 2
 SCM_VERSION = $(shell git rev-parse HEAD)
 
-default:	clean compile integration-tests
+default:	clean compile test integration-tests
 
-all:	clean generate compile integration-tests packages
+all:	clean generate compile test integration-tests packages
 
 .PHONY:	clean
 clean:
@@ -20,8 +20,12 @@ compile:
 	CGO_ENABLED=1 GOPATH=${PWD} go get -compiler gccgo -gccgoflags '-static-libgo -lpthread -pthread -lsqlite3' github.com/mattn/go-sqlite3/ github.com/cbuschka/config4go
 	CGO_ENABLED=1 GOPATH=${PWD} go build -compiler gccgo -gccgoflags '-static-libgo -lpthread -pthread -lsqlite3' -o target/mechanic src/mechanic.go
 
+test:
+	GOPATH=${PWD} go test -compiler gccgo -gccgoflags '-static-libgo -lpthread -pthread -lsqlite3' mechanic
+
 coverage:
-	rm -f coverage.txt && touch coverage.txt
+	GOPATH=${PWD} go test -compiler gccgo -gccgoflags '-static-libgo -lpthread -pthread -lsqlite3' -coverprofile=profile.out -covermode=atomic mechanic
+	mv profile.out coverage.txt
 
 .PHONY:	integration-tests
 integration-tests:
