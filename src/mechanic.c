@@ -77,6 +77,8 @@ int main(const int argc, const char** argv) {
 
 	close_log(log_file);
 	config_free(config);
+
+	/* run follow up command */
 	
 	return 0;
 }
