@@ -13,6 +13,5 @@
 ./var/lib/mechanic
 ./var/lib/mechanic/inventory.db
 ./var/lib/mechanic/state
-./var/lib/mechanic/state/ok.done
 ./var/log
 ./var/log/mechanic.log

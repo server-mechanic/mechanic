@@ -33,25 +33,15 @@
 
 static inventory_t inventory;
 
-static void get_migration_done_file_path(config_t* config, char* buf, size_t buf_capacity, const char* migration_name, app_error_t* app_error) {
-	config_get_state_dir_path(config, buf, buf_capacity, app_error);
-	if( !app_error_is_ok(app_error) ) {
-		return;
-	}
-	string_util_strcat(buf, buf_capacity, "/");
-	string_util_strcat(buf, buf_capacity, migration_name);
-	string_util_strcat(buf, buf_capacity, ".done");
-}
-
 static void init_dirs(config_t* config, app_error_t* app_error) {
 	char path[1000] = "";
-	
+
 	config_get_state_dir_path(config, path, 1000, app_error);
 	if( !app_error_is_ok(app_error) ) {
 		return;
 	}
 	mkdirp(path);
-
+	
 	config_get_etc_dir_path(config, path, 1000, app_error);
 	if( !app_error_is_ok(app_error) ) {
 		return;
@@ -82,13 +72,6 @@ void inventory_close(inventory_t* inventory, app_error_t* app_error) {
 }
 
 bool is_migration_done(inventory_t* inventory, char* migration_name, app_error_t* app_error) {
-	char buf[4000] = "";
-
-	get_migration_done_file_path(inventory->config, buf, 4000, migration_name, app_error);
-	if( is_file(buf) ) {
-		return true;
-	}
-
 	return inventory_db_is_migration_done(inventory->db, migration_name, app_error);
 }
 
@@ -96,26 +79,7 @@ void inventory_mark_migration_started(inventory_t* inventory, migration_t* migra
 	inventory_db_mark_migration_as_started(inventory->db, migration->name, app_error);
 }
 
-static void create_migration_done_file(config_t* config, const char* migration_name, app_error_t* app_error) {
-	char cbuf[4000] = "";
-	config_get_state_dir_path(config, cbuf, 4000, app_error);
-	if( !app_error_is_ok(app_error) ) {
-		return;
-	}
-
-	string_util_strcat(cbuf, 4000, "/");
-	string_util_strcat(cbuf, 4000, migration_name);
-	string_util_strcat(cbuf, 4000, ".done");
-	mkdirp2(cbuf);
-
-	create_file(cbuf, app_error);
-	if( !app_error_is_ok(app_error) ) {
-		return;
-	}
-}
-
 void inventory_mark_migration_as_done(inventory_t* inventory, migration_t* migration, app_error_t* app_error) {
-	create_migration_done_file(inventory->config, migration->name, app_error);
 	inventory_db_mark_migration_as_succeeded(inventory->db, migration->name, app_error);
 }
 

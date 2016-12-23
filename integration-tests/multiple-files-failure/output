@@ -13,7 +13,6 @@
 ./var/lib/mechanic
 ./var/lib/mechanic/inventory.db
 ./var/lib/mechanic/state
-./var/lib/mechanic/state/001_first.sh.done
 ./var/lib/mechanic/state/002_fail.sh.tmp
 ./var/lib/mechanic/state/002_fail.sh.tmp/log
 ./var/log
