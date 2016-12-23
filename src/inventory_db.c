@@ -309,8 +309,12 @@ sqlite3* inventory_db_open(config_t* config, app_error_t* app_error) {
 	config_get_inventory_db_path(config, cbuf, 4000, app_error);
 	mkdirp2(cbuf);
 	rc = sqlite3_open(cbuf, /* @in@ */ &db);
-	if( rc != SQLITE_OK ) {
-		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Opening database failed.", sqlite3_errstr(rc));
+	if( db == NULL ) {
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Opening database failed. Sqlite3 suspiciously failed to alloc mem.");
+		return NULL;
+	}
+	else if( rc != SQLITE_OK ) {
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Opening database failed.", sqlite3_errmsg(db));
 		return NULL;
 	}
 
