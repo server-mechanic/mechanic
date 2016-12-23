@@ -33,10 +33,24 @@ static void init_default_log() {
 	log_set_log_level(false);
 }
 
-static FILE* open_log(config_t* config, app_error_t* app_error) {
+static bool get_verbose_from(const int argc, const char** argv) {
+	int i;
+
+	for(i=0; i<argc; ++i) {
+		if( strcmp("-v", argv[i]) == 0 ) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+static FILE* open_log(const int argc, const char** argv, config_t* config, app_error_t* app_error) {
 	FILE* log_file = NULL;
 	char cbuf[PATH_MAX_LENGTH] = "";
+	bool verbose = get_verbose_from(argc, argv);
 
+	log_set_log_level(verbose);
 	config_get_log_file_path(config, cbuf, PATH_MAX_LENGTH, app_error);
 	app_error_check(app_error);
 
@@ -69,7 +83,7 @@ int main(const int argc, const char** argv) {
 	config = config_get(&app_error);
 	app_error_check(&app_error);
 
-	log_file = open_log(config, &app_error);
+	log_file = open_log(argc, argv, config, &app_error);
 	app_error_check(&app_error);
 
 	run_command(argc, argv, config, &app_error);
