@@ -1,3 +1,6 @@
+*.gcno
+*.gcov
+*.gcda
 *.o
 *~
 target/
