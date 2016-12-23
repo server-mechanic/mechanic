@@ -30,7 +30,7 @@
 
 static void init_default_log() {
 	log_set_output_stream(stderr);
-	log_set_log_level(true);
+	log_set_log_level(false);
 }
 
 static FILE* open_log(config_t* config, app_error_t* app_error) {
