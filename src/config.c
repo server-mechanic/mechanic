@@ -33,6 +33,8 @@ static void get_expanded_path(char* buf, size_t buf_cap, const char* value, /*@u
 	string_util_strcpy(buf, buf_cap, value );
 	if( NULL != rootDirEnv ) {
 		string_util_replace(buf, buf_cap, "${MECHANIC_ROOT_DIR}", rootDirEnv);
+	} else {
+		string_util_replace(buf, buf_cap, "${MECHANIC_ROOT_DIR}", "");
 	}
 }
 
