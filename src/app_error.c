@@ -40,7 +40,7 @@
 	}
 	else if( app_errno == APP_ERROR_GENERIC_ERROR ) {
 		va_start(arg_list, format);
-		(void)snprintf(cbuf, 4000, format, arg_list);
+		(void)vsnprintf(cbuf, 4000, format, arg_list);
 		va_end(arg_list);
 		(void)snprintf(app_error->message, APP_ERROR_MESSAGE_MAX_LEN, "%s (%s)", cbuf, strerror(errno));
 	}
