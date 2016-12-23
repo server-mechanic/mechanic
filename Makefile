@@ -24,6 +24,7 @@ generate:
 	sed -ri 's,^(.*SCM_VERSION\s*\")([^"]*)(\".*)$$,\1$(SCM_VERSION)\3,g' ${PWD}/include/mechanic/metadata.h
 	
 compile:	
+	sqlite3 -version
 	mkdir -p ${PWD}/target/
 	cd src && \
 	gcc -Wall -g -I ../include/ -c *.c && \
