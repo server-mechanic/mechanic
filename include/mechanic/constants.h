@@ -17,10 +17,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package main
 
-import "mechanic"
+#ifndef __MECHANIC_CONSTANTS_H__
+#define __MECHANIC_CONSTANTS_H__
 
-func main() {
-	mechanic.Run()
-}
+#define PATH_MAX_LENGTH 4000
+
+#endif

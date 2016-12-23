@@ -1,3 +1,4 @@
+*.o
 *~
 target/
 src/github.com/

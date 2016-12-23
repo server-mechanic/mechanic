@@ -17,16 +17,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package mechanic
 
-import (
-	"os"
-	"syscall"
-)
+#ifndef __MECHANIC_APP_ERROR_H__
+#define __MECHANIC_APP_ERROR_H__
 
-func RunFollowUpCommand(followUpCommand []string) error {
+#include <stdbool.h>
 
-	env := os.Environ()
-	err := syscall.Exec(followUpCommand[0], followUpCommand[0:], env)
-	return err
-}
+#define APP_ERROR_OK 0
+#define APP_ERROR_GENERIC_ERROR 1
+#define APP_ERROR_NO_SUB_COMMAND 2
+#define APP_ERROR_MIGRATION_FAILED 3
+#define APP_ERROR_DB_ERROR 4
+#define APP_ERROR_CONFIG_ERROR 4
+
+#define APP_ERROR_MESSAGE_MAX_LEN 4096
+
+typedef struct {
+	int app_errno;
+	char message[APP_ERROR_MESSAGE_MAX_LEN];
+	const char* file;
+	int line;
+} app_error_t;
+
+void app_error_clear(app_error_t* app_error);
+bool app_error_is_ok(app_error_t* app_error);
+void app_error_abort(app_error_t* app_error);
+void app_error_check(app_error_t* app_error);
+void app_error_set(app_error_t* app_error, int app_errno, const char* file, const int line, const char* format, ...);
+
+#endif

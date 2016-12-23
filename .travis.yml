@@ -1,13 +1,13 @@
-language: go
-
-services:
-  - docker
+language: c
+compiler:
+  - gcc
 
 before_install:
-  - docker build -t mechanic-build .
+  - sudo apt-get -qq update
+  - sudo apt-get install -y sqlite3 libsqlite3-dev
 
 script:
-  - docker run --rm --name mechanic-build -v $PWD/:/build mechanic-build /bin/bash -c "cd /build && make clean compile integration-tests coverage"
+  - make clean compile integration-tests
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

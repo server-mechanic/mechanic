@@ -17,14 +17,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package mechanic
 
-type Metadata struct {
-	PackageVersion string
-	ScmVersion string
-}
+#ifndef __MECHANIC_STRING_UTIL_H__
+#define __MECHANIC_STRING_UTIL_H__
 
-func GetMetadata() (*Metadata) {
-	metadata := &Metadata{PackageVersion: "dev", ScmVersion: "undefined"}
-	return metadata
-}
+#include <stdlib.h>
+#include <string.h>
+
+void string_util_strcpy(char* buf, size_t buf_capacity, const char* str);
+void string_util_strcat(char* buf, size_t buf_capacity, const char* str);
+void string_util_replace(char *buf, size_t buf_capacity, const char *old_str, const char *new_str);
+
+#endif

@@ -1,4 +1,4 @@
-# Server Mechanic [![Build Status](https://travis-ci.org/server-mechanic/mechanic.svg)](https://travis-ci.org/server-mechanic/mechanic) [![Code Coverage](https://img.shields.io/codecov/c/github/server-mechanic/mechanic.svg)](https://codecov.io/gh/server-mechanic/mechanic) [![Go Report Card](https://goreportcard.com/badge/github.com/server-mechanic/mechanic)](https://goreportcard.com/report/github.com/server-mechanic/mechanic) [![GoDoc](https://godoc.org/github.com/server-mechanic/mechanic?status.svg)](https://godoc.org/github.com/server-mechanic/mechanic) [![Release](https://img.shields.io/github/release/server-mechanic/mechanic.svg)](https://github.com/server-mechanic/mechanic/releases/latest) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+# Server Mechanic [![Build Status](https://travis-ci.org/server-mechanic/mechanic.svg)](https://travis-ci.org/server-mechanic/mechanic) [![Release](https://img.shields.io/github/release/server-mechanic/mechanic.svg)](https://github.com/server-mechanic/mechanic/releases/latest) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 ### Server Evolution Made Easy.
 
@@ -17,10 +17,17 @@ Still a prototype.
 * Focus on the migrations instead of developing reusable plugins.
 * Minimal overhead, no central server required.
 
+## History
+
+* Added packaging for debian jessie and centos 7.
+* Rewritten in C.
+* Added migration state in sqlite3 db.
+* Added packaging for ubuntu xenial, ubuntu yakkety and fedora 25.
+* First version written in golang.
+
 ## TODOs
 
-* Increase test coverage by writing unit tests.
-* Restructure project to be more golang style.
+* Write more tests.
 * Create examples.
 
 ## Contributing

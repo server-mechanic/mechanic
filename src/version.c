@@ -17,19 +17,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package mechanic
 
-import (
-	"fmt"
-	"testing"
-)
+#include "mechanic/metadata.h"
+#include "mechanic/app_error.h"
+#include "mechanic/config.h"
+#include <stdio.h>
 
-func TestGetScmVersion(t *testing.T) {
-	metadata := GetMetadata()
-
-	if metadata.ScmVersion == "" {
-                message := fmt.Sprintf("No SCM version.");
-                t.Error(message)
-        }
-
-}
+void print_version(const int argc, const char** argv, config_t* config, app_error_t* app_error) {
+	printf("Version: %s, SCM-Version: %s\n", VERSION, SCM_VERSION);
+} 

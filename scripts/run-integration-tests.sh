@@ -31,23 +31,25 @@ for TEST_DIR in $(find $TESTS_DIR -mindepth 1 -maxdepth 1 -type d); do
   cp -R $TEST_DIR/input/* $TEST_TMP_DIR
   mkdir -p $TEST_TMP_DIR/usr/sbin/
   cp $PROJECT_DIR/target/mechanic $TEST_TMP_DIR/usr/sbin/
-  TEST_ROOT=$TEST_TMP_DIR \
-  MECHANIC_ROOT_DIR=$TEST_TMP_DIR \
-  GOPATH=$PROJECT_DIR \
-  $TEST_TMP_DIR/usr/sbin/mechanic -v migrate -- /bin/true
-  TEST_EXIT_CODE=$?
-  echo $TEST_EXIT_CODE > $TEST_TMP_RESULT
-  cd $TEST_TMP_DIR
-  find . | sort -V >> $TEST_TMP_RESULT
-  #cat $TEST_TMP_RESULT
-  diff $TEST_DIR/output $TEST_TMP_RESULT 
-  DIFF_EXIT_CODE=$?
-  echo -n "Test $TEST_NAME "
-  if [ "0" = "$DIFF_EXIT_CODE" ]; then
-    echo "OK."
-  else
-    echo "FAILED."
-    exit 1
-  fi
+  for i in 1 2; do
+    echo "Run #$i"
+    TEST_ROOT=$TEST_TMP_DIR \
+	MECHANIC_ROOT_DIR=$TEST_TMP_DIR \
+  	$TEST_TMP_DIR/usr/sbin/mechanic -v migrate -- /bin/true
+    TEST_EXIT_CODE=$?
+    echo $TEST_EXIT_CODE > $TEST_TMP_RESULT
+    cd $TEST_TMP_DIR
+    find . | sort -V >> $TEST_TMP_RESULT
+    #cat $TEST_TMP_RESULT
+    diff $TEST_DIR/output $TEST_TMP_RESULT
+    DIFF_EXIT_CODE=$?
+    echo -n "Test $TEST_NAME "
+    if [ "0" = "$DIFF_EXIT_CODE" ]; then
+      echo "OK."
+    else
+      echo "FAILED."
+      exit 1
+    fi
+  done
 done
 exit 0
