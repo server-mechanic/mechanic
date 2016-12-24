@@ -95,38 +95,47 @@ static int compare_migrations_by_name(const void* a, const void* b) {
 	return result;
 }
 
-void inventory_collect_migrations(inventory_t* inventory, migration_list_t* list, app_error_t* app_error) {
-	size_t i;
-	int rc;
-	migration_t* migration = NULL;
+static void collect_migrations_from_dir(inventory_t* inventory, const char* dir_path, migration_list_t* list, app_error_t* app_error) {
 	DIR *dir;
 	struct dirent *ent;
-	char cbuf[4000] = "";
 	char path_buf[4000] = "";
+	int rc;
+	migration_t* migration = NULL;
 
-	config_get_migrations_dir_path(inventory->config, cbuf, 4000, app_error);
-	LOG_DEBUG1("Migrations dir is %s.", cbuf);
-	dir = opendir(cbuf);
-	if( dir != NULL ) {
-		while( (ent=readdir(dir)) != NULL) {
-			if( ent->d_type == DT_REG ) {
-				if( !is_migration_done(inventory, ent->d_name, app_error) ) {
-					string_util_strcpy(path_buf, 4000, cbuf);
-					string_util_strcat(path_buf, 4000, "/");
-					string_util_strcat(path_buf, 4000, ent->d_name);
+	dir = opendir(dir_path);
+	if( dir == NULL ) {
+		return;
+	}
 
-					migration = migration_create(path_buf, app_error);
-					migration_list_add_migration(list, migration, app_error);
-				} else {
-					LOG_DEBUG1("Migration %s already marked as done. Skipped.", ent->d_name);
-				}
+	while( (ent=readdir(dir)) != NULL) {
+		if( ent->d_type == DT_REG ) {
+			if( !is_migration_done(inventory, ent->d_name, app_error) ) {
+				string_util_strcpy(path_buf, 4000, dir_path);
+				string_util_strcat(path_buf, 4000, "/");
+				string_util_strcat(path_buf, 4000, ent->d_name);
+
+				migration = migration_create(path_buf, app_error);
+				migration_list_add_migration(list, migration, app_error);
+			} else {
+				LOG_DEBUG1("Migration %s already marked as done. Skipped.", ent->d_name);
 			}
 		}
-		rc = closedir(dir);
-		if( rc != 0 ) {
-			LOG_DEBUG2("Closing migrations dir %s failed. %s", cbuf, strerror(errno));
-		}
 	}
+
+	rc = closedir(dir);
+	if( rc != 0 ) {
+		LOG_DEBUG2("Closing migrations dir %s failed. %s", dir_path, strerror(errno));
+	}
+}
+
+void inventory_collect_migrations(inventory_t* inventory, migration_list_t* list, app_error_t* app_error) {
+	size_t i;
+	char cbuf[8000] = "";
+
+	config_get_migrations_dir_path(inventory->config, cbuf, 8000, app_error);
+	LOG_DEBUG1("Migrations dir path is %s.", cbuf);
+
+	collect_migrations_from_dir(inventory, cbuf, list, app_error);
 
 	qsort(list->migrations, list->length, sizeof(migration_t*), compare_migrations_by_name);
 	LOG_DEBUG1("%d migration(s) pending...", list->length);
