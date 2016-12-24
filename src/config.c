@@ -55,7 +55,7 @@ void config_get_state_dir_path(/*@unused@*/ config_t* config, char* buf, size_t 
 }
 
 void config_get_migrations_dir_path(/*@unused@*/ config_t* config, char* buf, size_t buf_cap, app_error_t* app_error) {
-	get_expanded_path(buf, buf_cap, "${MECHANIC_ROOT_DIR}/etc/mechanic/migration.d", app_error );
+	get_expanded_path(buf, buf_cap, "${MECHANIC_ROOT_DIR}/etc/mechanic/migration.d:${MECHANIC_ROOT_DIR}/var/lib/mechanic/migration.d", app_error );
 }
 
 void config_get_log_file_path(/*@unused@*/ config_t* config, char* buf, size_t buf_cap, app_error_t* app_error) {

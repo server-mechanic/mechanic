@@ -104,6 +104,7 @@ static void collect_migrations_from_dir(inventory_t* inventory, const char* dir_
 
 	dir = opendir(dir_path);
 	if( dir == NULL ) {
+		LOG_INFO2("Could not collect migrations from %s. (%s)", dir_path, strerror(errno));
 		return;
 	}
 
@@ -128,14 +129,24 @@ static void collect_migrations_from_dir(inventory_t* inventory, const char* dir_
 	}
 }
 
-void inventory_collect_migrations(inventory_t* inventory, migration_list_t* list, app_error_t* app_error) {
-	size_t i;
+static void collect_migrations(inventory_t* inventory, migration_list_t* list, app_error_t* app_error) {
 	char cbuf[8000] = "";
+	char path_buf[4000] = "";
+	size_t pos;
 
 	config_get_migrations_dir_path(inventory->config, cbuf, 8000, app_error);
 	LOG_DEBUG1("Migrations dir path is %s.", cbuf);
 
-	collect_migrations_from_dir(inventory, cbuf, list, app_error);
+	for(pos=0; pos<strlen(cbuf); pos=pos+strlen(path_buf)+1 ) {
+		string_util_substring(path_buf, 4000, &cbuf[pos], ':');
+		collect_migrations_from_dir(inventory, path_buf, list, app_error);
+	}
+}
+
+void inventory_collect_migrations(inventory_t* inventory, migration_list_t* list, app_error_t* app_error) {
+	size_t i;
+
+	collect_migrations(inventory, list, app_error);
 
 	qsort(list->migrations, list->length, sizeof(migration_t*), compare_migrations_by_name);
 	LOG_DEBUG1("%d migration(s) pending...", list->length);

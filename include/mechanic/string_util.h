@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+void string_util_substring(char* buf, size_t buf_capacity, const char* str, char c);
 void string_util_strcpy(char* buf, size_t buf_capacity, const char* str);
 void string_util_strcat(char* buf, size_t buf_capacity, const char* str);
 void string_util_replace(char *buf, size_t buf_capacity, const char *old_str, const char *new_str);
