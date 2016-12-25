@@ -35,6 +35,40 @@ static void init_default_log() {
 	log_set_log_level(false);
 }
 
+static bool starts_with(const char *a, const char *b)
+{
+	return ( strncmp(a, b, strlen(b)) == 0 );
+}
+
+/* finds first only */
+static command_t* get_command_from(const int argc, const char** argv, app_error_t* app_error) {
+	int i;
+	command_t* command = NULL;
+
+	for(i=0; i<argc; ++i) {
+		if( !starts_with(argv[i], "-") ) {
+			command = get_command_by_name( argv[i] );
+			if( command != NULL ) {
+				return command;
+			}
+		}
+	}
+
+	app_error_set(app_error, APP_ERROR_NO_SUB_COMMAND, __FILE__, __LINE__, "No sub command found.");
+
+	return NULL;
+}
+
+static void run_command(const int argc, const char** argv, config_t* config, app_error_t* app_error) {
+        command_t* command = get_command_from(argc, argv, app_error);
+        if( !app_error_is_ok(app_error) ) {
+                return;
+        }
+
+        (command->command_function)(argc, argv, config, app_error);
+}
+
+
 static bool get_verbose_from(const int argc, const char** argv) {
 	int i;
 

@@ -24,6 +24,12 @@
 #include "mechanic/app_error.h"
 #include "mechanic/config.h"
 
-void run_command(const int argc, const char** argv, config_t* config, app_error_t* app_error);
+typedef struct {
+	const char* name;
+	void (*command_function)(const int argc, const char** argv, config_t* config, app_error_t* app_error);
+} command_t;
+
+command_t* get_command_by_name(const char* name);
+command_t** get_commands();
 
 #endif

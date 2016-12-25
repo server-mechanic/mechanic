@@ -29,61 +29,23 @@
 extern void print_version(const int argc, const char** argv, config_t* config, app_error_t* app_error);
 extern void migrate(const int argc, const char** argv, config_t* config, app_error_t* app_error);
 
-typedef struct {
-	const char* name;
-	void (*command_function)(const int argc, const char** argv, config_t* config, app_error_t* app_error);
-} sub_command_t;
+static command_t version_command = { "version", print_version };
+static command_t migrate_command = { "migrate", migrate };
 
-static sub_command_t sub_commands[] = {
-	{ "version", print_version },
-	{ "migrate", migrate },
-	{ NULL, NULL }
-};
+static command_t* commands[] = { &version_command, &migrate_command, NULL };
 
-static bool starts_with(const char *a, const char *b)
-{
-   if( strncmp(a, b, strlen(b)) == 0 ) 
-	return 1;
-
-   return 0;
+command_t** get_commands() {
+	return commands;
 }
 
-static sub_command_t* get_sub_command_by_name(const char* name) {
+command_t* get_command_by_name(const char* name) {
 	int i;
 
-	for(i=0; sub_commands[i].name != NULL; ++i) {
-		if( strcmp(name, sub_commands[i].name) == 0 ) {
-			return &sub_commands[i];
+	for(i=0; commands[i] != NULL; ++i) {
+		if( strcmp(name, commands[i]->name) == 0 ) {
+			return commands[i];
 		}
 	}
 
 	return NULL;
-}
-
-/* finds first only */
-static sub_command_t* get_sub_command_from(const int argc, const char** argv, app_error_t* app_error) {
-	int i;
-	sub_command_t* sub_command = NULL;
-
-	for(i=0; i<argc; ++i) {
-		if( !starts_with(argv[i], "-") ) {
-			sub_command = get_sub_command_by_name( argv[i] );
-			if( sub_command != NULL ) {
-				return sub_command;
-			}
-		}
-	}
-
-	app_error_set(app_error, APP_ERROR_NO_SUB_COMMAND, __FILE__, __LINE__, "No sub command found.");
-
-	return NULL;
-}
-
-void run_command(const int argc, const char** argv, config_t* config, app_error_t* app_error) {
-	sub_command_t* sub_command = get_sub_command_from(argc, argv, app_error);
-	if( !app_error_is_ok(app_error) ) {
-		return;
-	}
-
-	(sub_command->command_function)(argc, argv, config, app_error);
 }
