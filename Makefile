@@ -1,8 +1,8 @@
-PACKAGE_VERSION := 0.1
-BUILD_NUMBER := 2
+PACKAGE_VERSION := 0.2
+BUILD_NUMBER := 3
 SCM_VERSION = $(shell git rev-parse HEAD)
 
-default:	clean compile tests integration-tests
+default:	clean generate compile tests integration-tests
 
 prerequisites:
 	if [ -f /etc/fedora-release ]; then \

@@ -19,14 +19,15 @@ Still a prototype.
 
 ## History
 
-* Added packaging for debian jessie and centos 7.
-* Rewritten in C.
+# 0.2 (2016-12-25)
+* Complete rewrite in C.
 * Added migration state in sqlite3 db.
-* Added packaging for ubuntu xenial, ubuntu yakkety and fedora 25.
+
+# 0.1 (2016-12-16)
+* Added packaging for ubuntu xenial, ubuntu yakkety.
 * First version written in golang.
 
 ## TODOs
-
 * Write more tests.
 * Create examples.
 
