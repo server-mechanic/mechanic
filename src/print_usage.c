@@ -18,11 +18,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-#ifndef __MECHANIC_CONSTANTS_H__
-#define __MECHANIC_CONSTANTS_H__
+#include "mechanic/metadata.h"
+#include "mechanic/app_error.h"
+#include "mechanic/config.h"
+#include "mechanic/command.h"
+#include <stdio.h>
+#include <string.h>
 
-#define PATH_MAX_LENGTH 4000
+void print_usage(const int argc, const char** argv, config_t* config, app_error_t* app_error) {
+	command_t** commands = get_commands();
+	int i=0;
 
-#define ENOERROR 0
-
-#endif
+	printf("usage: mechanic [-v] <command> [ <args> ]\n");
+	printf("  -v\tLog more information.\n");
+	printf("command:\n");
+	for(i=0; commands[i] != NULL; ++i) {
+		printf("  %s %s - %s\n", commands[i]->name, commands[i]->args_description, commands[i]->short_description);
+	}
+}

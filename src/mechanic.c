@@ -43,27 +43,21 @@ static bool starts_with(const char *a, const char *b)
 /* finds first only */
 static command_t* get_command_from(const int argc, const char** argv, app_error_t* app_error) {
 	int i;
-	command_t* command = NULL;
 
-	for(i=0; i<argc; ++i) {
+	for(i=1; i<argc; ++i) {
 		if( !starts_with(argv[i], "-") ) {
-			command = get_command_by_name( argv[i] );
-			if( command != NULL ) {
-				return command;
-			}
+			return get_command_by_name( argv[i] );
 		}
 	}
-
-	app_error_set(app_error, APP_ERROR_NO_SUB_COMMAND, __FILE__, __LINE__, "No sub command found.");
 
 	return NULL;
 }
 
 static void run_command(const int argc, const char** argv, config_t* config, app_error_t* app_error) {
         command_t* command = get_command_from(argc, argv, app_error);
-        if( !app_error_is_ok(app_error) ) {
-                return;
-        }
+	if( command == NULL ) {
+		command = get_help_command();
+	}
 
         (command->command_function)(argc, argv, config, app_error);
 }

@@ -26,10 +26,13 @@
 
 typedef struct {
 	const char* name;
+	const char* args_description;
+	const char* short_description;
 	void (*command_function)(const int argc, const char** argv, config_t* config, app_error_t* app_error);
 } command_t;
 
 command_t* get_command_by_name(const char* name);
 command_t** get_commands();
+command_t* get_help_command();
 
 #endif

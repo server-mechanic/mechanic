@@ -25,6 +25,7 @@
 #include "mechanic/file_util.h"
 #include <dirent.h>
 #include <stdio.h>
+#include <errno.h>
 #include <string.h>
 #include <sqlite3.h>
 #include <sys/stat.h>
@@ -308,13 +309,15 @@ sqlite3* inventory_db_open(config_t* config, app_error_t* app_error) {
 
 	config_get_inventory_db_path(config, cbuf, 4000, app_error);
 	mkdirp2(cbuf);
+
+	errno = ENOERROR;
 	rc = sqlite3_open(cbuf, /* @in@ */ &db);
 	if( db == NULL ) {
 		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Opening database failed. Sqlite3 suspiciously failed to alloc mem.");
 		return NULL;
 	}
 	else if( rc != SQLITE_OK ) {
-		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Opening database failed.", sqlite3_errmsg(db));
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Opening database failed. (sqlite3 message=%s, errno=%s)", sqlite3_errmsg(db), strerror(errno));
 		return NULL;
 	}
 
