@@ -27,7 +27,8 @@ Still a prototype.
 * Added packaging for ubuntu xenial, ubuntu yakkety.
 * First version written in golang.
 
-## [TODOs](TODOs.md)
+## TODOs
+[TODOs](TODOs.md)
 
 ## Contributing
 
