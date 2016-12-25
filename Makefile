@@ -20,8 +20,9 @@ clean:
 	rm -rf target/ ${PWD}/src/*.o
 
 generate:
-	sed -ri 's,^(.*PACKAGE_VERSION\s*\")([^"]*)(\".*)$$,\1$(PACKAGE_VERSION)\3,g' ${PWD}/include/mechanic/metadata.h
-	sed -ri 's,^(.*SCM_VERSION\s*\")([^"]*)(\".*)$$,\1$(SCM_VERSION)\3,g' ${PWD}/include/mechanic/metadata.h
+	cat ${PWD}/include/mechanic/metadata.h.in > ${PWD}/include/mechanic/metadata.h \
+	&& sed -ri 's,^(.*PACKAGE_VERSION\s*\")([^"]*)(\".*)$$,\1$(PACKAGE_VERSION)\3,g' ${PWD}/include/mechanic/metadata.h \
+	&& sed -ri 's,^(.*SCM_VERSION\s*\")([^"]*)(\".*)$$,\1$(SCM_VERSION)\3,g' ${PWD}/include/mechanic/metadata.h
 	
 compile:	
 	sqlite3 -version

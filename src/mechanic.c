@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <errno.h>
 #include "mechanic/log.h"
 #include "mechanic/app_error.h"
 #include "mechanic/file_util.h"
@@ -59,7 +60,7 @@ static FILE* open_log(const int argc, const char** argv, config_t* config, app_e
 	mkdirp2(cbuf);
 	log_file = fopen(cbuf, "ae");
 	if( log_file == NULL ) {
-		app_error_set(app_error, APP_ERROR_GENERIC_ERROR, __FILE__, __LINE__, "Opening log file %s failed.", cbuf);
+		LOG_ERROR2("Opening log file %s failed. %s", cbuf, strerror(errno));
 		return NULL;
 	}
 

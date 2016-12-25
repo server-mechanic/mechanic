@@ -20,20 +20,18 @@ Still a prototype.
 ## History
 
 # 0.2 (2016-12-25)
-* Complete rewrite in C.
 * Added migration state in sqlite3 db.
+* Complete rewrite in C.
 
 # 0.1 (2016-12-16)
 * Added packaging for ubuntu xenial, ubuntu yakkety.
 * First version written in golang.
 
-## TODOs
-* Write more tests.
-* Create examples.
+## [TODOs](TODOs.md)
 
 ## Contributing
 
-Server-Mechanic is an open source project, and contributions are welcome! Feel free to raise an issue or submit a pull request.
+Server Mechanic is an open source project, and contributions are welcome! Feel free to raise an issue or submit a pull request.
 
 ## License
 Copyright (c) 2016 by [Cornelius Buschka](https://github.com/cbuschka).
