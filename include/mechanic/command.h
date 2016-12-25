@@ -24,9 +24,6 @@
 #include "mechanic/app_error.h"
 #include "mechanic/config.h"
 
-void print_version(const int argc, const char** argv, config_t* config, app_error_t* app_error);
-void migrate(const int argc, const char** argv, config_t* config, app_error_t* app_error);
-
 void run_command(const int argc, const char** argv, config_t* config, app_error_t* app_error);
 
 #endif

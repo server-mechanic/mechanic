@@ -26,6 +26,9 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+extern void print_version(const int argc, const char** argv, config_t* config, app_error_t* app_error);
+extern void migrate(const int argc, const char** argv, config_t* config, app_error_t* app_error);
+
 typedef struct {
 	const char* name;
 	void (*command_function)(const int argc, const char** argv, config_t* config, app_error_t* app_error);
