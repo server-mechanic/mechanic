@@ -7,7 +7,7 @@ before_install:
   - sudo apt-get install -y sqlite3 libsqlite3-dev
 
 script:
-  - make clean compile integration-tests
+  - make clean generate compile integration-tests
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
