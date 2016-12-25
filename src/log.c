@@ -83,6 +83,13 @@ void log_info(const char* file, int line, const char* format, ...) {
 	va_end(arg_list);
 }
 
+void log_warn(const char* file, int line, const char* format, ...) {
+	va_list arg_list;
+	va_start(arg_list, format);
+	write_log(file, line, "WARN ", format, arg_list); 
+	va_end(arg_list);
+}
+
 void log_error(const char* file, int line, const char* format, ...) {
 	va_list arg_list;
 	va_start(arg_list, format);

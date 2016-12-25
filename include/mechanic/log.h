@@ -32,6 +32,10 @@
 #define LOG_INFO1(msg,arg0) log_info(__FILE__, __LINE__, (msg), (arg0))
 #define LOG_INFO2(msg,arg0,arg1) log_info(__FILE__, __LINE__, (msg), (arg0),(arg1))
 
+#define LOG_WARN(msg) log_warn(__FILE__, __LINE__, (msg))
+#define LOG_WARN1(msg,arg0) log_warn(__FILE__, __LINE__, (msg), (arg0))
+#define LOG_WARN2(msg,arg0,arg1) log_warn(__FILE__, __LINE__, (msg), (arg0), (arg1))
+
 #define LOG_ERROR(msg) log_error(__FILE__, __LINE__, (msg))
 #define LOG_ERROR1(msg,arg0) log_error(__FILE__, __LINE__, (msg), (arg0))
 #define LOG_ERROR2(msg,arg0,arg1) log_error(__FILE__, __LINE__, (msg), (arg0), (arg1))
@@ -40,6 +44,7 @@ void log_set_output_stream(FILE* out);
 void log_set_log_level(bool verbose);
 void log_debug(const char* file, int line, const char* format, ...);
 void log_info(const char* file, int line, const char* format, ...);
+void log_warn(const char* file, int line, const char* format, ...);
 void log_error(const char* file, int line, const char* format, ...);
 
 #endif

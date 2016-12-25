@@ -60,7 +60,7 @@ static FILE* open_log(const int argc, const char** argv, config_t* config, app_e
 	mkdirp2(cbuf);
 	log_file = fopen(cbuf, "ae");
 	if( log_file == NULL ) {
-		LOG_ERROR2("Opening log file %s failed. %s", cbuf, strerror(errno));
+		LOG_WARN2("Opening log file %s failed. %s", cbuf, strerror(errno));
 		return NULL;
 	}
 
