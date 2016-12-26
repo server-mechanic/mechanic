@@ -109,7 +109,7 @@ static void collect_migrations_from_dir(inventory_t* inventory, const char* dir_
 
 	dir = opendir(dir_path);
 	if( dir == NULL ) {
-		LOG_INFO2("Could not collect migrations from %s. (%s)", dir_path, strerror(errno));
+		LOG_DEBUG2("Could not collect migrations from %s. (%s)", dir_path, strerror(errno));
 		return;
 	}
 
