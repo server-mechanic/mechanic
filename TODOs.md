@@ -1,7 +1,6 @@
 # TODOs
 
 * add examples to README
-* add install notes for ubuntu xenial and yakkety
 * add fedora 25 support with install notes
 * add centos 7 support with install notes
 * add debian 8 support with install notes

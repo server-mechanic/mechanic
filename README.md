@@ -17,6 +17,10 @@ Still a prototype.
 * Focus on the migrations instead of developing reusable plugins.
 * Minimal overhead, no central server required.
 
+## Install
+
+For installation of Server Mechanic *unstable* see [Server Mechanic Packages Repository](https://github.com/server-mechanic/packages).
+
 ## History
 
 # 0.2 (2016-12-25)
