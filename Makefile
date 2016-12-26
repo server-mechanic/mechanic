@@ -1,5 +1,5 @@
-PACKAGE_VERSION := 0.2
-BUILD_NUMBER := 3
+PACKAGE_VERSION := 0.3
+BUILD_NUMBER := 1
 SCM_VERSION = $(shell git rev-parse HEAD)
 
 default:	clean generate compile tests integration-tests
@@ -21,7 +21,7 @@ clean:
 
 generate:
 	cat ${PWD}/include/mechanic/metadata.h.in > ${PWD}/include/mechanic/metadata.h \
-	&& sed -ri 's,^(.*PACKAGE_VERSION\s*\")([^"]*)(\".*)$$,\1$(PACKAGE_VERSION)\3,g' ${PWD}/include/mechanic/metadata.h \
+	&& sed -ri 's,^(.*VERSION\s*\")([^"]*)(\".*)$$,\1$(PACKAGE_VERSION)-$(BUILD_NUMBER)\3,g' ${PWD}/include/mechanic/metadata.h \
 	&& sed -ri 's,^(.*SCM_VERSION\s*\")([^"]*)(\".*)$$,\1$(SCM_VERSION)\3,g' ${PWD}/include/mechanic/metadata.h
 	
 compile:	

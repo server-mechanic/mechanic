@@ -23,6 +23,9 @@ For installation of Server Mechanic *unstable* see [Server Mechanic Packages Rep
 
 ## History
 
+# 0.3 (2016-12-26)
+* Added list-migrations.
+
 # 0.2 (2016-12-25)
 * Added migration state in sqlite3 db.
 * Complete rewrite in C.
