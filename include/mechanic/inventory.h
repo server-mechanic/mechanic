@@ -32,12 +32,15 @@ typedef struct {
 	config_t* config;
 } inventory_t;
 
+typedef void (*list_migrations_callback_t)(int id, const char *name, const char* start_time, const char* end_time, const char* status);
+
 inventory_t* inventory_open(config_t* config, app_error_t* app_error);
 void inventory_close(inventory_t* inventory, app_error_t* app_error);
 void inventory_collect_migrations(inventory_t* inventory, migration_list_t* list, app_error_t* app_error);
 void inventory_mark_migration_started(inventory_t* inventory, migration_t* migration, app_error_t* app_error);
 void inventory_mark_migration_as_done(inventory_t* inventory, migration_t* migration, app_error_t* app_error);
 void inventory_mark_migration_as_failed(inventory_t* inventory, migration_t* migration, app_error_t* app_error);
+void inventory_list_migrations(inventory_t* inventory, list_migrations_callback_t list_migrations_callback, app_error_t* app_error);
 
 sqlite3* inventory_db_open(config_t* config, app_error_t* app_error);
 void inventory_db_close(sqlite3* db, app_error_t* app_error);
@@ -45,5 +48,6 @@ void inventory_db_mark_migration_as_succeeded(sqlite3* db, const char* migration
 void inventory_db_mark_migration_as_failed(sqlite3* db, const char* migration_name, app_error_t* app_error);
 void inventory_db_mark_migration_as_started(sqlite3* db, const char* migration_name, app_error_t* app_error);
 bool inventory_db_is_migration_done(sqlite3* db, const char* migration_name, app_error_t* app_error);
+void inventory_db_list_migrations(sqlite3* db, list_migrations_callback_t callback, app_error_t* app_error);
 
 #endif

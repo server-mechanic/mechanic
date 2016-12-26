@@ -40,6 +40,9 @@ for TEST_DIR in $(find $TESTS_DIR -mindepth 1 -maxdepth 1 -type d); do
     echo $TEST_EXIT_CODE > $TEST_TMP_RESULT
     cd $TEST_TMP_DIR
     find . | sort -V >> $TEST_TMP_RESULT
+    TEST_ROOT=$TEST_TMP_DIR \
+	MECHANIC_ROOT_DIR=$TEST_TMP_DIR \
+  	$TEST_TMP_DIR/usr/sbin/mechanic list-migrations | cut --delimiter='	' -f 1,2,5 >> $TEST_TMP_RESULT
     #cat $TEST_TMP_RESULT
     diff $TEST_DIR/output $TEST_TMP_RESULT
     DIFF_EXIT_CODE=$?

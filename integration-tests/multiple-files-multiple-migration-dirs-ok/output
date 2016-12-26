@@ -18,3 +18,7 @@
 ./var/lib/mechanic/state
 ./var/log
 ./var/log/mechanic.log
+1	001_first.sh	SUCCESS
+2	002_nowme.sh	SUCCESS
+3	003_nowme2.sh	SUCCESS
+4	004_stderr.sh	SUCCESS

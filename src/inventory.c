@@ -71,6 +71,11 @@ void inventory_close(inventory_t* inventory, app_error_t* app_error) {
 	inventory->config = NULL;
 }
 
+void inventory_list_migrations(inventory_t* inventory, list_migrations_callback_t list_migrations_callback, app_error_t* app_error)
+{
+	inventory_db_list_migrations(inventory->db, list_migrations_callback, app_error);
+}
+
 bool is_migration_done(inventory_t* inventory, char* migration_name, app_error_t* app_error) {
 	return inventory_db_is_migration_done(inventory->db, migration_name, app_error);
 }

@@ -17,3 +17,5 @@
 ./var/lib/mechanic/state/002_fail.sh.tmp/log
 ./var/log
 ./var/log/mechanic.log
+1	001_first.sh	SUCCESS
+2	002_fail.sh	FAILURE

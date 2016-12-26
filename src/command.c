@@ -29,12 +29,14 @@
 extern void print_version(const int argc, const char** argv, config_t* config, app_error_t* app_error);
 extern void print_usage(const int argc, const char** argv, config_t* config, app_error_t* app_error);
 extern void migrate(const int argc, const char** argv, config_t* config, app_error_t* app_error);
+extern void list_migrations(const int argc, const char** argv, config_t* config, app_error_t* app_error);
 
 static command_t version_command = { "version", "", "Print mechanic version information.", print_version };
 static command_t migrate_command = { "migrate", "[-- <follow up command> [ <args> ] ]", "Apply migrations.", migrate };
+static command_t list_migrations_command = { "list-migrations", "", "List migrations.", list_migrations };
 static command_t help_command = { "help", "", "Print usage information.", print_usage };
 
-static command_t* commands[] = { &migrate_command, &version_command, &help_command, NULL };
+static command_t* commands[] = { &migrate_command, &list_migrations_command, &version_command, &help_command, NULL };
 
 command_t** get_commands() {
 	return commands;

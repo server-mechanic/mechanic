@@ -17,3 +17,4 @@
 ./var/lib/mechanic/state/fail.tmp/log
 ./var/log
 ./var/log/mechanic.log
+1	fail	FAILURE

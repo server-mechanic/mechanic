@@ -23,6 +23,7 @@
 #include "mechanic/log.h"
 #include "mechanic/string_util.h"
 #include "mechanic/file_util.h"
+#include "mechanic/inventory.h"
 #include <dirent.h>
 #include <stdio.h>
 #include <errno.h>
@@ -152,7 +153,6 @@ bool inventory_db_is_migration_done(sqlite3* db, const char* migration_name, app
 
 	return result_count > 0;
 }
-
 
 static void apply_db_migration(sqlite3* db, db_migration_t* db_migration, app_error_t* app_error) {
 	int rc;
@@ -300,6 +300,38 @@ static void update_db(sqlite3* db, app_error_t* app_error) {
 	}
 
 	LOG_DEBUG("Db is up to date.");
+}
+
+void inventory_db_list_migrations(sqlite3* db, list_migrations_callback_t list_migrations_callback, app_error_t* app_error) {
+	int rc;
+	sqlite3_stmt *stmt;
+
+	rc = sqlite3_prepare_v2(db, "SELECT id, name, start_time, end_time, status FROM migration ORDER BY name ASC;", -1, &stmt, 0);
+	if( rc != SQLITE_OK ) {
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Querying migration list failed.", sqlite3_errmsg(db));
+	}
+
+	while( (rc = sqlite3_step( stmt )) == SQLITE_ROW ) {
+		int id;
+		const char* name;
+		const char* status;
+		const char* start_time;
+		const char* end_time;
+		if( list_migrations_callback != NULL ) { 
+			id = sqlite3_column_int(stmt, 0);
+			name = (const char*)sqlite3_column_text(stmt, 1);
+			start_time = (const char*)sqlite3_column_text(stmt, 2);
+			end_time = (const char*)sqlite3_column_text(stmt, 3);
+			status = (const char*)sqlite3_column_text(stmt, 4);
+			list_migrations_callback(id, name, start_time, end_time, status);
+		}
+	}
+
+	if( rc != SQLITE_DONE ) {
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Querying migration list failed.", sqlite3_errmsg(db));
+	}
+
+	sqlite3_finalize(stmt);
 }
 
 sqlite3* inventory_db_open(config_t* config, app_error_t* app_error) {
