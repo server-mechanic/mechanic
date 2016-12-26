@@ -48,7 +48,10 @@ integration-tests:
 coverage:
 	splint -weak -f ${PWD}/splintrc -I ${PWD}/include/ $$(find ${PWD}/src -name "*.c" | grep -v _test.c | grep -v log.c)
 
-packages:	ubuntu-xenial ubuntu-yakkety fedora-25 centos-7
+packages:	debian-jessie ubuntu-xenial ubuntu-yakkety fedora-25 centos-7
+
+debian-jessie:
+	${PWD}/scripts/build-package.sh debian-jessie $(PACKAGE_VERSION)-${BUILD_NUMBER}
 
 ubuntu-xenial:
 	${PWD}/scripts/build-package.sh ubuntu-xenial $(PACKAGE_VERSION)-0ubuntu-xenial${BUILD_NUMBER}

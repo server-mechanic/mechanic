@@ -1,0 +1,16 @@
+Package: mechanic
+Version: REPLACEME
+Section: system
+Priority: optional
+Architecture: amd64
+Essential: no
+Depends: sqlite3 
+Pre-Depends:
+Recommends:
+Suggests:
+Installed-Size: 1866
+Maintainer: Cornelius Buschka <c.buschka@gmx.de>
+Conflicts:
+Replaces:
+Provides: 
+Description: Server Mechanic: Server Evolution Made Easy. See http://www.server-mechanic.org.
