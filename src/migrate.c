@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Cornelius Buschka.
+ * Copyright (c) 2016 the Server Mechanic Team.
  * Server Mechanic (http://server-mechanic.org)
  *
  * This file is part of Server Mechanic.
