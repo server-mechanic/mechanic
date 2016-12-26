@@ -4,10 +4,12 @@ PACKAGE_VERSION=$1
 BUILD_DIR=/build/target/
 PACKAGE_BUILD_DIR=/build/target/ubuntu-yakkety
 PACKAGE_FILE=$BUILD_DIR/mechanic_${PACKAGE_VERSION}_amd64.deb
+PACKAGE_COMMON_SRC_DIR=/build/packaging/common/src
 PACKAGE_SRC_DIR=/build/packaging/ubuntu-yakkety/src
 
 rm -rf $PACKAGE_BUILD_DIR && mkdir -p $PACKAGE_BUILD_DIR
 
+cp -R $PACKAGE_COMMON_SRC_DIR/* $PACKAGE_BUILD_DIR
 cp -R $PACKAGE_SRC_DIR/* $PACKAGE_BUILD_DIR
 chown root.root -R $PACKAGE_BUILD_DIR/*
 INSTALLED_SIZE=$(du -sb $PACKAGE_BUILD_DIR | cut -f 1)
