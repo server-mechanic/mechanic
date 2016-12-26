@@ -26,15 +26,19 @@
 #include "mechanic/constants.h"
 #include "mechanic/app_error.h"
 
+#define CONFIG_KEY_LOG_FILE "log_file"
+#define CONFIG_KEY_MIGRATION_DIRS "migration_dirs"
+
 typedef struct {
 	char log_file_path[PATH_MAX_LENGTH];
+	char migration_dirs_path[PATH_MAX_LENGTH];
 } config_t;
 
 config_t* config_get(app_error_t* app_error);
 void config_free(config_t* config);
 void config_get_log_file_path(config_t* config, char* buf, size_t buf_cap, app_error_t* app_error);
 void config_get_state_dir_path(config_t* config, char* buf, size_t buf_cap, app_error_t* app_error);
-void config_get_migrations_dir_path(config_t* config, char* buf, size_t buf_cap, app_error_t* app_error);
+void config_get_migration_dirs_path(config_t* config, char* buf, size_t buf_cap, app_error_t* app_error);
 void config_get_etc_dir_path(config_t* config, char* buf, size_t buf_cap, app_error_t* app_error);
 void config_get_inventory_db_path(config_t* config, char* cbuf, size_t buf_cap, app_error_t* app_error);
 

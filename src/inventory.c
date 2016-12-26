@@ -139,8 +139,8 @@ static void collect_migrations(inventory_t* inventory, migration_list_t* list, a
 	char path_buf[4000] = "";
 	size_t pos;
 
-	config_get_migrations_dir_path(inventory->config, cbuf, 8000, app_error);
-	LOG_DEBUG1("Migrations dir path is %s.", cbuf);
+	config_get_migration_dirs_path(inventory->config, cbuf, 8000, app_error);
+	LOG_DEBUG1("Migrations dirs path is %s.", cbuf);
 
 	for(pos=0; pos<strlen(cbuf); pos=pos+strlen(path_buf)+1 ) {
 		string_util_substring(path_buf, 4000, &cbuf[pos], ':');

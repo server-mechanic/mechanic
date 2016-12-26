@@ -54,8 +54,8 @@ void config_get_state_dir_path(/*@unused@*/ config_t* config, char* buf, size_t 
 	get_expanded_path(buf, buf_cap, "${MECHANIC_ROOT_DIR}/var/lib/mechanic/state", app_error );
 }
 
-void config_get_migrations_dir_path(/*@unused@*/ config_t* config, char* buf, size_t buf_cap, app_error_t* app_error) {
-	get_expanded_path(buf, buf_cap, "${MECHANIC_ROOT_DIR}/etc/mechanic/migration.d:${MECHANIC_ROOT_DIR}/var/lib/mechanic/migration.d", app_error );
+void config_get_migration_dirs_path( config_t* config, char* buf, size_t buf_cap, app_error_t* app_error) {
+	get_expanded_path(buf, buf_cap, config->migration_dirs_path, app_error);
 }
 
 void config_get_log_file_path(/*@unused@*/ config_t* config, char* buf, size_t buf_cap, app_error_t* app_error) {
@@ -68,10 +68,12 @@ void config_get_log_file_path(/*@unused@*/ config_t* config, char* buf, size_t b
 }
 
 static void handle_key_value(config_t* config, const char* key, const char* value, /*@unused@*/ app_error_t* app_error) {
-	if( strcmp("log_file", key) == 0 ) {
+	if( strcmp(CONFIG_KEY_LOG_FILE, key) == 0 ) {
 		string_util_strcpy(config->log_file_path, PATH_MAX_LENGTH, value);
 	}
-	else {
+	else if( strcmp(CONFIG_KEY_MIGRATION_DIRS, key) == 0 ) {
+		string_util_strcpy(config->migration_dirs_path, PATH_MAX_LENGTH, value);
+	} else {
 		LOG_INFO1("Unknown config option %s.", key);
 	}
 }
@@ -87,7 +89,8 @@ static void read_config(config_t* config, app_error_t* app_error) {
 		config_parse( config, conf_file, handle_key_value, app_error);
 	}
 	else {
-		handle_key_value( config, "log_file", "${MECHANIC_ROOT_DIR}/var/log/mechanic.log", app_error);
+		handle_key_value( config, CONFIG_KEY_LOG_FILE, "${MECHANIC_ROOT_DIR}/var/log/mechanic.log", app_error);
+		handle_key_value( config, CONFIG_KEY_MIGRATION_DIRS, "${MECHANIC_ROOT_DIR}/etc/mechanic/migration.d:${MECHANIC_ROOT_DIR}/var/lib/mechanic/migration.d", app_error );
 	}
 }
 

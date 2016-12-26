@@ -1,0 +1,5 @@
+#!/bin/bash
+
+touch $TEST_ROOT/ok.dat
+
+exit 0
