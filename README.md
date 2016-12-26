@@ -35,7 +35,7 @@ Still a prototype.
 Server Mechanic is an open source project, and contributions are welcome! Feel free to raise an issue or submit a pull request.
 
 ## License
-Copyright (c) 2016 by the [Server Mechanic Team](https://github.com/orgs/server-mechanic/people)
+Copyright (c) 2016 by the [Server Mechanic Team](https://github.com/orgs/server-mechanic/people).
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
