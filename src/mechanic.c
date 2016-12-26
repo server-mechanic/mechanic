@@ -27,7 +27,6 @@
 #include "mechanic/file_util.h"
 #include "mechanic/config.h"
 #include "mechanic/command.h"
-#include "mechanic/follow_up_command.h"
 #include "mechanic/constants.h"
 
 static void init_default_log() {
@@ -82,7 +81,9 @@ static FILE* open_log(const int argc, const char** argv, config_t* config, app_e
 
 	log_set_log_level(verbose);
 	config_get_log_file_path(config, cbuf, PATH_MAX_LENGTH, app_error);
-	app_error_check(app_error);
+	if( !app_error_is_ok(app_error) ) {
+		return NULL;
+	}
 
 	LOG_DEBUG1("Log file is %s.", cbuf);
 	mkdirp2(cbuf);
@@ -117,9 +118,6 @@ int main(const int argc, const char** argv) {
 	app_error_check(&app_error);
 
 	run_command(argc, argv, config, &app_error);
-	app_error_check(&app_error);
-
-	run_follow_up_command(argc, argv, &app_error);
 	app_error_check(&app_error);
 
 	close_log(log_file);

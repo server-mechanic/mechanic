@@ -21,20 +21,12 @@
 #include "mechanic/inventory.h"
 #include "mechanic/app_error.h"
 #include "mechanic/migration.h"
+#include "mechanic/follow_up_command.h"
 #include <stdio.h>
 
-void migrate(const int argc, const char** argv, config_t* config, app_error_t* app_error) {
-
-	inventory_t* inventory = inventory_open(config, app_error);
-	migration_list_t* migration_list = NULL;
-	migration_t* migration = NULL;
+static void apply_migrations(inventory_t* inventory, config_t* config, migration_list_t* migration_list, app_error_t* app_error) {
 	size_t i;
-	
-	migration_list = migration_list_alloc(8, app_error);
-	app_error_check(app_error);
-
-	inventory_collect_migrations(inventory, migration_list, app_error);
-	app_error_check(app_error);
+	migration_t* migration;
 
 	for(i=0; i<migration_list->length; ++i) {
 		migration = migration_list->migrations[i];
@@ -47,8 +39,32 @@ void migrate(const int argc, const char** argv, config_t* config, app_error_t* a
 		else
 		{
 			inventory_mark_migration_as_failed(inventory, migration, app_error);
-			break;
 		}
+	}
+}
+
+void migrate(const int argc, const char** argv, config_t* config, app_error_t* app_error) {
+
+	inventory_t* inventory = inventory_open(config, app_error);
+	migration_list_t* migration_list = NULL;
+
+	migration_list = migration_list_alloc(8, app_error);
+	if( !app_error_is_ok(app_error) ) {
+		return;
+	}
+
+	inventory_collect_migrations(inventory, migration_list, app_error);
+	if( !app_error_is_ok(app_error) ) {
+		return;
+	}
+
+	apply_migrations(inventory, config, migration_list, app_error);
+	if( !app_error_is_ok(app_error) ) {
+		return;
+	}
+
+	if( app_error_is_ok(app_error) ) {
+		run_follow_up_command(argc, argv, app_error);
 	}
 
 	migration_list_free(migration_list, app_error);
