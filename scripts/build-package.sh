@@ -11,4 +11,4 @@ cd $PROJECT_DIR
 docker run --rm \
 	-e FIX_OWNER_UID=$UID \
 	-v ${PROJECT_DIR}:/build \
-	mechanic-build-$pkg /bin/bash /build/packaging/$pkg/build.sh $PACKAGE_VERSION
+	mechanic-build-$pkg /bin/bash /build/packaging/$pkg/build.sh $PACKAGE_VERSION $3 $4

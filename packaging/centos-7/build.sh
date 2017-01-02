@@ -26,6 +26,7 @@ tar cv src Makefile --exclude=.git --exclude=target | gzip -c > $RPM_SOURCES_DIR
 
 cp -R $SRC_DIR/* $RPM_BUILD_DIR
 cp $BUILD_DIR/mechanic $RPM_BUILD_DIR/usr/sbin/
+cp $BUILD_DIR/libmechanic* $RPM_BUILD_DIR/usr/lib64/
 cd $PACKAGE_BUILD_DIR/rpm
 rpmbuild -bb SPECS/mechanic.spec
 cp $PACKAGE_BUILD_DIR/rpm/RPMS/x86_64/mechanic-${PACKAGE_VERSION}-0.x86_64.rpm $BUILD_DIR

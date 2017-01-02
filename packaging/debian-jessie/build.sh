@@ -18,6 +18,7 @@ sed -i "s,Version: .*,Version: $PACKAGE_VERSION," $PACKAGE_BUILD_DIR/DEBIAN/cont
 sed -i "s,Installed-Size: .*,Installed-Size: $INSTALLED_SIZE," $PACKAGE_BUILD_DIR/DEBIAN/control
 
 cp $BUILD_DIR/mechanic $PACKAGE_BUILD_DIR/usr/sbin/
+cp $BUILD_DIR/libmechanic* $PACKAGE_BUILD_DIR/usr/lib/x86_64-linux-gnu/
 dpkg -b $PACKAGE_BUILD_DIR $PACKAGE_FILE
 
 chown ${FIX_OWNER_UID} -R $PACKAGE_BUILD_DIR $PACKAGE_FILE
