@@ -33,8 +33,8 @@
 
 typedef struct {
 	int id;
-	char* name;
-	char* sql;
+	const char* name;
+	const char* sql;
 } db_migration_t;
 
 static db_migration_t db_migrations[] = {
