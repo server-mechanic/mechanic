@@ -17,7 +17,7 @@ all:	clean generate compile tests integration-tests coverage packages
 .PHONY:	clean
 clean:
 	@echo "Cleaning up..."; \
-	rm -rf target/ ${PWD}/src/*.o
+	rm -rf target/ ${PWD}/src/cli/*.o
 
 generate:
 	cat ${PWD}/include/mechanic/metadata.h.in > ${PWD}/include/mechanic/metadata.h \
@@ -27,11 +27,11 @@ generate:
 compile:	
 	sqlite3 -version
 	mkdir -p ${PWD}/target/
-	cd src && \
-	gcc -Wall -g -I ../include/ -c *.c && \
-	gcc $$(find . -name "*.o" | grep -v _test.o) -lm -lsqlite3 -o ../target/mechanic && \
+	cd src/cli && \
+	gcc -Wall -g -I ../../include/ -c *.c && \
+	gcc $$(find . -name "*.o" | grep -v _test.o) -lm -lsqlite3 -o ../../target/mechanic && \
 	for i in *_test.c; do \
-		gcc $$(find . -name "*.o" | grep -v mechanic.o) -lm -lsqlite3 -o ../target/$$(basename $$i .c); \
+		gcc $$(find . -name "*.o" | grep -v mechanic.o) -lm -lsqlite3 -o ../../target/$$(basename $$i .c); \
 	done
 
 tests:
@@ -46,7 +46,7 @@ integration-tests:
 	${PWD}/scripts/run-integration-tests.sh
 
 coverage:
-	splint -weak -f ${PWD}/splintrc -I ${PWD}/include/ $$(find ${PWD}/src -name "*.c" | grep -v _test.c | grep -v log.c)
+	splint -weak -f ${PWD}/splintrc -I ${PWD}/include/ $$(find ${PWD}/cli/src -name "*.c" | grep -v _test.c | grep -v log.c)
 
 packages:	debian-jessie ubuntu-xenial ubuntu-yakkety fedora-25 centos-7
 
