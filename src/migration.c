@@ -26,7 +26,7 @@
 
 migration_t* migration_create(const char* path, app_error_t* app_error) {
 	char buf[4000] = "";
-	migration_t* migration = malloc( sizeof(migration_t) );
+	migration_t* migration = (migration_t*) malloc( sizeof(migration_t) );
 	get_basename(buf, 4000, path);
 	migration->name = /*@-unrecog@*/ strdup(buf);
 	migration->path = /*@-unrecog@*/ strdup(path);

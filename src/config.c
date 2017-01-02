@@ -95,7 +95,7 @@ static void read_config(config_t* config, app_error_t* app_error) {
 }
 
 config_t* config_get(app_error_t* app_error) {
-	config_t* config = malloc( sizeof(config_t) );
+	config_t* config = (config_t*)malloc( sizeof(config_t) );
 	string_util_strcpy(config->log_file_path, PATH_MAX_LENGTH, "/dev/stderr");
 
 	read_config(config, app_error);

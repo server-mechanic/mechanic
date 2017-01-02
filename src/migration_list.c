@@ -24,10 +24,10 @@
 #include <string.h>
 
 migration_list_t* migration_list_alloc(size_t capacity, app_error_t* app_error) {
-	migration_list_t* list = malloc(sizeof(migration_list_t) );
+	migration_list_t* list = (migration_list_t*) malloc(sizeof(migration_list_t) );
 	list->capacity = capacity;
 	list->length = 0;
-	list->migrations = malloc(sizeof(migration_t*) * capacity); 
+	list->migrations = (migration_t**) malloc(sizeof(migration_t*) * capacity); 
 
 	// TODO check return
 
@@ -51,7 +51,7 @@ void migration_list_add_migration(migration_list_t* list, migration_t* migration
 	else
 	{
 		old_migrations = list->migrations;
-		list->migrations = malloc(sizeof(migration_t*) * list->capacity*2);
+		list->migrations = (migration_t**) malloc(sizeof(migration_t*) * list->capacity*2);
 		memcpy(list->migrations, old_migrations, sizeof(migration_t*)*list->length );
 		list->capacity = list->capacity*2;
 		list->migrations[list->length] = migration;
