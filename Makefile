@@ -17,14 +17,26 @@ all:	clean generate compile tests integration-tests coverage packages
 .PHONY:	clean
 clean:
 	@echo "Cleaning up..."; \
-	rm -rf target/ ${PWD}/src/cli/*.o ${PWD}/src/libmechanic/*.o
+	rm -rf target/ ${PWD}/src/cli/*.o ${PWD}/src/util/*.o ${PWD}/src/libmechanic/*.o
 
 generate:
 	cat ${PWD}/include/mechanic/metadata.h.in > ${PWD}/include/mechanic/metadata.h \
 	&& sed -ri 's,^(.*VERSION\s*\")([^"]*)(\".*)$$,\1$(PACKAGE_VERSION)-$(BUILD_NUMBER)\3,g' ${PWD}/include/mechanic/metadata.h \
 	&& sed -ri 's,^(.*SCM_VERSION\s*\")([^"]*)(\".*)$$,\1$(SCM_VERSION)\3,g' ${PWD}/include/mechanic/metadata.h
 	
-compile:	compile_lib compile_cli
+compile:	compile_util compile_lib compile_cli
+
+compile_util:
+	@mkdir -p ${PWD}/target/ && \
+	cd src/util && \
+	echo "Compiling util Lib..." && \
+	gcc -fPIC -Wall -g -I ../../include/ -c *.c && \
+	echo "Linking util Lib..." && \
+	ar rcs ../../target/libmechanicutil.a $$(find . -name "*.o" | grep -v _test.o) && \
+	for i in $$(find . -name "*_test.c"); do \
+		echo "Compiling and linking util Lib-Test $$(basename $$i .c)..." && \
+		gcc $$(basename $$i .c).o ../../target/libmechanicutil.a -o ../../target/$$(basename $$i .c); \
+	done
 
 compile_lib:
 	@mkdir -p ${PWD}/target/ && \
@@ -32,10 +44,10 @@ compile_lib:
 	echo "Compiling Lib..." && \
 	gcc -fPIC -Wall -g -I ../../include/ -c *.c && \
 	echo "Linking Lib..." && \
-	gcc -shared $$(find . -name "*.o" | grep -v _test.o) -lm -lsqlite3 -o ../../target/libmechanic.so.${PACKAGE_VERSION}.${BUILD_NUMBER} && \
+	gcc -shared $$(find . -name "*.o" | grep -v _test.o) -lm -lsqlite3 ../../target/libmechanicutil.a -o ../../target/libmechanic.so.${PACKAGE_VERSION}.${BUILD_NUMBER} && \
 	ln -s libmechanic.so.${PACKAGE_VERSION}.${BUILD_NUMBER} ../../target/libmechanic.so.${PACKAGE_VERSION} && \
 	ln -s libmechanic.so.${PACKAGE_VERSION} ../../target/libmechanic.so && \
-	for i in *_test.c; do \
+	for i in $$(find . -name "*_test.c"); do \
 		echo "Compiling and linking Lib-Test $$(basename $$i .c)..." && \
 		gcc $$(basename $$i .c).o -L ../../target/ -lmechanic -o ../../target/$$(basename $$i .c); \
 	done
@@ -46,11 +58,11 @@ compile_cli:
 	echo "Compiling CLI..." && \
 	gcc -Wall -g -I ../../include/ -c *.c && \
 	echo "Linking CLI..." && \
-	gcc $$(find . -name "*.o" | grep -v _test.o) -L ../../target/ -lmechanic -lm -lsqlite3 -o ../../target/mechanic 
-	#for i in *_test.c; do \
-	#	echo "Compiling and linking CLI-Test $$(basename $$i .c)..." && \
-	#	gcc $$(basename $$i .c).o -L ../../target/ -lmechanic -lm -lsqlite3 -o ../../target/$$(basename $$i .c); \
-	#done
+	gcc $$(find . -name "*.o" | grep -v _test.o) -L ../../target/ ../../target/libmechanicutil.a -lmechanic -lm -lsqlite3 ../../target/libmechanicutil.a -o ../../target/mechanic && \
+	for i in $$(find . -name "*_test.c"); do \
+		echo "Compiling and linking CLI-Test $$(basename $$i .c)..." && \
+		gcc $$(basename $$i .c).o -L ../../target/ -lmechanic -lm -lsqlite3 -o ../../target/$$(basename $$i .c); \
+	done
 
 tests:
 	@echo "Running tests..."; \
