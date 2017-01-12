@@ -42,12 +42,4 @@ void inventory_mark_migration_as_done(inventory_t* inventory, migration_t* migra
 void inventory_mark_migration_as_failed(inventory_t* inventory, migration_t* migration, app_error_t* app_error);
 void inventory_list_migrations(inventory_t* inventory, list_migrations_callback_t list_migrations_callback, app_error_t* app_error);
 
-sqlite3* inventory_db_open(config_t* config, app_error_t* app_error);
-void inventory_db_close(sqlite3* db, app_error_t* app_error);
-void inventory_db_mark_migration_as_succeeded(sqlite3* db, const char* migration_name, app_error_t* app_error);
-void inventory_db_mark_migration_as_failed(sqlite3* db, const char* migration_name, app_error_t* app_error);
-void inventory_db_mark_migration_as_started(sqlite3* db, const char* migration_name, app_error_t* app_error);
-bool inventory_db_is_migration_done(sqlite3* db, const char* migration_name, app_error_t* app_error);
-void inventory_db_list_migrations(sqlite3* db, list_migrations_callback_t callback, app_error_t* app_error);
-
 #endif

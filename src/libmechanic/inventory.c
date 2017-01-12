@@ -19,6 +19,7 @@
  */
 
 #include "mechanic/inventory.h"
+#include "mechanic/inventory_db.h"
 #include "mechanic/config.h"
 #include "mechanic/file_util.h"
 #include "mechanic/string_util.h"
@@ -50,12 +51,19 @@ static void init_dirs(config_t* config, app_error_t* app_error) {
 }
 
 inventory_t* inventory_open(config_t* config, app_error_t* app_error) {
+	char cbuf[4000] = "";
+
 	init_dirs(config, app_error);
 	if( !app_error_is_ok(app_error) ) {
 		return NULL;
 	}
 
-	inventory.db = inventory_db_open(config, app_error);
+	config_get_inventory_db_path(config, cbuf, 4000, app_error);
+	if( !app_error_is_ok(app_error) ) {
+		return NULL;
+	}
+
+	inventory.db = inventory_db_open(cbuf, app_error);
 	if( !app_error_is_ok(app_error) ) {
 		return NULL;
 	}

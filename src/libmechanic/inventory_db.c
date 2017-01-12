@@ -19,7 +19,6 @@
  */
 
 #include "mechanic/app_error.h"
-#include "mechanic/config.h"
 #include "mechanic/log.h"
 #include "mechanic/string_util.h"
 #include "mechanic/file_util.h"
@@ -334,16 +333,14 @@ void inventory_db_list_migrations(sqlite3* db, list_migrations_callback_t list_m
 	sqlite3_finalize(stmt);
 }
 
-sqlite3* inventory_db_open(config_t* config, app_error_t* app_error) {
-	char cbuf[4000] = "";
+sqlite3* inventory_db_open(const char* inventory_db_path, app_error_t* app_error) {
 	sqlite3 *db = NULL;
 	int rc;
 
-	config_get_inventory_db_path(config, cbuf, 4000, app_error);
-	mkdirp2(cbuf);
+	mkdirp2(inventory_db_path);
 
 	errno = ENOERROR;
-	rc = sqlite3_open(cbuf, /* @in@ */ &db);
+	rc = sqlite3_open(inventory_db_path, /* @in@ */ &db);
 	if( db == NULL ) {
 		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Opening database failed. Sqlite3 suspiciously failed to alloc mem.");
 		return NULL;
