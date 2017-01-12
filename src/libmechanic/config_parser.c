@@ -24,7 +24,7 @@
 #include "mechanic/app_error.h"
 #include "mechanic/config.h"
 #include "mechanic/constants.h"
-#include "mechanic/string_util.h"
+#include "string_util.h"
 
 typedef enum { INITIAL, IN_KEY, POST_KEY, EQ_SEEN, IN_VALUE, POST_VALUE, IN_COMMENT, DONE, ERROR } state_t;
 

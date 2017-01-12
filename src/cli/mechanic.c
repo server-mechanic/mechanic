@@ -24,7 +24,7 @@
 #include <errno.h>
 #include "mechanic/log.h"
 #include "mechanic/app_error.h"
-#include "mechanic/file_util.h"
+#include "file_util.h"
 #include "mechanic/config.h"
 #include "mechanic/command.h"
 #include "mechanic/constants.h"

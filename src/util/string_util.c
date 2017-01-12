@@ -1,6 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
-#include "mechanic/string_util.h"
+#include "string_util.h"
 
 void string_util_substring(char* buf, size_t buf_capacity, const char* str, char c) {
 	const char* next_substr = strchr(str, c);

@@ -1,4 +1,4 @@
-#include "mechanic/string_util.h"
+#include "string_util.h"
 #include <string.h>
 #include <stdbool.h>
 #include <stdio.h>

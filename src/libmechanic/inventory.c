@@ -21,8 +21,8 @@
 #include "mechanic/inventory.h"
 #include "inventory_db.h"
 #include "mechanic/config.h"
-#include "mechanic/file_util.h"
-#include "mechanic/string_util.h"
+#include "file_util.h"
+#include "string_util.h"
 #include "mechanic/log.h"
 #include <dirent.h>
 #include <errno.h>

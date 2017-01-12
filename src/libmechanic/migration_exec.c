@@ -29,10 +29,10 @@
 #include <unistd.h>
 #include "mechanic/config.h"
 #include "mechanic/app_error.h"
-#include "mechanic/file_util.h"
+#include "file_util.h"
 #include "mechanic/migration.h"
 #include "mechanic/log.h"
-#include "mechanic/string_util.h"
+#include "string_util.h"
 
 extern char **environ;
 

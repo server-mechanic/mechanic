@@ -30,7 +30,7 @@ compile_util:
 	@mkdir -p ${PWD}/target/ && \
 	cd src/util && \
 	echo "Compiling util Lib..." && \
-	gcc -fPIC -Wall -g -I ../../include/ -c *.c && \
+	gcc -fPIC -Wall -g -I ./include/ -c *.c && \
 	echo "Linking util Lib..." && \
 	ar rcs ../../target/libmechanicutil.a $$(find . -name "*.o" | grep -v _test.o) && \
 	for i in $$(find . -name "*_test.c"); do \
@@ -42,7 +42,7 @@ compile_lib:
 	@mkdir -p ${PWD}/target/ && \
 	cd src/libmechanic && \
 	echo "Compiling Lib..." && \
-	gcc -fPIC -Wall -g -I ./include/ -I ../../include/ -c *.c && \
+	gcc -fPIC -Wall -g -I ./include/ -I ../util/include/ -I ../../include/ -c *.c && \
 	echo "Linking Lib..." && \
 	gcc -shared $$(find . -name "*.o" | grep -v _test.o) -lm -lsqlite3 ../../target/libmechanicutil.a -o ../../target/libmechanic.so.${PACKAGE_VERSION}.${BUILD_NUMBER} && \
 	ln -s libmechanic.so.${PACKAGE_VERSION}.${BUILD_NUMBER} ../../target/libmechanic.so.${PACKAGE_VERSION} && \
@@ -56,7 +56,7 @@ compile_cli:
 	@mkdir -p ${PWD}/target/ && \
 	cd src/cli && \
 	echo "Compiling CLI..." && \
-	gcc -Wall -g -I ../../include/ -c *.c && \
+	gcc -Wall -g -I ../util/include/ -I ../../include/ -c *.c && \
 	echo "Linking CLI..." && \
 	gcc $$(find . -name "*.o" | grep -v _test.o) -L ../../target/ ../../target/libmechanicutil.a -lmechanic -lm -lsqlite3 ../../target/libmechanicutil.a -o ../../target/mechanic && \
 	for i in $$(find . -name "*_test.c"); do \

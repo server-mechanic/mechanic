@@ -23,13 +23,12 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
-#include <mechanic/app_error.h>
 
 bool is_file(const char* path);
 void rmrf(const char* path);
 void mkdirp(const char* path);
 void mkdirp2(const char* path);
 void get_basename(char* buf, size_t buf_capacity, const char* path);
-void create_file(const char* path, app_error_t* app_error);
+int create_file(const char* path);
 
 #endif

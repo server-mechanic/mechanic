@@ -20,8 +20,8 @@
 
 #include "mechanic/app_error.h"
 #include "mechanic/log.h"
-#include "mechanic/string_util.h"
-#include "mechanic/file_util.h"
+#include "string_util.h"
+#include "file_util.h"
 #include "mechanic/inventory.h"
 #include <dirent.h>
 #include <stdio.h>

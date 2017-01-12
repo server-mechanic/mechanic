@@ -20,7 +20,7 @@
 
 #include "mechanic/migration.h"
 #include "mechanic/app_error.h"
-#include "mechanic/file_util.h"
+#include "file_util.h"
 #include <stdlib.h>
 #include <string.h>
 

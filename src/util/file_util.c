@@ -18,9 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-#include "mechanic/file_util.h"
-#include "mechanic/string_util.h"
-#include "mechanic/app_error.h"
+#include "file_util.h"
+#include "string_util.h"
 #include <string.h>
 #include <stdio.h>
 #include <fcntl.h>
@@ -71,11 +70,9 @@ void rmrf(const char* dirname) {
   remove(dirname);
 }
 
-void create_file(const char* path, app_error_t* app_error) {
+int create_file(const char* path) {
 	int fd = creat(path, 0644);
-	if( fd == -1 ) {
-		app_error_set(app_error, APP_ERROR_GENERIC_ERROR, __FILE__, __LINE__, "Creating file %s failed.", path);
-	}
+	return fd == -1 ? 0 : 1;
 }
 
 void get_basename(char* buf, size_t buf_capacity, const char* path) {

@@ -26,7 +26,7 @@
 #include "mechanic/config.h"
 #include "mechanic/constants.h"
 #include "mechanic/log.h"
-#include "mechanic/string_util.h"
+#include "string_util.h"
 
 static void get_expanded_path(char* buf, size_t buf_cap, const char* value, /*@unused@*/ app_error_t* app_error) {
 	const char* rootDirEnv = getenv("MECHANIC_ROOT_DIR");
