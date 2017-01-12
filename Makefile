@@ -42,7 +42,7 @@ compile_lib:
 	@mkdir -p ${PWD}/target/ && \
 	cd src/libmechanic && \
 	echo "Compiling Lib..." && \
-	gcc -fPIC -Wall -g -I ../../include/ -c *.c && \
+	gcc -fPIC -Wall -g -I ./include/ -I ../../include/ -c *.c && \
 	echo "Linking Lib..." && \
 	gcc -shared $$(find . -name "*.o" | grep -v _test.o) -lm -lsqlite3 ../../target/libmechanicutil.a -o ../../target/libmechanic.so.${PACKAGE_VERSION}.${BUILD_NUMBER} && \
 	ln -s libmechanic.so.${PACKAGE_VERSION}.${BUILD_NUMBER} ../../target/libmechanic.so.${PACKAGE_VERSION} && \

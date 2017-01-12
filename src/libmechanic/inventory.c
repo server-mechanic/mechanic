@@ -19,7 +19,7 @@
  */
 
 #include "mechanic/inventory.h"
-#include "mechanic/inventory_db.h"
+#include "inventory_db.h"
 #include "mechanic/config.h"
 #include "mechanic/file_util.h"
 #include "mechanic/string_util.h"
