@@ -4,7 +4,7 @@
 
 ![Server Mechanic](https://server-mechanic.github.io/website/images/mechanic.png "Server Mechanic")
 
-#### Evolve your containers, virtual machines and bare metal servers more easily.
+#### Evolve your containers and virtual machines more easily.
 
 ## Status
 
@@ -12,10 +12,14 @@ Still a prototype.
 
 ## Features
 
+### Pros
 * Evolve your servers step by step.
 * Write server migrations in your favorite language.
 * Focus on the migrations instead of developing reusable plugins.
 * Minimal overhead, no central server required.
+
+### Cons
+* List of migrations can get very long for new installs. So it is well suited for virtual machines and containers you can take a full snapshot of.
 
 ## Installation
 
