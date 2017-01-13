@@ -32,8 +32,17 @@ static void print_migration(int id, const char* name, const char* start_time, co
 void list_migrations(const int argc, const char** argv, config_t* config, app_error_t* app_error) {
 
 	inventory_t* inventory = inventory_open(config, app_error);
+	if( !app_error_is_ok(app_error) ) {
+		return;
+	}
 
 	inventory_list_migrations(inventory, print_migration, app_error);
+	if( !app_error_is_ok(app_error) ) {
+		return;
+	}
 
 	inventory_close(inventory, app_error);
+	if( !app_error_is_ok(app_error) ) {
+		return;
+	}
 }

@@ -37,7 +37,7 @@ all:	clean generate compile tests integration-tests coverage packages
 .PHONY:	clean
 clean:
 	@echo "Cleaning up..."; \
-	rm -rf target/ ${PWD}/src/cli/*.o ${PWD}/src/util/*.o ${PWD}/src/libmechanic/*.o
+	rm -rf target/ ${PWD}/src/*.o
 
 generate:
 	@echo "Generating metadata..."; \
