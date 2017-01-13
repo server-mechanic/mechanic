@@ -24,7 +24,6 @@
 #include <string.h>
 #include "app_error.h"
 #include "config.h"
-#include "constants.h"
 #include "log.h"
 #include "string_util.h"
 

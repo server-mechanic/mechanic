@@ -27,7 +27,6 @@
 #include "file_util.h"
 #include "config.h"
 #include "command.h"
-#include "constants.h"
 
 static void init_default_log() {
 	log_set_output_stream(stderr);

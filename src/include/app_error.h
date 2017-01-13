@@ -23,6 +23,8 @@
 
 #include <stdbool.h>
 
+#define ENOERROR 0
+
 #define APP_ERROR_OK 0
 #define APP_ERROR_GENERIC_ERROR 1
 #define APP_ERROR_NO_SUB_COMMAND 2

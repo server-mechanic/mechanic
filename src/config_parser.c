@@ -23,7 +23,6 @@
 #include <string.h>
 #include "app_error.h"
 #include "config.h"
-#include "constants.h"
 #include "string_util.h"
 
 typedef enum { INITIAL, IN_KEY, POST_KEY, EQ_SEEN, IN_VALUE, POST_VALUE, IN_COMMENT, DONE, ERROR } state_t;
@@ -38,8 +37,8 @@ static void append_char(char* buffer, size_t buf_cap, char c) {
 }
 
 void config_parse(config_t* config, FILE* in, config_key_value_func_t key_value_handler, app_error_t* app_error) {
-	char key_buffer[PATH_MAX_LENGTH] = "";
-	char value_buffer[PATH_MAX_LENGTH] = "";
+	char key_buffer[CONFIG_MAX_KEY_LENGTH] = "";
+	char value_buffer[CONFIG_MAX_VALUE_LENGTH] = "";
 
 	state_t state = INITIAL;
 	int c;
@@ -56,7 +55,7 @@ void config_parse(config_t* config, FILE* in, config_key_value_func_t key_value_
 					/* skip */
 				} else {
 					state = IN_KEY;
-					append_char(key_buffer, PATH_MAX_LENGTH, (char)c);
+					append_char(key_buffer, CONFIG_MAX_KEY_LENGTH, (char)c);
 				}
 				break;
 			case IN_KEY:
@@ -68,7 +67,7 @@ void config_parse(config_t* config, FILE* in, config_key_value_func_t key_value_
 				} else if( isspace(c) ) {
 					state = POST_KEY;
 				} else {
-					append_char(key_buffer, PATH_MAX_LENGTH, (char)c);
+					append_char(key_buffer, CONFIG_MAX_KEY_LENGTH, (char)c);
 				}
 				break;
 			case POST_KEY:
@@ -89,7 +88,7 @@ void config_parse(config_t* config, FILE* in, config_key_value_func_t key_value_
 				} else if( isspace(c) ) {
 					; /* skip */
 				} else {
-					append_char(value_buffer, PATH_MAX_LENGTH, (char)c);
+					append_char(value_buffer, CONFIG_MAX_VALUE_LENGTH, (char)c);
 					state = IN_VALUE;
 				}
 				break;
@@ -102,7 +101,7 @@ void config_parse(config_t* config, FILE* in, config_key_value_func_t key_value_
 					clear_buffer(value_buffer);
 					state = INITIAL;
 				} else {
-					append_char(value_buffer, PATH_MAX_LENGTH, (char)c);
+					append_char(value_buffer, CONFIG_MAX_VALUE_LENGTH, (char)c);
 					state = IN_VALUE;
 				}
 				break;

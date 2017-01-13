@@ -24,6 +24,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+#define PATH_MAX_LENGTH 4000
+
 bool is_file(const char* path);
 void rmrf(const char* path);
 void mkdirp(const char* path);

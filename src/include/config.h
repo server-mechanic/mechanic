@@ -23,8 +23,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "constants.h"
 #include "app_error.h"
+#include "file_util.h"
+
+#define CONFIG_MAX_KEY_LENGTH 100
+#define CONFIG_MAX_VALUE_LENGTH 4000
 
 #define CONFIG_KEY_LOG_FILE "log_file"
 #define CONFIG_KEY_MIGRATION_DIRS "migration_dirs"
