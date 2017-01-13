@@ -40,6 +40,7 @@ clean:
 	rm -rf target/ ${PWD}/src/cli/*.o ${PWD}/src/util/*.o ${PWD}/src/libmechanic/*.o
 
 generate:
+	@echo "Generating metadata..."; \
 	cat ${PWD}/src/include/metadata.h.in \
 	| sed -r 's,^(.*VERSION\s*\")([^"]*)(\".*)$$,\1$(PACKAGE_VERSION)-$(BUILD_NUMBER)\3,g' \
 	| sed -r 's,^(.*SCM_VERSION\s*\")([^"]*)(\".*)$$,\1$(SCM_VERSION)\3,g' \
