@@ -18,22 +18,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-#include "mechanic/inventory.h"
-#include "mechanic/app_error.h"
-#include "mechanic/migration.h"
+#include "metadata.h"
+#include "app_error.h"
+#include "config.h"
 #include <stdio.h>
 
-#define UNNULL(s) ((s) == NULL ? "<NULL>" : (s))
-
-static void print_migration(int id, const char* name, const char* start_time, const char* end_time, const char* status) {
-	printf("%d\t%s\t%s\t%s\t%s\n", id, name, UNNULL(start_time), UNNULL(end_time), UNNULL(status));
-}
-
-void list_migrations(const int argc, const char** argv, config_t* config, app_error_t* app_error) {
-
-	inventory_t* inventory = inventory_open(config, app_error);
-
-	inventory_list_migrations(inventory, print_migration, app_error);
-
-	inventory_close(inventory, app_error);
-}
+void print_version(const int argc, const char** argv, config_t* config, app_error_t* app_error) {
+	printf("Version: %s, SCM-Version: %s\n", VERSION, SCM_VERSION);
+} 

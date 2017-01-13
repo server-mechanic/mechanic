@@ -18,12 +18,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-#include "mechanic/inventory.h"
+#include "inventory.h"
 #include "inventory_db.h"
-#include "mechanic/config.h"
+#include "config.h"
 #include "file_util.h"
 #include "string_util.h"
-#include "mechanic/log.h"
+#include "log.h"
 #include <dirent.h>
 #include <errno.h>
 #include <stdio.h>

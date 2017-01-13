@@ -22,12 +22,12 @@
 #include <stdbool.h>
 #include <string.h>
 #include <errno.h>
-#include "mechanic/log.h"
-#include "mechanic/app_error.h"
+#include "log.h"
+#include "app_error.h"
 #include "file_util.h"
-#include "mechanic/config.h"
-#include "mechanic/command.h"
-#include "mechanic/constants.h"
+#include "config.h"
+#include "command.h"
+#include "constants.h"
 
 static void init_default_log() {
 	log_set_output_stream(stderr);

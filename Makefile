@@ -20,54 +20,28 @@ clean:
 	rm -rf target/ ${PWD}/src/cli/*.o ${PWD}/src/util/*.o ${PWD}/src/libmechanic/*.o
 
 generate:
-	cat ${PWD}/include/mechanic/metadata.h.in > ${PWD}/include/mechanic/metadata.h \
-	&& sed -ri 's,^(.*VERSION\s*\")([^"]*)(\".*)$$,\1$(PACKAGE_VERSION)-$(BUILD_NUMBER)\3,g' ${PWD}/include/mechanic/metadata.h \
-	&& sed -ri 's,^(.*SCM_VERSION\s*\")([^"]*)(\".*)$$,\1$(SCM_VERSION)\3,g' ${PWD}/include/mechanic/metadata.h
+	cat ${PWD}/src/include/metadata.h.in \
+	| sed -r 's,^(.*VERSION\s*\")([^"]*)(\".*)$$,\1$(PACKAGE_VERSION)-$(BUILD_NUMBER)\3,g' \
+	| sed -r 's,^(.*SCM_VERSION\s*\")([^"]*)(\".*)$$,\1$(SCM_VERSION)\3,g' \
+	> ${PWD}/src/include/metadata.h
 	
-compile:	compile_util compile_lib compile_cli
-
-compile_util:
+compile:	
 	@mkdir -p ${PWD}/target/ && \
-	cd src/util && \
-	echo "Compiling util Lib..." && \
-	gcc -fPIC -Wall -g -I ./include/ -c *.c && \
-	echo "Linking util Lib..." && \
-	ar rcs ../../target/libmechanicutil.a $$(find . -name "*.o" | grep -v _test.o) && \
+	cd src && \
+	echo "Compiling..." && \
+	gcc -Wall -g -I ./include/ -c *.c && \
+	echo "Linking..." && \
+	gcc $$(find . -name "*.o" | grep -v _test.o) -L ../target/ -lm -lsqlite3 -o ../target/mechanic && \
 	for i in $$(find . -name "*_test.c"); do \
-		echo "Compiling and linking util Lib-Test $$(basename $$i .c)..." && \
-		gcc $$(basename $$i .c).o ../../target/libmechanicutil.a -o ../../target/$$(basename $$i .c); \
-	done
-
-compile_lib:
-	@mkdir -p ${PWD}/target/ && \
-	cd src/libmechanic && \
-	echo "Compiling Lib..." && \
-	gcc -fPIC -Wall -g -I ./include/ -I ../util/include/ -I ../../include/ -c *.c && \
-	echo "Linking Lib..." && \
-	gcc -shared $$(find . -name "*.o" | grep -v _test.o) -lm -lsqlite3 ../../target/libmechanicutil.a -o ../../target/libmechanic.so.${PACKAGE_VERSION}.${BUILD_NUMBER} && \
-	ln -s libmechanic.so.${PACKAGE_VERSION}.${BUILD_NUMBER} ../../target/libmechanic.so.${PACKAGE_VERSION} && \
-	ln -s libmechanic.so.${PACKAGE_VERSION} ../../target/libmechanic.so && \
-	for i in $$(find . -name "*_test.c"); do \
-		echo "Compiling and linking Lib-Test $$(basename $$i .c)..." && \
-		gcc $$(basename $$i .c).o -L ../../target/ -lmechanic -o ../../target/$$(basename $$i .c); \
-	done
-
-compile_cli:
-	@mkdir -p ${PWD}/target/ && \
-	cd src/cli && \
-	echo "Compiling CLI..." && \
-	gcc -Wall -g -I ../util/include/ -I ../../include/ -c *.c && \
-	echo "Linking CLI..." && \
-	gcc $$(find . -name "*.o" | grep -v _test.o) -L ../../target/ ../../target/libmechanicutil.a -lmechanic -lm -lsqlite3 ../../target/libmechanicutil.a -o ../../target/mechanic && \
-	for i in $$(find . -name "*_test.c"); do \
-		echo "Compiling and linking CLI-Test $$(basename $$i .c)..." && \
-		gcc $$(basename $$i .c).o -L ../../target/ -lmechanic -lm -lsqlite3 -o ../../target/$$(basename $$i .c); \
+		echo "Linking Test $$(basename $$i .c)..." && \
+		gcc $$(basename $$i .c).o $$(find . -name "*.o" | grep -v _test.o | grep -v mechanic.o) -lm -lsqlite3 -o ../target/$$(basename $$i .c); \
 	done
 
 tests:
 	@echo "Running tests..."; \
 	for i in $$(find ${PWD}/target/ -name "*_test"); do \
 		echo $$(basename $$i); \
+		$$i; \
 	done
 
 .PHONY:	integration-tests

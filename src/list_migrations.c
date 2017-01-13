@@ -18,21 +18,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-#include "mechanic/metadata.h"
-#include "mechanic/app_error.h"
-#include "mechanic/config.h"
-#include "mechanic/command.h"
+#include "inventory.h"
+#include "app_error.h"
+#include "migration.h"
 #include <stdio.h>
-#include <string.h>
 
-void print_usage(const int argc, const char** argv, config_t* config, app_error_t* app_error) {
-	command_t** commands = get_commands();
-	int i=0;
+#define UNNULL(s) ((s) == NULL ? "<NULL>" : (s))
 
-	printf("usage: mechanic [-v] <command> [ <args> ]\n");
-	printf("  -v\tLog more information.\n");
-	printf("command:\n");
-	for(i=0; commands[i] != NULL; ++i) {
-		printf("  %s %s - %s\n", commands[i]->name, commands[i]->args_description, commands[i]->short_description);
-	}
+static void print_migration(int id, const char* name, const char* start_time, const char* end_time, const char* status) {
+	printf("%d\t%s\t%s\t%s\t%s\n", id, name, UNNULL(start_time), UNNULL(end_time), UNNULL(status));
+}
+
+void list_migrations(const int argc, const char** argv, config_t* config, app_error_t* app_error) {
+
+	inventory_t* inventory = inventory_open(config, app_error);
+
+	inventory_list_migrations(inventory, print_migration, app_error);
+
+	inventory_close(inventory, app_error);
 }

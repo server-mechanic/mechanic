@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-#include "mechanic/migration.h"
-#include "mechanic/app_error.h"
+#include "migration.h"
+#include "app_error.h"
 #include "file_util.h"
 #include <stdlib.h>
 #include <string.h>

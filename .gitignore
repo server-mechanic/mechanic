@@ -10,4 +10,4 @@ pkg/
 .idea/
 coverage.txt
 profile.out
-/include/mechanic/metadata.h
+/src/include/metadata.h

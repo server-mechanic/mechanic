@@ -18,9 +18,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-#include "mechanic/follow_up_command.h"
-#include "mechanic/app_error.h"
-#include "mechanic/log.h"
+#include "follow_up_command.h"
+#include "app_error.h"
+#include "log.h"
 #include <unistd.h>
 #include <string.h>
 

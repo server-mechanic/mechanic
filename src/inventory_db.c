@@ -18,11 +18,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-#include "mechanic/app_error.h"
-#include "mechanic/log.h"
+#include "app_error.h"
+#include "log.h"
 #include "string_util.h"
 #include "file_util.h"
-#include "mechanic/inventory.h"
+#include "inventory.h"
 #include <dirent.h>
 #include <stdio.h>
 #include <errno.h>

@@ -23,8 +23,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "mechanic/constants.h"
-#include "mechanic/app_error.h"
+#include "constants.h"
+#include "app_error.h"
 
 #define CONFIG_KEY_LOG_FILE "log_file"
 #define CONFIG_KEY_MIGRATION_DIRS "migration_dirs"

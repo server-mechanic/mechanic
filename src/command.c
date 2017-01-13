@@ -18,9 +18,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-#include "mechanic/command.h"
-#include "mechanic/app_error.h"
-#include "mechanic/config.h"
+#include "command.h"
+#include "app_error.h"
+#include "config.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>

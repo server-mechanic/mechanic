@@ -22,10 +22,10 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
-#include "mechanic/app_error.h"
-#include "mechanic/config.h"
-#include "mechanic/constants.h"
-#include "mechanic/log.h"
+#include "app_error.h"
+#include "config.h"
+#include "constants.h"
+#include "log.h"
 #include "string_util.h"
 
 static void get_expanded_path(char* buf, size_t buf_cap, const char* value, /*@unused@*/ app_error_t* app_error) {

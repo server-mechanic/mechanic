@@ -27,11 +27,11 @@
 #include <errno.h>
 #include <string.h>
 #include <unistd.h>
-#include "mechanic/config.h"
-#include "mechanic/app_error.h"
+#include "config.h"
+#include "app_error.h"
 #include "file_util.h"
-#include "mechanic/migration.h"
-#include "mechanic/log.h"
+#include "migration.h"
+#include "log.h"
 #include "string_util.h"
 
 extern char **environ;

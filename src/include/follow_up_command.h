@@ -21,7 +21,7 @@
 #ifndef __MECHANIC_FOLLOW_UP_COMMAND_H__
 #define __MECHANIC_FOLLOW_UP_COMMAND_H__
 
-#include "mechanic/app_error.h"
+#include "app_error.h"
 
 void run_follow_up_command(const int argc, const char** argv, app_error_t* app_error);
 

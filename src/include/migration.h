@@ -21,8 +21,8 @@
 #ifndef __MECHANIC_MIGRATION_H__
 #define __MECHANIC_MIGRATION_H__
 
-#include "mechanic/app_error.h"
-#include "mechanic/config.h"
+#include "app_error.h"
+#include "config.h"
 
 typedef struct {
 	char* name;

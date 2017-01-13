@@ -23,8 +23,8 @@
 
 #include <sqlite3.h>
 #include <stdbool.h>
-#include "mechanic/app_error.h"
-#include "mechanic/migration.h"
+#include "app_error.h"
+#include "migration.h"
 
 typedef void (*inventory_db_list_migrations_callback_t)(int id, const char *name, const char* start_time, const char* end_time, const char* status);
 

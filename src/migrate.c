@@ -18,10 +18,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 
-#include "mechanic/inventory.h"
-#include "mechanic/app_error.h"
-#include "mechanic/migration.h"
-#include "mechanic/follow_up_command.h"
+#include "inventory.h"
+#include "app_error.h"
+#include "migration.h"
+#include "follow_up_command.h"
 #include <stdio.h>
 
 static void apply_migrations(inventory_t* inventory, config_t* config, migration_list_t* migration_list, app_error_t* app_error) {

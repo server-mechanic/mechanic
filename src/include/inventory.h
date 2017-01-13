@@ -23,9 +23,9 @@
 
 #include <sqlite3.h>
 #include <stdbool.h>
-#include "mechanic/app_error.h"
-#include "mechanic/config.h"
-#include "mechanic/migration.h"
+#include "app_error.h"
+#include "config.h"
+#include "migration.h"
 
 typedef struct {
 	sqlite3 *db;
