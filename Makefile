@@ -22,7 +22,7 @@ PACKAGE_VERSION := 0.3
 BUILD_NUMBER := 2
 SCM_VERSION = $(shell git rev-parse HEAD)
 
-default:	clean generate compile tests integration-tests
+default:	clean generate compile tests bundle integration-tests
 
 prerequisites:
 	if [ -f /etc/fedora-release ]; then \
@@ -32,7 +32,7 @@ prerequisites:
 		apt-get install -y git gcc splint build-essential sqlite3 libsqlite3-dev; \
 	fi
 
-all:	clean generate compile tests integration-tests coverage packages
+all:	clean generate compile tests bundle integration-tests coverage packages
 
 .PHONY:	clean
 clean:
@@ -47,23 +47,28 @@ generate:
 	> ${PWD}/src/include/metadata.h
 	
 compile:	
-	@mkdir -p ${PWD}/target/ && \
+	@mkdir -p ${PWD}/target/bin/ && \
 	cd src && \
 	echo "Compiling..." && \
 	gcc -Wall -g -I ./include/ -c *.c && \
 	echo "Linking..." && \
-	gcc $$(find . -name "*.o" | grep -v _test.o) -L ../target/ -lm -lsqlite3 -o ../target/mechanic && \
+	gcc $$(find . -name "*.o" | grep -v _test.o) -lm -lsqlite3 -o ../target/bin/mechanic && \
 	for i in $$(find . -name "*_test.c"); do \
 		echo "Linking Test $$(basename $$i .c)..." && \
-		gcc $$(basename $$i .c).o $$(find . -name "*.o" | grep -v _test.o | grep -v mechanic.o) -lm -lsqlite3 -o ../target/$$(basename $$i .c); \
+		gcc $$(basename $$i .c).o $$(find . -name "*.o" | grep -v _test.o | grep -v mechanic.o) -lm -lsqlite3 -o ../target/bin/$$(basename $$i .c); \
 	done
 
 tests:
 	@echo "Running tests..."; \
-	for i in $$(find ${PWD}/target/ -name "*_test"); do \
+	for i in $$(find ${PWD}/target/bin/ -name "*_test"); do \
 		echo $$(basename $$i); \
 		$$i; \
 	done
+
+bundle:
+	@echo "Preparing bundle..." && \
+	mkdir -p ${PWD}/target/bundle/usr/sbin ${PWD}/target/bundle/etc/ && \
+	cp ${PWD}/target/bin/mechanic ${PWD}/target/bundle/usr/sbin
 
 .PHONY:	integration-tests
 integration-tests:

@@ -1,13 +1,10 @@
-1
+2
 .
 ./etc
 ./etc/mechanic
 ./etc/mechanic/migration.d
 ./etc/mechanic/migration.d/001_first.sh
 ./etc/mechanic/migration.d/002_fail.sh
-./usr
-./usr/sbin
-./usr/sbin/mechanic
 ./var
 ./var/lib
 ./var/lib/mechanic

@@ -5,9 +5,6 @@
 ./etc/mechanic/migration.d
 ./etc/mechanic/migration.d/ok
 ./ok.dat
-./usr
-./usr/sbin
-./usr/sbin/mechanic
 ./var
 ./var/lib
 ./var/lib/mechanic

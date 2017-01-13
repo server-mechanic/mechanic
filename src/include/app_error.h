@@ -34,8 +34,14 @@
 
 #define APP_ERROR_MESSAGE_MAX_LEN 4096
 
+#ifndef EXIT_FAILURE
+#define EXIT_FAILURE 1
+#endif
+#define EXIT_MIGRATION_FAILED 2
+
 typedef struct {
 	int app_errno;
+	int exit_code;
 	char message[APP_ERROR_MESSAGE_MAX_LEN];
 	const char* file;
 	int line;

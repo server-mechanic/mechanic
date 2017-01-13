@@ -47,7 +47,6 @@ static void init_dirs(config_t* config, app_error_t* app_error) {
 	if( !app_error_is_ok(app_error) ) {
 		return;
 	}
-	mkdirp(path);
 }
 
 inventory_t* inventory_open(config_t* config, app_error_t* app_error) {

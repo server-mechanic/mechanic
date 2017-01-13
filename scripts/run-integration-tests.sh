@@ -21,28 +21,35 @@
 
 PROJECT_DIR=$(cd `dirname $0`/..; pwd)
 TESTS_DIR=$PROJECT_DIR/integration-tests
-BUILD_DIR=$PROJECT_DIR/target
+BUNDLE_DIR=$PROJECT_DIR/target/bundle
 
 for TEST_DIR in $(find $TESTS_DIR -mindepth 1 -maxdepth 1 -type d); do
   TEST_NAME=$(basename $TEST_DIR)
-  TEST_TMP_DIR=$(mktemp -d)
+  TEST_TMP_DIR=$(mktemp -d --suffix=-mechanic-it)
   echo "Running test $TEST_NAME... (TEST_TMP_DIR: $TEST_TMP_DIR)"
-  TEST_TMP_RESULT=$(mktemp)
+  TEST_TMP_RESULT=$(mktemp --suffix=-mechanic-it)
   cp -R $TEST_DIR/input/* $TEST_TMP_DIR
   mkdir -p $TEST_TMP_DIR/usr/sbin/
-  cp $PROJECT_DIR/target/mechanic $TEST_TMP_DIR/usr/sbin/
+  cp -R $BUNDLE_DIR/usr $TEST_TMP_DIR
   for i in 1 2; do
     echo "Run #$i"
-    TEST_ROOT=$TEST_TMP_DIR \
+    if [[ ! -f "$TEST_DIR/run-test.sh" ]]; then
+      TEST_ROOT=$TEST_TMP_DIR \
 	MECHANIC_ROOT_DIR=$TEST_TMP_DIR \
-  	LD_LIBRARY_PATH=$PROJECT_DIR/target $TEST_TMP_DIR/usr/sbin/mechanic -v migrate -- /bin/true
-    TEST_EXIT_CODE=$?
+  	$TEST_TMP_DIR/usr/sbin/mechanic -v migrate -- /bin/true
+      TEST_EXIT_CODE=$?
+    else
+      TEST_ROOT=$TEST_TMP_DIR \
+	MECHANIC_ROOT_DIR=$TEST_TMP_DIR \
+  	$TEST_DIR/run-test.sh
+      TEST_EXIT_CODE=$?
+    fi
     echo $TEST_EXIT_CODE > $TEST_TMP_RESULT
     cd $TEST_TMP_DIR
-    find . | sort -V >> $TEST_TMP_RESULT
+    find . | grep -v /usr | sort -V >> $TEST_TMP_RESULT
     TEST_ROOT=$TEST_TMP_DIR \
 	MECHANIC_ROOT_DIR=$TEST_TMP_DIR \
-  	LD_LIBRARY_PATH=$PROJECT_DIR/target $TEST_TMP_DIR/usr/sbin/mechanic list-migrations | cut --delimiter='	' -f 1,2,5 >> $TEST_TMP_RESULT
+  	$TEST_TMP_DIR/usr/sbin/mechanic list-migrations | cut --delimiter='	' -f 1,2,5 >> $TEST_TMP_RESULT
     #cat $TEST_TMP_RESULT
     diff $TEST_DIR/output $TEST_TMP_RESULT
     DIFF_EXIT_CODE=$?

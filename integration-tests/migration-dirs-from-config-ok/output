@@ -1,14 +1,10 @@
 0
 .
 ./etc
-./etc/mechanic
 ./etc/mechanic.conf
 ./migration.d
 ./migration.d/ok
 ./ok.dat
-./usr
-./usr/sbin
-./usr/sbin/mechanic
 ./var
 ./var/lib
 ./var/lib/mechanic

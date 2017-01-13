@@ -27,12 +27,18 @@
 #include <errno.h>
 
 /*@-formatconst@ */ void app_error_set(app_error_t* app_error, int app_errno, const char* file, const int line, const char* format, ...) {
+	int exit_code = EXIT_FAILURE;
 	char cbuf[4000] = "";
 
 	va_list arg_list;
 
+	if( app_errno == APP_ERROR_MIGRATION_FAILED ) {
+		exit_code = EXIT_MIGRATION_FAILED;
+	}
+
 	app_error->app_errno = app_errno;
 	app_error->message[0] = (char)0; 
+	app_error->exit_code = exit_code;
 	app_error->file = file;
 	app_error->line = line;
 	if( app_errno == APP_ERROR_OK ) {
@@ -69,5 +75,5 @@ void app_error_check(app_error_t* app_error) {
 
 void app_error_abort(app_error_t* app_error) {
 	log_error(app_error->file, app_error->line, app_error->message);
-	exit(EXIT_FAILURE);
+	exit(app_error->exit_code);
 }

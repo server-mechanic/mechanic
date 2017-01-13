@@ -7,9 +7,6 @@
 ./etc/mechanic/migration.d/002_nowme.sh
 ./etc/mechanic/migration.d/003_nowme2.sh
 ./etc/mechanic/migration.d/004_stderr.sh
-./usr
-./usr/sbin
-./usr/sbin/mechanic
 ./var
 ./var/lib
 ./var/lib/mechanic
