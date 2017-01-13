@@ -67,7 +67,8 @@ tests:
 
 bundle:
 	@echo "Preparing bundle..." && \
-	mkdir -p ${PWD}/target/bundle/usr/sbin ${PWD}/target/bundle/etc/ && \
+	cp -R ${PWD}/src/bundle ${PWD}/target/ && \
+	mkdir -p ${PWD}/src/bundle/usr/sbin/ && \
 	cp ${PWD}/target/bin/mechanic ${PWD}/target/bundle/usr/sbin
 
 .PHONY:	integration-tests

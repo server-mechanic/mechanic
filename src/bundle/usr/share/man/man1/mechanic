@@ -1,0 +1,58 @@
+.\" Manpage for mechanic.
+.\" 
+.TH man 1 "13 Jan 2017" "0.3" "mechanic man page"
+.SH NAME
+mechanic - A simple server migration tool.
+
+.SH SYNOPSIS
+.B mechanic
+[\fB-v\fR] <\fBcommand\fR> [ <\fBargs\fR> ]
+
+.SH DESCRIPTION
+Mechanic executes migration scripts and records them as executed. So changes to a machine
+can be applied step by step.
+
+.SH Global options
+.TP
+.BR \fB-v\fR,\ \fB--verbose\fR
+Log more information.
+
+.SH Commands
+.TP
+.BR migrate\ [\ --\ <follow\ up\ command>\ ]
+Collect and apply migrations; in case of success execute optional follow up command.
+.TP
+.BR list-migrations
+List the migration state from internal database.
+.TP
+.BR version
+Show package and SCM version of mechanic.
+.TP
+.BR help
+Print usage information.
+
+.SH Exit codes
+.TP
+0 - All right
+.TP
+1 - Internal mechanic failure
+.TP
+2 - A migration has failed
+
+.SH Configuration
+The mechanic config is stored in \fB/etc/mechanic.conf\fR.
+.TP
+.BR log_file="/var/log/mechanic.log"
+Path to log file
+.TP
+.BR migration_dirs="/etc/mechanic/migration.d:/var/lib/mechanic/migration.d"
+Directories the mechanic collects migrations from
+
+.SH AUTHOR
+The Server Mechanic Team, <http://server-mechanic.org>
+.SH COPYRIGHT
+Copyright \(co 2016 the Server Mechanic Team.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
