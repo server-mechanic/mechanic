@@ -18,8 +18,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
 
-PACKAGE_VERSION := 0.3
-BUILD_NUMBER := 2
+PACKAGE_VERSION := 0.4
+BUILD_NUMBER := 1
 SCM_VERSION = $(shell git rev-parse HEAD)
 
 default:	clean generate compile tests bundle integration-tests
