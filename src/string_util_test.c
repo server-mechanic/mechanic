@@ -27,4 +27,5 @@ static void test_strcpy_limits_copied_string_when_doenst_fit() {
 int main(const int argc, const char** argv) {
 	test_strcpy_copies_string_when_fits();
 	test_strcpy_limits_copied_string_when_doenst_fit();
+	return 0;
 }
