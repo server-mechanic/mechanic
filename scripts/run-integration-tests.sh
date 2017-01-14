@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 #
 # Copyright (c) 2016 the Server Mechanic Team.
 # Server Mechanic (http://server-mechanic.org)
