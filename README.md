@@ -31,7 +31,7 @@ Server Mechanic gets executed on container startup, migrates state of the volume
 
 ## Status
 
-Server Mechanic is in an early and experimental state. We appreciate feedback about any real world usage so we can learn and improve Server Mechanic.
+Server Mechanic is in an early and experimental state. We appreciate any feedback about usage so we can learn and improve Server Mechanic.
 
 ## Installation
 
