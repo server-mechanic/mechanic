@@ -30,6 +30,9 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#define FOLDER_PERMS (S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH)
+#define FILE_PERMS (S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH)
+
 bool is_file(const char* path) {
   struct stat buffer;   
   return (stat (path, &buffer) == 0);
@@ -71,7 +74,7 @@ void rmrf(const char* dirname) {
 }
 
 int create_file(const char* path) {
-	int fd = creat(path, 0644);
+	int fd = creat(path, FILE_PERMS);
 	return fd == -1 ? 0 : 1;
 }
 
@@ -103,12 +106,12 @@ void mkdirp(const char *dir) {
 	for(p = tmp + 1; *p; p++) {
 		if(*p == '/') {
 			*p = 0;
-			mkdir(tmp, (__mode_t)S_IRWXU);
+			mkdir(tmp, (__mode_t)FOLDER_PERMS);
 			*p = '/';
 		}
 	}
 
-	mkdir(tmp, (__mode_t)S_IRWXU);
+	mkdir(tmp, (__mode_t)FOLDER_PERMS);
 }
 
 void mkdirp2(const char *dir) {
