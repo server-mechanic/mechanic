@@ -49,6 +49,17 @@ void string_util_strcat(char* buf, size_t buf_capacity, const char* str) {
 	}
 }
 
+bool string_util_ends_with(const char* buf, const char* str) {
+	size_t buf_len = strlen(buf);
+	size_t str_len = strlen(str);
+
+	if( buf_len < str_len ) {
+		return false;
+	}
+
+	return strcmp(&(buf[buf_len-str_len-1]), str) == 0;
+}
+
 void string_util_replace(char *Str, size_t buf_cap, const char *OldStr, const char *NewStr)
 {
 	// TODO check buf_cap

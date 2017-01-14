@@ -38,11 +38,13 @@ extern char **environ;
 
 static void get_migration_tmp_dir_path(char* buf, size_t buf_capacity, const char* migration_name, config_t* config, app_error_t* app_error) {
         buf[0] = 0;
-        config_get_state_dir_path(config, buf, buf_capacity, app_error);
+        config_get_run_dir(config, buf, buf_capacity, app_error);
 	if( !app_error_is_ok(app_error) ) {
 		return;
 	}
-        string_util_strcat(buf, buf_capacity, "/");
+	if( !string_util_ends_with(buf, "/") ) {
+	        string_util_strcat(buf, buf_capacity, "/");
+	}
         string_util_strcat(buf, buf_capacity, migration_name);
         string_util_strcat(buf, buf_capacity, ".tmp");
 }

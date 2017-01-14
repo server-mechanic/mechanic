@@ -10,8 +10,9 @@
 ./var
 ./var/lib
 ./var/lib/mechanic
-./var/lib/mechanic/inventory.db
 ./var/lib/mechanic/state
+./var/lib/mechanic/state/inventory.db
+./var/lib/mechanic/tmp
 ./var/log
 ./var/log/mechanic.log
 1	001_first.sh	SUCCESS

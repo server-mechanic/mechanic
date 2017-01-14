@@ -48,11 +48,12 @@ void config_parse(config_t* config, FILE* in, config_key_value_func_t key_value_
 			case INITIAL:
 				if( c == EOF ) {
 					state = DONE;
-			}
-				else if( '=' == c ) {
+				} else if( '=' == c ) {
 					state = ERROR;
 				} else if( isspace(c) ) {
 					/* skip */
+				} else if( '#' == c ) {
+					state = IN_COMMENT;
 				} else {
 					state = IN_KEY;
 					append_char(key_buffer, CONFIG_MAX_KEY_LENGTH, (char)c);
@@ -61,8 +62,7 @@ void config_parse(config_t* config, FILE* in, config_key_value_func_t key_value_
 			case IN_KEY:
 				if( c == EOF ) {
 					state = ERROR;
-				}
-				else if( '=' == c ) {
+				} else if( '=' == c ) {
 					state = EQ_SEEN;
 				} else if( isspace(c) ) {
 					state = POST_KEY;
@@ -73,8 +73,7 @@ void config_parse(config_t* config, FILE* in, config_key_value_func_t key_value_
 			case POST_KEY:
 				if( c == EOF ) {
 					state = ERROR;
-				}
-				else if( '=' == c ) {
+				} else if( '=' == c ) {
 					state = EQ_SEEN;
 				} else if( isspace(c) ) {
 					state = POST_KEY;
@@ -95,6 +94,11 @@ void config_parse(config_t* config, FILE* in, config_key_value_func_t key_value_
 			case IN_VALUE:
 				if( c == EOF ) {
 					state = DONE;
+				} else if ( c == '#' ) {
+					(*key_value_handler)(config, key_buffer, value_buffer, app_error);
+					clear_buffer(key_buffer);
+					clear_buffer(value_buffer);
+					state = IN_COMMENT;
 				} else if ( c == '\n' ) {
 					(*key_value_handler)(config, key_buffer, value_buffer, app_error);
 					clear_buffer(key_buffer);
@@ -103,6 +107,15 @@ void config_parse(config_t* config, FILE* in, config_key_value_func_t key_value_
 				} else {
 					append_char(value_buffer, CONFIG_MAX_VALUE_LENGTH, (char)c);
 					state = IN_VALUE;
+				}
+				break;
+			case IN_COMMENT:
+				if( c == EOF ) {
+					state = DONE;
+				} else if( c == '\n' ) {
+					state = INITIAL;
+				} else {
+					; /* skip */
 				}
 				break;
 			case DONE:
