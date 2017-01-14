@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 #
 # Copyright (c) 2016 the Server Mechanic Team.
 # Server Mechanic (http://server-mechanic.org)
@@ -22,8 +22,6 @@
 PROJECT_DIR=$(cd `dirname $0`/..; pwd)
 TESTS_DIR=$PROJECT_DIR/integration-tests
 BUILD_DIR=$PROJECT_DIR/target
-
-find $PROJECT_DIR/target
 
 for TEST_DIR in $(find $TESTS_DIR -mindepth 1 -maxdepth 1 -type d); do
   TEST_NAME=$(basename $TEST_DIR)
