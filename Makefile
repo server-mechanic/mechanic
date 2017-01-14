@@ -19,7 +19,7 @@
 #
 
 PACKAGE_VERSION := 0.4
-BUILD_NUMBER := 3
+BUILD_NUMBER := 4
 SCM_VERSION = $(shell git rev-parse HEAD)
 
 default:	clean generate compile tests bundle integration-tests
