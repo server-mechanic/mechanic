@@ -1,5 +1,8 @@
 # TODOs
 
+* +/etc/mechanic.conf.d/
+* handle changed config files on install
+* add evaluation of env vars
 * better tests for config
 * add examples to README
 * add fedora 25 support with install notes
