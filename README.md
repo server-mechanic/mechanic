@@ -6,9 +6,17 @@
 
 #### Evolve your containers and virtual machines more easily.
 
-## Status
+## What Server Mechanic is for?
 
-Still a prototype.
+With Server Mechanic you (admin or dev) author change scripts in your favorite language, e.g. shell scripts. The Server Mechanic collects these migration scripts, executes them and records them as applied in an internal database. Next time Server Mechanic is run the migrations already applied will be skipped and only new migrations will be executed. In case of errors you fix the problem and start over.
+
+Server Mechanic is considered as a lightweight alternative when tools like puppet, ansible, etc. seem to be oversized.
+
+### Server Mechanic for docker containers
+
+Docker already utilizes the step by step approach with the commands you put into your Dockerfile. These commands are run at container image build time. So you have full access to the container's internal data. External volumes injected into a newly created container cannot be manipulated with Dockerfile commands. Here Server Mechanic comes into play.
+
+Server Mechanic gets executed on container startup, migrates state of the volumes mounted and replaces itself with the actual enty point so container startup can proceed. So you can roll out adjustments to external volumes with new container versions so container and volume stay in sync.
 
 ## Features
 
@@ -19,7 +27,11 @@ Still a prototype.
 * Minimal overhead, no central server required.
 
 ### Cons
-* List of migrations can get very long for new installs. So it is well suited for virtual machines and containers you can take a full snapshot of.
+* List of migrations can get very long for new installs.
+
+## Status
+
+Server Mechanic is in an early and experimental state. We appreciate feedback about any real world usage so we can learn and improve Server Mechanic.
 
 ## Installation
 
@@ -51,3 +63,10 @@ GNU General Public License for more details.
 
 You should have received a [copy of the GNU General Public License](LICENSE)
 along with this program.  If not, see [GNU GPL v3 at http://www.gnu.org](http://www.gnu.org/licenses/gpl-3.0.txt).
+
+## Trademark hints
+Docker is a trademark or registered trademark of Docker, Inc.
+
+Puppet is a trademark or registered trademark of Puppet, Inc.
+
+Ansible is a trademark or registered trademark of Red Hat, Inc.
