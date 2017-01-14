@@ -23,6 +23,8 @@ PROJECT_DIR=$(cd `dirname $0`/..; pwd)
 TESTS_DIR=$PROJECT_DIR/integration-tests
 BUNDLE_DIR=$PROJECT_DIR/target/bundle
 
+find $PROJECT_DIR/target
+
 for TEST_DIR in $(find $TESTS_DIR -mindepth 1 -maxdepth 1 -type d); do
   TEST_NAME=$(basename $TEST_DIR)
   TEST_TMP_DIR=$(mktemp -d --suffix=-mechanic-it)
