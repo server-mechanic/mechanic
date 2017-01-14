@@ -1,5 +1,8 @@
 # History
 
+## 0.4 (2017-01-13)
+* Bug fixes.
+
 ## 0.3 (2016-12-26)
 * Added list-migrations.
 
