@@ -1,9 +1,10 @@
 # History
 
-## 0.4-2 (2017-01-14)
+## 0.4-3 (2017-01-14)
 * Seperate run dir and state dir.
 * Fixes for config.
 * Added man page.
+* Fixed permissions of files and folders created.
 
 ## 0.4 (2017-01-13)
 * Bug fixes.
