@@ -66,7 +66,5 @@ along with this program.  If not, see [GNU GPL v3 at http://www.gnu.org](http://
 
 ## Trademark hints
 Docker is a trademark or registered trademark of Docker, Inc.
-
 Puppet is a trademark or registered trademark of Puppet, Inc.
-
 Ansible is a trademark or registered trademark of Red Hat, Inc.
