@@ -21,7 +21,7 @@
 
 PROJECT_DIR=$(cd `dirname $0`/..; pwd)
 TESTS_DIR=$PROJECT_DIR/integration-tests
-BUNDLE_DIR=$PROJECT_DIR/target/bundle
+BUILD_DIR=$PROJECT_DIR/target
 
 find $PROJECT_DIR/target
 
@@ -32,7 +32,7 @@ for TEST_DIR in $(find $TESTS_DIR -mindepth 1 -maxdepth 1 -type d); do
   TEST_TMP_RESULT=$(mktemp --suffix=-mechanic-it)
   cp -R $TEST_DIR/input/* $TEST_TMP_DIR
   mkdir -p $TEST_TMP_DIR/usr/sbin/
-  cp $BUNDLE_DIR/usr/sbin/mechanic $TEST_TMP_DIR/usr/sbin/
+  cp $BUILD_DIR/bin/mechanic $TEST_TMP_DIR/usr/sbin/
   for i in 1 2; do
     echo "Run #$i"
     if [[ ! -f "$TEST_DIR/run-test.sh" ]]; then
