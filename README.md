@@ -2,7 +2,7 @@
 
 ### Server Evolution Made Easy.
 
-![Server Mechanic](https://server-mechanic.github.io/website/images/mechanic.png "Server Mechanic")
+![Server Mechanic](https://server-mechanic.github.io/website/images/mechanic_small.png "Server Mechanic")
 
 #### Evolve your containers and virtual machines more easily.
 
