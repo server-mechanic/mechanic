@@ -41,9 +41,6 @@ For installation of Server Mechanic *unstable* see [Server Mechanic Packages Rep
 
 [History](HISTORY.md)
 
-## TODOs
-[TODOs](TODOs.md)
-
 ## Contributing
 
 Server Mechanic is an open source project, and contributions are welcome! Feel free to raise an issue or submit a pull request.
