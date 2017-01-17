@@ -25,7 +25,7 @@
 #include "config.h"
 #include "string_util.h"
 
-typedef enum { INITIAL, IN_KEY, POST_KEY, EQ_SEEN, IN_VALUE, POST_VALUE, IN_COMMENT, DONE, ERROR } state_t;
+typedef enum { INITIAL, IN_SECTION, IN_KEY, POST_KEY, EQ_SEEN, IN_VALUE, POST_VALUE, IN_COMMENT, DONE, ERROR } state_t;
 
 static void clear_buffer(char* buffer) {
 	buffer[0] = 0;
@@ -48,6 +48,8 @@ void config_parse(config_t* config, FILE* in, config_key_value_func_t key_value_
 			case INITIAL:
 				if( c == EOF ) {
 					state = DONE;
+				} else if( '[' == c ) {
+					state = IN_SECTION;
 				} else if( '=' == c ) {
 					state = ERROR;
 				} else if( isspace(c) ) {
@@ -57,6 +59,15 @@ void config_parse(config_t* config, FILE* in, config_key_value_func_t key_value_
 				} else {
 					state = IN_KEY;
 					append_char(key_buffer, CONFIG_MAX_KEY_LENGTH, (char)c);
+				}
+				break;
+			case IN_SECTION:
+				if( c == EOF ) {
+					state = ERROR;
+				} else if ( ']' == c ) {
+					state = INITIAL;
+				} else {
+					/* skip */
 				}
 				break;
 			case IN_KEY:
