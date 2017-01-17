@@ -1,0 +1,17 @@
+#!/bin/sh -e
+# -*- coding: UTF-8 -*-
+
+SCRIPT_DIR=$(dirname $0)
+
+# for dev
+if [[ -d "$SCRIPT_DIR/../python/mechanic" ]]; then
+  export PYTHONPATH=$PYTHONPATH:$SCRIPT_DIR/../python/
+fi
+
+if [[ -d "$MECHANIC_ROOT_DIR/usr/lib/python2.7/site-packages/mechanic" ]]; then
+  export PYTHONPATH="$PYTHONPATH:$MECHANIC_ROOT_DIR/usr/lib/python2.7/site-packages/"
+fi
+
+export PYTHONDONTWRITEBYTECODE=dontdothis
+
+/usr/bin/python2.7 -B -m mechanic $*
