@@ -28,9 +28,8 @@ for TEST_DIR in $(find $TESTS_DIR -mindepth 1 -maxdepth 1 -type d); do
   TEST_TMP_DIR=$(mktemp -d --suffix=-mechanic-it)
   echo "Running test $TEST_NAME... (TEST_TMP_DIR: $TEST_TMP_DIR)"
   TEST_TMP_RESULT=$(mktemp --suffix=-mechanic-it)
+  tar xfz $BUILD_DIR/bundle.tgz -C $TEST_TMP_DIR
   cp -R $TEST_DIR/input/* $TEST_TMP_DIR
-  mkdir -p $TEST_TMP_DIR/usr/sbin/
-  cp $BUILD_DIR/bin/mechanic $TEST_TMP_DIR/usr/sbin/
   for i in 1 2; do
     echo "Run #$i"
     if [[ ! -f "$TEST_DIR/run-test.sh" ]]; then
