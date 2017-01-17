@@ -1,5 +1,7 @@
 2
 .
+./etc
+./etc/mechanic.conf
 ./follow_up_cmd.sh
 ./var
 ./var/lib

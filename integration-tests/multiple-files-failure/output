@@ -2,6 +2,7 @@
 .
 ./etc
 ./etc/mechanic
+./etc/mechanic.conf
 ./etc/mechanic/migration.d
 ./etc/mechanic/migration.d/001_first.sh
 ./etc/mechanic/migration.d/002_fail.sh
