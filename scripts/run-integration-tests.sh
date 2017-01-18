@@ -25,9 +25,11 @@ BUILD_DIR=$PROJECT_DIR/target
 
 for TEST_DIR in $(find $TESTS_DIR -mindepth 1 -maxdepth 1 -type d); do
   TEST_NAME=$(basename $TEST_DIR)
-  TEST_TMP_DIR=$(mktemp -d --suffix=-mechanic-it)
+  TEST_TMP_DIR=$BUILD_DIR/$(mktemp -u -d --suffix=-mechanic-it)
+  mkdir -p $TEST_TMP_DIR
   echo "Running test $TEST_NAME... (TEST_TMP_DIR: $TEST_TMP_DIR)"
-  TEST_TMP_RESULT=$(mktemp --suffix=-mechanic-it)
+  TEST_TMP_RESULT=$BUILD_DIR/$(mktemp -u --suffix=-mechanic-it)
+  mkdir -p $(dirname $TEST_TMP_DIR)
   tar xfz $BUILD_DIR/bundle.tgz -C $TEST_TMP_DIR
   cp -R $TEST_DIR/input/* $TEST_TMP_DIR
   for i in 1 2; do
