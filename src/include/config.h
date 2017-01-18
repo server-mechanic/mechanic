@@ -28,7 +28,9 @@
 
 #define CONFIG_MAX_KEY_LENGTH 100
 #define CONFIG_MAX_VALUE_LENGTH 4000
+#define CONFIG_MAX_SECTION_LENGTH 100
 
+#define CONFIG_SECTION_MAIN "main"
 #define CONFIG_KEY_LOG_FILE "log_file"
 #define CONFIG_KEY_MIGRATION_DIRS "migration_dirs"
 #define CONFIG_KEY_STATE_DIR "state_dir"
@@ -50,7 +52,7 @@ void config_get_migration_dirs_path(config_t* config, char* buf, size_t buf_cap,
 void config_get_etc_dir_path(config_t* config, char* buf, size_t buf_cap, app_error_t* app_error);
 void config_get_inventory_db_path(config_t* config, char* cbuf, size_t buf_cap, app_error_t* app_error);
 
-typedef void (*config_key_value_func_t)(config_t* config, const char* key, const char* value, app_error_t* app_error);
+typedef void (*config_key_value_func_t)(config_t* config, const char* section, const char* key, const char* value, app_error_t* app_error);
 void config_parse(config_t* config, FILE* in, config_key_value_func_t key_value_handler, app_error_t* app_error);
 
 #endif

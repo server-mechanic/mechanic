@@ -74,7 +74,12 @@ void config_get_log_file_path(/*@unused@*/ config_t* config, char* buf, size_t b
 	}
 }
 
-static void handle_key_value(config_t* config, const char* key, const char* value, /*@unused@*/ app_error_t* app_error) {
+static void handle_key_value(config_t* config, const char* section, const char* key, const char* value, /*@unused@*/ app_error_t* app_error) {
+
+	if( strcmp(CONFIG_SECTION_MAIN, section) != 0 ) {
+		LOG_WARN2("Unknown section %s. Assuming %s.", section, CONFIG_SECTION_MAIN);
+	}
+
 	if( strcmp(CONFIG_KEY_LOG_FILE, key) == 0 ) {
 		string_util_strcpy(config->log_file_path, PATH_MAX_LENGTH, value);
 	} else if( strcmp(CONFIG_KEY_STATE_DIR, key) == 0 ) {
@@ -89,10 +94,10 @@ static void handle_key_value(config_t* config, const char* key, const char* valu
 }
 
 static void apply_defaults(config_t* config, app_error_t* app_error) {
-	handle_key_value( config, CONFIG_KEY_LOG_FILE, "${MECHANIC_ROOT_DIR}/var/log/mechanic.log", app_error);
-	handle_key_value( config, CONFIG_KEY_MIGRATION_DIRS, "${MECHANIC_ROOT_DIR}/etc/mechanic/migration.d:${MECHANIC_ROOT_DIR}/var/lib/mechanic/migration.d", app_error );
-	handle_key_value( config, CONFIG_KEY_STATE_DIR, "${MECHANIC_ROOT_DIR}/var/lib/mechanic/state", app_error );
-	handle_key_value( config, CONFIG_KEY_RUN_DIR, "${MECHANIC_ROOT_DIR}/var/lib/mechanic/tmp", app_error );
+	handle_key_value( config, CONFIG_SECTION_MAIN, CONFIG_KEY_LOG_FILE, "${MECHANIC_ROOT_DIR}/var/log/mechanic.log", app_error);
+	handle_key_value( config, CONFIG_SECTION_MAIN, CONFIG_KEY_MIGRATION_DIRS, "${MECHANIC_ROOT_DIR}/etc/mechanic/migration.d:${MECHANIC_ROOT_DIR}/var/lib/mechanic/migration.d", app_error );
+	handle_key_value( config, CONFIG_SECTION_MAIN, CONFIG_KEY_STATE_DIR, "${MECHANIC_ROOT_DIR}/var/lib/mechanic/state", app_error );
+	handle_key_value( config, CONFIG_SECTION_MAIN, CONFIG_KEY_RUN_DIR, "${MECHANIC_ROOT_DIR}/var/lib/mechanic/tmp", app_error );
 }
 
 static void read_config(config_t* config, app_error_t* app_error) {
