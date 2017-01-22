@@ -50,9 +50,9 @@ compile:
 	@mkdir -p ${PWD}/target/bin/ && \
 	cd src && \
 	echo "Compiling..." && \
-	gcc -Wall -g -I ./include/ -c *.c && \
+	g++ -Wall -g -I ./include/ -c *.c && \
 	echo "Linking..." && \
-	gcc $$(find . -name "*.o" | grep -v _test.o) -lm -lsqlite3 -o ../target/bin/mechanic && \
+	g++ $$(find . -name "*.o" | grep -v _test.o) -lm -lsqlite3 -o ../target/bin/mechanic && \
 	for i in $$(find . -name "*_test.c"); do \
 		echo "Linking Test $$(basename $$i .c)..." && \
 		gcc $$(basename $$i .c).o $$(find . -name "*.o" | grep -v _test.o | grep -v mechanic.o) -lm -lsqlite3 -o ../target/bin/$$(basename $$i .c); \
