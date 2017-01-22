@@ -7,9 +7,9 @@
 #### Evolve your containers and virtual machines more easily.
 
 ## What Server Mechanic is for?
-If you want to manage your machines in a traceable and repeatable way, one strategy is the creation of "infrastructure as code".
+If you want to manage your machines in a traceable and repeatable way one strategy is the creation of "infrastructure as code".
 
-With Server Mechanic you author changes to your machines as scripts in your favorite language, e.g. shell scripts. Then Server Mechanic collects these migration scripts, executes them and records them as applied in an internal database. Next time only new migrations will be executed. In case of errors you fix the problem and start over.
+With Server Mechanic you author changes to your machines as scripts in your favorite language, e.g. shell scripts. Server Mechanic collects these migration scripts, executes them and records them as applied in an internal database. Next time only new migrations will be executed. In case of an error you fix the problem and start over.
 
 Server Mechanic is considered a lightweight alternative to tools like puppet, ansible, etc.
 
