@@ -32,6 +32,7 @@ for TEST_DIR in $(find $TESTS_DIR -mindepth 1 -maxdepth 1 -type d); do
   mkdir -p $(dirname $TEST_TMP_DIR)
   tar xfz $BUILD_DIR/bundle.tgz -C $TEST_TMP_DIR
   cp -R $TEST_DIR/input/* $TEST_TMP_DIR
+  find $TEST_TMP_DIR
   for i in 1 2; do
     echo "Run #$i"
     if [[ ! -f "$TEST_DIR/run-test.sh" ]]; then
