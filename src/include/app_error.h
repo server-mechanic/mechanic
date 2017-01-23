@@ -22,6 +22,7 @@
 #define __MECHANIC_APP_ERROR_H__
 
 #include <stdbool.h>
+#include <stdarg.h>
 
 #define ENOERROR 0
 
@@ -48,9 +49,20 @@ typedef struct {
 } app_error_t;
 
 void app_error_clear(app_error_t* app_error);
-bool app_error_is_ok(app_error_t* app_error);
-void app_error_abort(app_error_t* app_error);
-void app_error_check(app_error_t* app_error);
+bool app_error_is_ok(app_error_t const* app_error);
+void app_error_abort(app_error_t const* app_error);
+void app_error_check(app_error_t const* app_error);
 void app_error_set(app_error_t* app_error, int app_errno, const char* file, const int line, const char* format, ...);
+void app_error_vset(app_error_t* app_error, int app_errno, const char* file, const int line, const char* format, va_list arg_list);
+
+class AppException {
+  public:
+    AppException(int app_errno, const char* file, const int line, const char* format, ...);
+
+    app_error_t const* getAppError() const;
+
+  private:
+    app_error_t app_error;
+};
 
 #endif

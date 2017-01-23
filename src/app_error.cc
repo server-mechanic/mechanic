@@ -27,10 +27,15 @@
 #include <errno.h>
 
 /*@-formatconst@ */ void app_error_set(app_error_t* app_error, int app_errno, const char* file, const int line, const char* format, ...) {
+	va_list arg_list;
+	va_start(arg_list, format);
+	app_error_vset(app_error, app_errno, file, line, format, arg_list);
+	va_end(arg_list);
+}
+
+/*@-formatconst@ */ void app_error_vset(app_error_t* app_error, int app_errno, const char* file, const int line, const char* format, va_list arg_list) {
 	int exit_code = EXIT_FAILURE;
 	char cbuf[4000] = "";
-
-	va_list arg_list;
 
 	if( app_errno == APP_ERROR_MIGRATION_FAILED ) {
 		exit_code = EXIT_MIGRATION_FAILED;
@@ -45,15 +50,11 @@
 		return;
 	}
 	else if( app_errno == APP_ERROR_GENERIC_ERROR ) {
-		va_start(arg_list, format);
 		(void)vsnprintf(cbuf, 4000, format, arg_list);
-		va_end(arg_list);
 		(void)snprintf(app_error->message, APP_ERROR_MESSAGE_MAX_LEN, "%s (%s)", cbuf, strerror(errno));
 	}
 	else {
-		va_start(arg_list, format);
 		(void)vsnprintf(app_error->message, APP_ERROR_MESSAGE_MAX_LEN, format, arg_list);
-		va_end(arg_list);
 	}
 }
 
@@ -61,11 +62,11 @@ void app_error_clear(app_error_t* app_error) {
 	app_error_set(app_error, APP_ERROR_OK, "none", -1, "It's all ok.");
 }
 
-bool app_error_is_ok(app_error_t* app_error) {
+bool app_error_is_ok(app_error_t const* app_error) {
 	return app_error != NULL && app_error->app_errno == APP_ERROR_OK;
 }
 
-void app_error_check(app_error_t* app_error) {
+void app_error_check(app_error_t const* app_error) {
 	if( app_error_is_ok(app_error) ) {
 		return;
 	}
@@ -73,7 +74,18 @@ void app_error_check(app_error_t* app_error) {
 	app_error_abort(app_error);
 }
 
-void app_error_abort(app_error_t* app_error) {
+void app_error_abort(app_error_t const* app_error) {
 	log_error(app_error->file, app_error->line, app_error->message);
 	exit(app_error->exit_code);
+}
+
+AppException::AppException(int app_errno, const char* file, const int line, const char* format, ...) {
+	va_list arg_list;
+	va_start(arg_list, format);
+	app_error_vset(&this->app_error, app_errno, file, line, format, arg_list);
+	va_end(arg_list);
+}
+
+app_error_t const* AppException::getAppError() const {
+	return &this->app_error;
 }
