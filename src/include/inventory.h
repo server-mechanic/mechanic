@@ -21,14 +21,14 @@
 #ifndef __MECHANIC_INVENTORY_H__
 #define __MECHANIC_INVENTORY_H__
 
-#include <sqlite3.h>
 #include <stdbool.h>
 #include "app_error.h"
 #include "config.h"
 #include "migration.h"
+#include "inventory_db.h"
 
 typedef struct {
-	sqlite3 *db;
+	InventoryDb* db;
 	config_t* config;
 } inventory_t;
 

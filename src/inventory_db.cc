@@ -23,6 +23,7 @@
 #include "string_util.h"
 #include "file_util.h"
 #include "inventory.h"
+#include "inventory_db.h"
 #include <dirent.h>
 #include <stdio.h>
 #include <errno.h>
@@ -41,101 +42,104 @@ static db_migration_t db_migrations[] = {
 	{ 0, NULL, NULL }
 };
 
-void inventory_db_mark_migration_as_started(sqlite3* db, const char* migration_name, app_error_t* app_error) {
+InventoryDb::InventoryDb() {}
+InventoryDb::~InventoryDb() {}
+
+void InventoryDb::inventory_db_mark_migration_as_started(const char* migration_name, app_error_t* app_error) {
 	int rc;
 	sqlite3_stmt *stmt;
 
-	rc = sqlite3_prepare_v2(db, "insert or replace into migration ( id, name, start_time, end_time, status ) values ( (select id from migration where name = ?), ?, strftime('%Y-%m-%d %H:%M:%f', 'now'), NULL, 'STARTED' )", -1, &stmt, 0);
+	rc = sqlite3_prepare_v2(this->db, "insert or replace into migration ( id, name, start_time, end_time, status ) values ( (select id from migration where name = ?), ?, strftime('%Y-%m-%d %H:%M:%f', 'now'), NULL, 'STARTED' )", -1, &stmt, 0);
 	if( rc != SQLITE_OK ) {
-		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as started failed. %s", sqlite3_errmsg(db));
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as started failed. %s", sqlite3_errmsg(this->db));
 		return;
 	}
 
 	rc = sqlite3_bind_text( stmt, 1, migration_name, -1, SQLITE_TRANSIENT );
 	if( rc != SQLITE_OK ) {
-		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as started failed. %s", sqlite3_errmsg(db));
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as started failed. %s", sqlite3_errmsg(this->db));
 		return;
 	}
 
 	rc = sqlite3_bind_text( stmt, 2, migration_name, -1, SQLITE_TRANSIENT );
 	if( rc != SQLITE_OK ) {
-		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as started failed. %s", sqlite3_errmsg(db));
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as started failed. %s", sqlite3_errmsg(this->db));
 		return;
 	}
 
 	rc = sqlite3_step( stmt );
 	if( rc != SQLITE_DONE ) {
-		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as started failed. %s", sqlite3_errmsg(db));
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as started failed. %s", sqlite3_errmsg(this->db));
 		return;
 	}
 
 	sqlite3_finalize(stmt);
 }
 
-void inventory_db_mark_migration_as_failed(sqlite3* db, const char* migration_name, app_error_t* app_error) {
+void InventoryDb::inventory_db_mark_migration_as_failed(const char* migration_name, app_error_t* app_error) {
 	int rc;
 	sqlite3_stmt *stmt;
 
-	rc = sqlite3_prepare_v2(db, "update migration set status='FAILURE', end_time=strftime('%Y-%m-%d %H:%M:%f', 'now') where name = ?", -1, &stmt, 0);
+	rc = sqlite3_prepare_v2(this->db, "update migration set status='FAILURE', end_time=strftime('%Y-%m-%d %H:%M:%f', 'now') where name = ?", -1, &stmt, 0);
 	if( rc != SQLITE_OK ) {
-		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as failed failed. %s", sqlite3_errmsg(db));
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as failed failed. %s", sqlite3_errmsg(this->db));
 		return;
 	}
 
 	rc = sqlite3_bind_text( stmt, 1, migration_name, -1, SQLITE_TRANSIENT );
 	if( rc != SQLITE_OK ) {
-		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as failed failed. %s", sqlite3_errmsg(db));
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as failed failed. %s", sqlite3_errmsg(this->db));
 		return;
 	}
 
 	rc = sqlite3_step( stmt );
 	if( rc != SQLITE_DONE ) {
-		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as failed failed. %s", sqlite3_errmsg(db));
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as failed failed. %s", sqlite3_errmsg(this->db));
 		return;
 	}
 
 	sqlite3_finalize(stmt);
 }
 
-void inventory_db_mark_migration_as_succeeded(sqlite3* db, const char* migration_name, app_error_t* app_error) {
+void InventoryDb::inventory_db_mark_migration_as_succeeded(const char* migration_name, app_error_t* app_error) {
 	int rc;
 	sqlite3_stmt *stmt;
 
-	rc = sqlite3_prepare_v2(db, "update migration set status='SUCCESS', end_time=strftime('%Y-%m-%d %H:%M:%f', 'now') where name = ?", -1, &stmt, 0);
+	rc = sqlite3_prepare_v2(this->db, "update migration set status='SUCCESS', end_time=strftime('%Y-%m-%d %H:%M:%f', 'now') where name = ?", -1, &stmt, 0);
 	if( rc != SQLITE_OK ) {
-		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as successful failed. %s", sqlite3_errmsg(db));
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as successful failed. %s", sqlite3_errmsg(this->db));
 		return;
 	}
 
 	rc = sqlite3_bind_text( stmt, 1, migration_name, -1, SQLITE_TRANSIENT );
 	if( rc != SQLITE_OK ) {
-		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as successful failed. %s", sqlite3_errmsg(db));
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as successful failed. %s", sqlite3_errmsg(this->db));
 		return;
 	}
 
 	rc = sqlite3_step( stmt );
 	if( rc != SQLITE_DONE ) {
-		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as successful failed. %s", sqlite3_errmsg(db));
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Marking migration as successful failed. %s", sqlite3_errmsg(this->db));
 		return;
 	}
 
 	sqlite3_finalize(stmt);
 }
 
-bool inventory_db_is_migration_done(sqlite3* db, const char* migration_name, app_error_t* app_error) {
+bool InventoryDb::inventory_db_is_migration_done(const char* migration_name, app_error_t* app_error) {
 	int result_count;
 	int rc;
 	sqlite3_stmt *stmt;
 
-	rc = sqlite3_prepare_v2(db, "SELECT count(*) FROM migration WHERE name = ? AND status = 'SUCCESS';", -1, &stmt, 0);
+	rc = sqlite3_prepare_v2(this->db, "SELECT count(*) FROM migration WHERE name = ? AND status = 'SUCCESS';", -1, &stmt, 0);
 	if( rc != SQLITE_OK ) {
-		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Querying if migration %s has been applied failed. %s", migration_name, sqlite3_errmsg(db));
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Querying if migration %s has been applied failed. %s", migration_name, sqlite3_errmsg(this->db));
 		return false;
 	}
 
 	rc = sqlite3_bind_text( stmt, 1, migration_name, -1, SQLITE_TRANSIENT );
 	if( rc != SQLITE_OK ) {
-		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Querying if migration %s has been applied failed. %s", migration_name, sqlite3_errmsg(db));
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Querying if migration %s has been applied failed. %s", migration_name, sqlite3_errmsg(this->db));
 		return false;
 	}
 
@@ -144,7 +148,7 @@ bool inventory_db_is_migration_done(sqlite3* db, const char* migration_name, app
 	}
 
 	if( rc != SQLITE_DONE ) {
-		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Querying if migration %s has been applied failed. %s", migration_name, sqlite3_errmsg(db));
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Querying if migration %s has been applied failed. %s", migration_name, sqlite3_errmsg(this->db));
 		return false;
 	}
 
@@ -301,13 +305,13 @@ static void update_db(sqlite3* db, app_error_t* app_error) {
 	LOG_DEBUG("Db is up to date.");
 }
 
-void inventory_db_list_migrations(sqlite3* db, list_migrations_callback_t list_migrations_callback, app_error_t* app_error) {
+void InventoryDb::inventory_db_list_migrations(list_migrations_callback_t list_migrations_callback, app_error_t* app_error) {
 	int rc;
 	sqlite3_stmt *stmt;
 
-	rc = sqlite3_prepare_v2(db, "SELECT id, name, start_time, end_time, status FROM migration ORDER BY name ASC;", -1, &stmt, 0);
+	rc = sqlite3_prepare_v2(this->db, "SELECT id, name, start_time, end_time, status FROM migration ORDER BY name ASC;", -1, &stmt, 0);
 	if( rc != SQLITE_OK ) {
-		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Querying migration list failed.", sqlite3_errmsg(db));
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Querying migration list failed.", sqlite3_errmsg(this->db));
 	}
 
 	while( (rc = sqlite3_step( stmt )) == SQLITE_ROW ) {
@@ -327,13 +331,13 @@ void inventory_db_list_migrations(sqlite3* db, list_migrations_callback_t list_m
 	}
 
 	if( rc != SQLITE_DONE ) {
-		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Querying migration list failed.", sqlite3_errmsg(db));
+		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Querying migration list failed.", sqlite3_errmsg(this->db));
 	}
 
 	sqlite3_finalize(stmt);
 }
 
-sqlite3* inventory_db_open(const char* inventory_db_path, app_error_t* app_error) {
+void InventoryDb::inventory_db_open(const char* inventory_db_path, app_error_t* app_error) {
 	sqlite3 *db = NULL;
 	int rc;
 
@@ -343,27 +347,28 @@ sqlite3* inventory_db_open(const char* inventory_db_path, app_error_t* app_error
 	rc = sqlite3_open(inventory_db_path, /* @in@ */ &db);
 	if( db == NULL ) {
 		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Opening database failed. Sqlite3 suspiciously failed to alloc mem.");
-		return NULL;
+		return;
 	}
 	else if( rc != SQLITE_OK ) {
 		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Opening database failed. (sqlite3 message=%s, errno=%s)", sqlite3_errmsg(db), strerror(errno));
-		return NULL;
+		return;
 	}
 
 	init_db(db, app_error);
 	if( !app_error_is_ok(app_error) ) {
-		return NULL;
+		return;
 	}
 
 	update_db(db, app_error);
 	if( !app_error_is_ok(app_error) ) {
-		return NULL;
+		return;
 	}
 
-	return db;
+	this->db = db;
 }
 
-void inventory_db_close(sqlite3* db, app_error_t* app_error) {
-	sqlite3_close(db);
+void InventoryDb::inventory_db_close(app_error_t* app_error) {
+	sqlite3_close(this->db);
+	this->db = NULL;
 }
 
