@@ -47,8 +47,25 @@ void migrate(const int argc, const char** argv, config_t* config, app_error_t* a
 
 	inventory_t* inventory = inventory_open(config, app_error);
 	migration_list_t* migration_list = NULL;
+	migration_list_t* pre_migration_list = NULL;
+	migration_list_t* post_migration_list = NULL;
 
 	migration_list = migration_list_alloc(8, app_error);
+	if( !app_error_is_ok(app_error) ) {
+		return;
+	}
+
+	pre_migration_list = migration_list_alloc(8, app_error);
+	if( !app_error_is_ok(app_error) ) {
+		return;
+	}
+
+	post_migration_list = migration_list_alloc(8, app_error);
+	if( !app_error_is_ok(app_error) ) {
+		return;
+	}
+
+	inventory_collect_pre_migrations(inventory, pre_migration_list, app_error);
 	if( !app_error_is_ok(app_error) ) {
 		return;
 	}
@@ -58,7 +75,22 @@ void migrate(const int argc, const char** argv, config_t* config, app_error_t* a
 		return;
 	}
 
+	inventory_collect_post_migrations(inventory, post_migration_list, app_error);
+	if( !app_error_is_ok(app_error) ) {
+		return;
+	}
+
+	apply_migrations(inventory, config, pre_migration_list, app_error);
+	if( !app_error_is_ok(app_error) ) {
+		return;
+	}
+
 	apply_migrations(inventory, config, migration_list, app_error);
+	if( !app_error_is_ok(app_error) ) {
+		return;
+	}
+
+	apply_migrations(inventory, config, post_migration_list, app_error);
 	if( !app_error_is_ok(app_error) ) {
 		return;
 	}
@@ -68,5 +100,7 @@ void migrate(const int argc, const char** argv, config_t* config, app_error_t* a
 	}
 
 	migration_list_free(migration_list, app_error);
+	migration_list_free(pre_migration_list, app_error);
+	migration_list_free(post_migration_list, app_error);
 	inventory_close(inventory, app_error);
 } 

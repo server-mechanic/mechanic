@@ -8,6 +8,12 @@
 ./etc/mechanic/migration.d/002_nowme.sh
 ./etc/mechanic/migration.d/003_nowme2.sh
 ./etc/mechanic/migration.d/004_stderr.sh
+./etc/mechanic/post-migration.d
+./etc/mechanic/post-migration.d/001_post.sh
+./etc/mechanic/pre-migration.d
+./etc/mechanic/pre-migration.d/001_pre.sh
+./post.ok
+./pre.ok
 ./var
 ./var/lib
 ./var/lib/mechanic
@@ -16,7 +22,9 @@
 ./var/lib/mechanic/tmp
 ./var/log
 ./var/log/mechanic.log
-1	001_first.sh	SUCCESS
-2	002_nowme.sh	SUCCESS
-3	003_nowme2.sh	SUCCESS
-4	004_stderr.sh	SUCCESS
+1	001_pre.sh	SUCCESS
+2	001_first.sh	SUCCESS
+3	002_nowme.sh	SUCCESS
+4	003_nowme2.sh	SUCCESS
+5	004_stderr.sh	SUCCESS
+6	001_post.sh	SUCCESS

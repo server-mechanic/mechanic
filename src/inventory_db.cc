@@ -305,11 +305,15 @@ static void update_db(sqlite3* db, app_error_t* app_error) {
 	LOG_DEBUG("Db is up to date.");
 }
 
-void InventoryDb::inventory_db_list_migrations(list_migrations_callback_t list_migrations_callback, app_error_t* app_error) {
+void InventoryDb::inventory_db_list_migrations(migration_order_t order, list_migrations_callback_t list_migrations_callback, app_error_t* app_error) {
 	int rc;
 	sqlite3_stmt *stmt;
 
-	rc = sqlite3_prepare_v2(this->db, "SELECT id, name, start_time, end_time, status FROM migration ORDER BY start_time ASC;", -1, &stmt, 0);
+	if( order == BY_ID ) {
+		rc = sqlite3_prepare_v2(this->db, "SELECT id, name, start_time, end_time, status FROM migration ORDER BY id ASC;", -1, &stmt, 0);
+	} else {
+		rc = sqlite3_prepare_v2(this->db, "SELECT id, name, start_time, end_time, status FROM migration ORDER BY start_time ASC;", -1, &stmt, 0);
+	}
 	if( rc != SQLITE_OK ) {
 		app_error_set(app_error, APP_ERROR_DB_ERROR, __FILE__, __LINE__, "Querying migration list failed.", sqlite3_errmsg(this->db));
 	}

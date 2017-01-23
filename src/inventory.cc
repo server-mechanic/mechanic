@@ -28,6 +28,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <sqlite3.h>
 #include <sys/stat.h>
@@ -80,9 +81,9 @@ void inventory_close(inventory_t* inventory, app_error_t* app_error) {
 	inventory->config = NULL;
 }
 
-void inventory_list_migrations(inventory_t* inventory, list_migrations_callback_t list_migrations_callback, app_error_t* app_error)
+void inventory_list_migrations(inventory_t* inventory, migration_order_t order, list_migrations_callback_t list_migrations_callback, app_error_t* app_error)
 {
-	inventory->db->inventory_db_list_migrations(list_migrations_callback, app_error);
+	inventory->db->inventory_db_list_migrations(order, list_migrations_callback, app_error);
 }
 
 bool is_migration_done(inventory_t* inventory, char* migration_name, app_error_t* app_error) {
@@ -109,7 +110,7 @@ static int compare_migrations_by_name(const void* a, const void* b) {
 	return result;
 }
 
-static void collect_migrations_from_dir(inventory_t* inventory, const char* dir_path, migration_list_t* list, app_error_t* app_error) {
+static void collect_migrations_from_dir(inventory_t* inventory, const char* dir_path, migration_list_t* list, bool check_if_applied, app_error_t* app_error) {
 	DIR *dir;
 	struct dirent *ent;
 	char path_buf[4000] = "";
@@ -124,7 +125,7 @@ static void collect_migrations_from_dir(inventory_t* inventory, const char* dir_
 
 	while( (ent=readdir(dir)) != NULL) {
 		if( ent->d_type == DT_REG ) {
-			if( !is_migration_done(inventory, ent->d_name, app_error) ) {
+			if( !check_if_applied || !is_migration_done(inventory, ent->d_name, app_error) ) {
 				string_util_strcpy(path_buf, 4000, dir_path);
 				string_util_strcat(path_buf, 4000, "/");
 				string_util_strcat(path_buf, 4000, ent->d_name);
@@ -143,28 +144,46 @@ static void collect_migrations_from_dir(inventory_t* inventory, const char* dir_
 	}
 }
 
-static void collect_migrations(inventory_t* inventory, migration_list_t* list, app_error_t* app_error) {
-	char cbuf[8000] = "";
+static void collect_migrations(inventory_t* inventory, const char* dirs_path, migration_list_t* list, bool check_if_applied, app_error_t* app_error) {
 	char path_buf[4000] = "";
 	size_t pos;
-
-	config_get_migration_dirs_path(inventory->config, cbuf, 8000, app_error);
-	LOG_DEBUG1("Migrations dirs path is %s.", cbuf);
-
-	for(pos=0; pos<strlen(cbuf); pos=pos+strlen(path_buf)+1 ) {
-		string_util_substring(path_buf, 4000, &cbuf[pos], ':');
-		collect_migrations_from_dir(inventory, path_buf, list, app_error);
-	}
-}
-
-void inventory_collect_migrations(inventory_t* inventory, migration_list_t* list, app_error_t* app_error) {
 	size_t i;
 
-	collect_migrations(inventory, list, app_error);
+	for(pos=0; pos<strlen(dirs_path); pos=pos+strlen(path_buf)+1 ) {
+		string_util_substring(path_buf, 4000, &dirs_path[pos], ':');
+		collect_migrations_from_dir(inventory, path_buf, list, check_if_applied, app_error);
+	}
 
 	qsort(list->migrations, list->length, sizeof(migration_t*), compare_migrations_by_name);
 	LOG_DEBUG1("%d migration(s) pending...", list->length);
 	for(i=0; i<list->length; ++i) {
 		LOG_DEBUG2("#%d: %s", i, list->migrations[i]->name);
 	}
+}
+
+void inventory_collect_migrations(inventory_t* inventory, migration_list_t* list, app_error_t* app_error) {
+	char cbuf[8000] = "";
+
+	config_get_migration_dirs_path(inventory->config, cbuf, 8000, app_error);
+	LOG_DEBUG1("Migrations dirs path is %s.", cbuf);
+
+	collect_migrations(inventory, cbuf, list, true, app_error);
+}
+
+void inventory_collect_pre_migrations(inventory_t* inventory, migration_list_t* list, app_error_t* app_error) {
+	char cbuf[8000] = "";
+
+	config_get_pre_migration_dirs_path(inventory->config, cbuf, 8000, app_error);
+	LOG_DEBUG1("Migrations dirs path is %s.", cbuf);
+
+	collect_migrations(inventory, cbuf, list, false, app_error);
+}
+
+void inventory_collect_post_migrations(inventory_t* inventory, migration_list_t* list, app_error_t* app_error) {
+	char cbuf[8000] = "";
+
+	config_get_post_migration_dirs_path(inventory->config, cbuf, 8000, app_error);
+	LOG_DEBUG1("Migrations dirs path is %s.", cbuf);
+
+	collect_migrations(inventory, cbuf, list, false, app_error);
 }

@@ -32,7 +32,7 @@ for TEST_DIR in $(find $TESTS_DIR -mindepth 1 -maxdepth 1 -type d); do
   mkdir -p $(dirname $TEST_TMP_DIR)
   tar xfz $BUILD_DIR/bundle.tgz -C $TEST_TMP_DIR
   cp -R $TEST_DIR/input/* $TEST_TMP_DIR
-  find $TEST_TMP_DIR
+  #find $TEST_TMP_DIR
   for i in 1 2; do
     echo "Run #$i"
     if [[ ! -f "$TEST_DIR/run-test.sh" ]]; then
@@ -51,7 +51,7 @@ for TEST_DIR in $(find $TESTS_DIR -mindepth 1 -maxdepth 1 -type d); do
     find . | grep -v /usr | sort -V >> $TEST_TMP_RESULT
     TEST_ROOT=$TEST_TMP_DIR \
 	MECHANIC_ROOT_DIR=$TEST_TMP_DIR \
-  	$TEST_TMP_DIR/usr/sbin/mechanic list-migrations | cut --delimiter='	' -f 1,2,5 >> $TEST_TMP_RESULT
+  	$TEST_TMP_DIR/usr/sbin/mechanic list-migrations --order-by=id | cut --delimiter='	' -f 1,2,5 >> $TEST_TMP_RESULT
     #cat $TEST_TMP_RESULT
     diff $TEST_DIR/output $TEST_TMP_RESULT
     DIFF_EXIT_CODE=$?

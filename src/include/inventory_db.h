@@ -26,6 +26,8 @@
 #include "app_error.h"
 #include "migration.h"
 
+typedef enum { BY_ID, BY_START_DATE } migration_order_t;
+
 typedef void (*inventory_db_list_migrations_callback_t)(int id, const char *name, const char* start_time, const char* end_time, const char* status);
 
 class InventoryDb {
@@ -38,7 +40,7 @@ class InventoryDb {
     void inventory_db_mark_migration_as_failed(const char* migration_name, app_error_t* app_error);
     void inventory_db_mark_migration_as_started(const char* migration_name, app_error_t* app_error);
     bool inventory_db_is_migration_done(const char* migration_name, app_error_t* app_error);
-    void inventory_db_list_migrations(inventory_db_list_migrations_callback_t callback, app_error_t* app_error);
+    void inventory_db_list_migrations(migration_order_t order, inventory_db_list_migrations_callback_t callback, app_error_t* app_error);
     void inventory_db_close(app_error_t* app_error);
 
   private:

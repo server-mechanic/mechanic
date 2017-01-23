@@ -33,12 +33,16 @@
 #define CONFIG_SECTION_MAIN "main"
 #define CONFIG_KEY_LOG_FILE "log_file"
 #define CONFIG_KEY_MIGRATION_DIRS "migration_dirs"
+#define CONFIG_KEY_PRE_MIGRATION_DIRS "pre_migration_dirs"
+#define CONFIG_KEY_POST_MIGRATION_DIRS "post_migration_dirs"
 #define CONFIG_KEY_STATE_DIR "state_dir"
 #define CONFIG_KEY_RUN_DIR "run_dir"
 
 typedef struct {
 	char log_file_path[PATH_MAX_LENGTH];
 	char migration_dirs_path[PATH_MAX_LENGTH];
+	char pre_migration_dirs_path[PATH_MAX_LENGTH];
+	char post_migration_dirs_path[PATH_MAX_LENGTH];
 	char state_dir[PATH_MAX_LENGTH];
 	char run_dir[PATH_MAX_LENGTH];
 } config_t;
@@ -49,6 +53,8 @@ void config_get_log_file_path(config_t* config, char* buf, size_t buf_cap, app_e
 void config_get_state_dir_path(config_t* config, char* buf, size_t buf_cap, app_error_t* app_error);
 void config_get_run_dir(config_t* config, char* buf, size_t buf_cap, app_error_t* app_error);
 void config_get_migration_dirs_path(config_t* config, char* buf, size_t buf_cap, app_error_t* app_error);
+void config_get_pre_migration_dirs_path(config_t* config, char* buf, size_t buf_cap, app_error_t* app_error);
+void config_get_post_migration_dirs_path(config_t* config, char* buf, size_t buf_cap, app_error_t* app_error);
 void config_get_etc_dir_path(config_t* config, char* buf, size_t buf_cap, app_error_t* app_error);
 void config_get_inventory_db_path(config_t* config, char* cbuf, size_t buf_cap, app_error_t* app_error);
 

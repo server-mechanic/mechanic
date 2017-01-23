@@ -37,9 +37,11 @@ typedef void (*list_migrations_callback_t)(int id, const char *name, const char*
 inventory_t* inventory_open(config_t* config, app_error_t* app_error);
 void inventory_close(inventory_t* inventory, app_error_t* app_error);
 void inventory_collect_migrations(inventory_t* inventory, migration_list_t* list, app_error_t* app_error);
+void inventory_collect_pre_migrations(inventory_t* inventory, migration_list_t* list, app_error_t* app_error);
+void inventory_collect_post_migrations(inventory_t* inventory, migration_list_t* list, app_error_t* app_error);
 void inventory_mark_migration_started(inventory_t* inventory, migration_t* migration, app_error_t* app_error);
 void inventory_mark_migration_as_done(inventory_t* inventory, migration_t* migration, app_error_t* app_error);
 void inventory_mark_migration_as_failed(inventory_t* inventory, migration_t* migration, app_error_t* app_error);
-void inventory_list_migrations(inventory_t* inventory, list_migrations_callback_t list_migrations_callback, app_error_t* app_error);
+void inventory_list_migrations(inventory_t* inventory, migration_order_t order, list_migrations_callback_t list_migrations_callback, app_error_t* app_error);
 
 #endif

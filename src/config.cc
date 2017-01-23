@@ -65,6 +65,14 @@ void config_get_migration_dirs_path( config_t* config, char* buf, size_t buf_cap
 	get_expanded_path(buf, buf_cap, config->migration_dirs_path, app_error);
 }
 
+void config_get_pre_migration_dirs_path( config_t* config, char* buf, size_t buf_cap, app_error_t* app_error) {
+	get_expanded_path(buf, buf_cap, config->pre_migration_dirs_path, app_error);
+}
+
+void config_get_post_migration_dirs_path( config_t* config, char* buf, size_t buf_cap, app_error_t* app_error) {
+	get_expanded_path(buf, buf_cap, config->post_migration_dirs_path, app_error);
+}
+
 void config_get_log_file_path(/*@unused@*/ config_t* config, char* buf, size_t buf_cap, app_error_t* app_error) {
 	const char* path = config->log_file_path;
 	if( NULL == path ) {
@@ -86,6 +94,10 @@ static void handle_key_value(config_t* config, const char* section, const char* 
 		string_util_strcpy(config->state_dir, PATH_MAX_LENGTH, value);
 	} else if( strcmp(CONFIG_KEY_MIGRATION_DIRS, key) == 0 ) {
 		string_util_strcpy(config->migration_dirs_path, PATH_MAX_LENGTH, value);
+	} else if( strcmp(CONFIG_KEY_PRE_MIGRATION_DIRS, key) == 0 ) {
+		string_util_strcpy(config->pre_migration_dirs_path, PATH_MAX_LENGTH, value);
+	} else if( strcmp(CONFIG_KEY_POST_MIGRATION_DIRS, key) == 0 ) {
+		string_util_strcpy(config->post_migration_dirs_path, PATH_MAX_LENGTH, value);
 	} else if( strcmp(CONFIG_KEY_RUN_DIR, key) == 0 ) {
 		string_util_strcpy(config->run_dir, PATH_MAX_LENGTH, value);
 	} else {
@@ -96,6 +108,8 @@ static void handle_key_value(config_t* config, const char* section, const char* 
 static void apply_defaults(config_t* config, app_error_t* app_error) {
 	handle_key_value( config, CONFIG_SECTION_MAIN, CONFIG_KEY_LOG_FILE, "${MECHANIC_ROOT_DIR}/var/log/mechanic.log", app_error);
 	handle_key_value( config, CONFIG_SECTION_MAIN, CONFIG_KEY_MIGRATION_DIRS, "${MECHANIC_ROOT_DIR}/etc/mechanic/migration.d:${MECHANIC_ROOT_DIR}/var/lib/mechanic/migration.d", app_error );
+	handle_key_value( config, CONFIG_SECTION_MAIN, CONFIG_KEY_PRE_MIGRATION_DIRS, "${MECHANIC_ROOT_DIR}/etc/mechanic/pre-migration.d:${MECHANIC_ROOT_DIR}/var/lib/mechanic/pre-migration.d", app_error );
+	handle_key_value( config, CONFIG_SECTION_MAIN, CONFIG_KEY_POST_MIGRATION_DIRS, "${MECHANIC_ROOT_DIR}/etc/mechanic/post-migration.d:${MECHANIC_ROOT_DIR}/var/lib/mechanic/post-migration.d", app_error );
 	handle_key_value( config, CONFIG_SECTION_MAIN, CONFIG_KEY_STATE_DIR, "${MECHANIC_ROOT_DIR}/var/lib/mechanic/state", app_error );
 	handle_key_value( config, CONFIG_SECTION_MAIN, CONFIG_KEY_RUN_DIR, "${MECHANIC_ROOT_DIR}/var/lib/mechanic/tmp", app_error );
 }
