@@ -69,7 +69,7 @@ bundle:
 	@echo "Preparing bundle..." && \
 	cp -R ${PWD}/src/bundle ${PWD}/target/ && \
 	mkdir -p ${PWD}/src/bundle/usr/sbin/ && \
-	cp ${PWD}/target/bin/mechanic ${PWD}/target/bundle/usr/sbin && \
+	cp ${PWD}/target/bin/mechanic ${PWD}/target/bundle/usr/sbin/ && \
 	cd ${PWD}/target/bundle && tar czf ../bundle.tgz .
 
 .PHONY:	integration-tests
