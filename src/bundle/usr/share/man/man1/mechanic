@@ -51,8 +51,8 @@ Directories the mechanic collects migrations from
 .SH AUTHOR
 The Server Mechanic Team, <http://server-mechanic.org>
 .SH COPYRIGHT
-Copyright \(co 2016 the Server Mechanic Team.
-License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+Copyright \(co 2016,2017 the Server Mechanic Team.
+License Apache License, Version 2.0, http://www.apache.org/licenses/LICENSE-2.0
 .br
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.

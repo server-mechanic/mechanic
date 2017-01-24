@@ -3,7 +3,7 @@ Version: 1
 Release: 0
 Summary: Simple server migration tool.
 Source0: mechanic-sources.tar.gz
-License: GPL
+License: Apache License, 2.0
 Group: Rahul
 BuildArch: x86_64
 BuildRoot: %{_tmppath}/%{name}-buildroot
