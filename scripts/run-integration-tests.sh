@@ -23,7 +23,8 @@ PROJECT_DIR=$(cd `dirname $0`/..; pwd)
 TESTS_DIR=$PROJECT_DIR/integration-tests
 BUILD_DIR=$PROJECT_DIR/target
 
-for TEST_DIR in $(find $TESTS_DIR -mindepth 1 -maxdepth 1 -type d); do
+function runTest() {
+  TEST_DIR=$1
   TEST_NAME=$(basename $TEST_DIR)
   TEST_TMP_DIR=$BUILD_DIR/$(mktemp -u -d --suffix=-mechanic-it)
   mkdir -p $TEST_TMP_DIR
@@ -31,7 +32,9 @@ for TEST_DIR in $(find $TESTS_DIR -mindepth 1 -maxdepth 1 -type d); do
   TEST_TMP_RESULT=$BUILD_DIR/$(mktemp -u --suffix=-mechanic-it)
   mkdir -p $(dirname $TEST_TMP_DIR)
   tar xfz $BUILD_DIR/bundle.tgz -C $TEST_TMP_DIR
-  cp -R $TEST_DIR/input/* $TEST_TMP_DIR
+  if [ -d $TEST_DIR/input/ ]; then
+    cp -R $TEST_DIR/input/* $TEST_TMP_DIR
+  fi
   #find $TEST_TMP_DIR
   for i in 1 2; do
     echo "Run #$i"
@@ -63,5 +66,16 @@ for TEST_DIR in $(find $TESTS_DIR -mindepth 1 -maxdepth 1 -type d); do
       exit 1
     fi
   done
-done
+}
+
+if [ $# = 0 ]; then
+  for TEST_DIR in $(find $TESTS_DIR -mindepth 1 -maxdepth 1 -type d); do
+    runTest $TEST_DIR
+  done
+else
+  for TEST_DIR in $*; do
+    runTest $TESTS_DIR/$TEST_DIR
+  done
+fi
+
 exit 0

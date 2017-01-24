@@ -1,0 +1,11 @@
+1
+.
+./etc
+./etc/mechanic.conf
+./var
+./var/lib
+./var/lib/mechanic
+./var/lib/mechanic/state
+./var/lib/mechanic/state/inventory.db
+./var/log
+./var/log/mechanic.log
