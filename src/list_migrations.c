@@ -26,7 +26,9 @@ static void print_migration(int id, const char* name, const char* start_time, co
 }
 
 static const char* get_opt_if_defined(const int argc, const char** argv, const char* flag) {
-	for(int i=0; i<argc; ++i) {
+	int i;
+
+	for(i=0; i<argc; ++i) {
 		if( strstr(argv[i], flag) == argv[i] ) {
 			return argv[i];
 		}

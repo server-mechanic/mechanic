@@ -43,7 +43,7 @@ compile:
 	@mkdir -p ${PWD}/target/bin/ && \
 	cd src && \
 	echo "Compiling..." && \
-	gcc -Wall -g -I ./include/ -c *.c && \
+	gcc -pedantic -Wall -g -I ./include/ -c *.c && \
 	echo "Linking..." && \
 	gcc $$(find . -name "*.o" | grep -v _test.o) -lm -lsqlite3 -o ../target/bin/mechanic && \
 	for i in $$(find . -name "*_test.c"); do \
