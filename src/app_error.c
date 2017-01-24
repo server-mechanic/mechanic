@@ -78,14 +78,3 @@ void app_error_abort(app_error_t const* app_error) {
 	log_error(app_error->file, app_error->line, app_error->message);
 	exit(app_error->exit_code);
 }
-
-AppException::AppException(int app_errno, const char* file, const int line, const char* format, ...) {
-	va_list arg_list;
-	va_start(arg_list, format);
-	app_error_vset(&this->app_error, app_errno, file, line, format, arg_list);
-	va_end(arg_list);
-}
-
-app_error_t const* AppException::getAppError() const {
-	return &this->app_error;
-}

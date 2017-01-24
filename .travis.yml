@@ -2,7 +2,7 @@ os: linux
 dist: trusty
 group: stable
 
-language: cpp
+language: c
 compiler:
   - gcc
 

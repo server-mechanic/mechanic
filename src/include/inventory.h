@@ -28,7 +28,7 @@
 #include "inventory_db.h"
 
 typedef struct {
-	InventoryDb* db;
+	inventory_db_t* db;
 	config_t* config;
 } inventory_t;
 

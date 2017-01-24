@@ -63,8 +63,7 @@ inventory_t* inventory_open(config_t* config, app_error_t* app_error) {
 		return NULL;
 	}
 
-	inventory.db = new InventoryDb();
-	inventory.db->inventory_db_open(cbuf, app_error);
+	inventory.db = inventory_db_open(cbuf, app_error);
 	if( !app_error_is_ok(app_error) ) {
 		return NULL;
 	}
@@ -75,31 +74,30 @@ inventory_t* inventory_open(config_t* config, app_error_t* app_error) {
 }
 
 void inventory_close(inventory_t* inventory, app_error_t* app_error) {
-	inventory->db->inventory_db_close(app_error);
-	delete inventory->db;
+	inventory_db_close(inventory->db, app_error);
 	inventory->db = NULL;
 	inventory->config = NULL;
 }
 
 void inventory_list_migrations(inventory_t* inventory, migration_order_t order, list_migrations_callback_t list_migrations_callback, app_error_t* app_error)
 {
-	inventory->db->inventory_db_list_migrations(order, list_migrations_callback, app_error);
+	inventory_db_list_migrations(inventory->db, order, list_migrations_callback, app_error);
 }
 
 bool is_migration_done(inventory_t* inventory, char* migration_name, app_error_t* app_error) {
-	return inventory->db->inventory_db_is_migration_done(migration_name, app_error);
+	return inventory_db_is_migration_done(inventory->db, migration_name, app_error);
 }
 
 void inventory_mark_migration_started(inventory_t* inventory, migration_t* migration, app_error_t* app_error) {
-	inventory->db->inventory_db_mark_migration_as_started(migration->name, app_error);
+	inventory_db_mark_migration_as_started(inventory->db, migration->name, app_error);
 }
 
 void inventory_mark_migration_as_done(inventory_t* inventory, migration_t* migration, app_error_t* app_error) {
-	inventory->db->inventory_db_mark_migration_as_succeeded(migration->name, app_error);
+	inventory_db_mark_migration_as_succeeded(inventory->db, migration->name, app_error);
 }
 
 void inventory_mark_migration_as_failed(inventory_t* inventory, migration_t* migration, app_error_t* app_error) {
-	inventory->db->inventory_db_mark_migration_as_failed(migration->name, app_error);
+	inventory_db_mark_migration_as_failed(inventory->db, migration->name, app_error);
 }
 
 static int compare_migrations_by_name(const void* a, const void* b) {

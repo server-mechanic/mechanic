@@ -56,14 +56,4 @@ void app_error_check(app_error_t const* app_error);
 void app_error_set(app_error_t* app_error, int app_errno, const char* file, const int line, const char* format, ...);
 void app_error_vset(app_error_t* app_error, int app_errno, const char* file, const int line, const char* format, va_list arg_list);
 
-class AppException {
-  public:
-    AppException(int app_errno, const char* file, const int line, const char* format, ...);
-
-    app_error_t const* getAppError() const;
-
-  private:
-    app_error_t app_error;
-};
-
 #endif

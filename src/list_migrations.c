@@ -41,7 +41,7 @@ static const char* get_opt_if_defined(const int argc, const char** argv, const c
 	return NULL;
 }
 
-static migration_order_t get_order_opt(const int argc, const char** argv) {
+static migration_order_t get_order_opt(const int argc, const char** argv, app_error_t* app_error) {
 	const char* order_opt = get_opt_if_defined(argc, argv, "--order-by=");
 
 	if( order_opt == NULL ) {
@@ -54,7 +54,8 @@ static migration_order_t get_order_opt(const int argc, const char** argv) {
 		return BY_ID;
 	}
 
-	throw AppException(APP_ERROR_OPT_ERROR, __FILE__, __LINE__, "Invalid --order-by value: \"%s\". Valid ones are: id, start_date.", order_opt);
+	app_error_set(app_error, APP_ERROR_OPT_ERROR, __FILE__, __LINE__, "Invalid --order-by value: \"%s\". Valid ones are: id, start_date.", order_opt);
+	return BY_ID;
 }
 
 void list_migrations(const int argc, const char** argv, config_t* config, app_error_t* app_error) {
@@ -65,7 +66,10 @@ void list_migrations(const int argc, const char** argv, config_t* config, app_er
 		return;
 	}
 
-	order = get_order_opt(argc, argv);
+	order = get_order_opt(argc, argv, app_error);
+	if( !app_error_is_ok(app_error) ) {
+		return;
+	}
 
 	inventory_list_migrations(inventory, order, print_migration, app_error);
 	if( !app_error_is_ok(app_error) ) {

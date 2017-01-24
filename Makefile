@@ -50,12 +50,12 @@ compile:
 	@mkdir -p ${PWD}/target/bin/ && \
 	cd src && \
 	echo "Compiling..." && \
-	g++ -Wall -g -I ./include/ -c *.cc && \
+	gcc -Wall -g -I ./include/ -c *.c && \
 	echo "Linking..." && \
-	g++ $$(find . -name "*.o" | grep -v _test.o) -lm -lsqlite3 -o ../target/bin/mechanic && \
-	for i in $$(find . -name "*_test.cc"); do \
-		echo "Linking Test $$(basename $$i .cc)..." && \
-		g++ $$(basename $$i .cc).o $$(find . -name "*.o" | grep -v _test.o | grep -v mechanic.o) -lm -lsqlite3 -o ../target/bin/$$(basename $$i .cc); \
+	gcc $$(find . -name "*.o" | grep -v _test.o) -lm -lsqlite3 -o ../target/bin/mechanic && \
+	for i in $$(find . -name "*_test.c"); do \
+		echo "Linking Test $$(basename $$i .c)..." && \
+		gcc $$(basename $$i .c).o $$(find . -name "*.o" | grep -v _test.o | grep -v mechanic.o) -lm -lsqlite3 -o ../target/bin/$$(basename $$i .c); \
 	done
 
 tests:

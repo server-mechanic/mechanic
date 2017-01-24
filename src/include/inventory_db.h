@@ -26,25 +26,20 @@
 #include "app_error.h"
 #include "migration.h"
 
+typedef struct {
+  sqlite3* db;
+} inventory_db_t;
+
 typedef enum { BY_ID, BY_START_DATE } migration_order_t;
 
 typedef void (*inventory_db_list_migrations_callback_t)(int id, const char *name, const char* start_time, const char* end_time, const char* status);
 
-class InventoryDb {
-  public:
-    InventoryDb();
-    ~InventoryDb();
-
-    void inventory_db_open(const char* inventory_db_path, app_error_t* app_error);
-    void inventory_db_mark_migration_as_succeeded(const char* migration_name, app_error_t* app_error);
-    void inventory_db_mark_migration_as_failed(const char* migration_name, app_error_t* app_error);
-    void inventory_db_mark_migration_as_started(const char* migration_name, app_error_t* app_error);
-    bool inventory_db_is_migration_done(const char* migration_name, app_error_t* app_error);
-    void inventory_db_list_migrations(migration_order_t order, inventory_db_list_migrations_callback_t callback, app_error_t* app_error);
-    void inventory_db_close(app_error_t* app_error);
-
-  private:
-    sqlite3* db;
-};
+inventory_db_t* inventory_db_open(const char* inventory_db_path, app_error_t* app_error);
+void inventory_db_mark_migration_as_succeeded(inventory_db_t* inventory_db, const char* migration_name, app_error_t* app_error);
+void inventory_db_mark_migration_as_failed(inventory_db_t* inventory_db, const char* migration_name, app_error_t* app_error);
+void inventory_db_mark_migration_as_started(inventory_db_t* inventory_db, const char* migration_name, app_error_t* app_error);
+bool inventory_db_is_migration_done(inventory_db_t* inventory_db, const char* migration_name, app_error_t* app_error);
+void inventory_db_list_migrations(inventory_db_t* inventory_db, migration_order_t order, inventory_db_list_migrations_callback_t callback, app_error_t* app_error);
+void inventory_db_close(inventory_db_t* db, app_error_t* app_error);
 
 #endif

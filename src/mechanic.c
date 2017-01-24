@@ -106,25 +106,21 @@ int main(const int argc, const char** argv) {
 	app_error_t app_error;
 	config_t* config;
 
-	try {
-		app_error_clear(&app_error);
+	app_error_clear(&app_error);
 
-		init_default_log();
+	init_default_log();
 
-		config = config_get(&app_error);
-		app_error_check(&app_error);
+	config = config_get(&app_error);
+	app_error_check(&app_error);
 
-		log_file = open_log(argc, argv, config, &app_error);
-		app_error_check(&app_error);
+	log_file = open_log(argc, argv, config, &app_error);
+	app_error_check(&app_error);
 
-		run_command(argc, argv, config, &app_error);
-		app_error_check(&app_error);
+	run_command(argc, argv, config, &app_error);
+	app_error_check(&app_error);
 
-		close_log(log_file);
-		config_free(config);
+	close_log(log_file);
+	config_free(config);
 	
-		return 0;
-	} catch( AppException const &ex ) {
-		app_error_check(ex.getAppError());
-	}
+	return 0;
 }
