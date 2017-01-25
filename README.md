@@ -6,6 +6,18 @@
 
 #### Evolve your containers and virtual machines more easily.
 
+## Features
+
+### Pros
+* Evolve your servers step by step.
+* Write server migrations in your favorite language.
+* Use the standard tools developed for the job, e.g. apt, yum, dnf.
+* Focus on the migrations instead of developing reusable plugins.
+* Minimal overhead, no central server required.
+
+### Cons
+* List of migrations can get very long for new installs.
+
 ## What Server Mechanic is for?
 If you want to manage your machines in a traceable and repeatable way one strategy is the creation of "infrastructure as code".
 
@@ -18,18 +30,6 @@ Server Mechanic is considered a lightweight alternative to tools like puppet, an
 Docker already utilizes the step by step approach with the commands in your Dockerfile. These commands are run at container image build time. So you have full access to the container's internal state. But external volumes injected into a container instance cannot be manipulated by Dockerfile commands. Here Server Mechanic comes into play.
 
 Server Mechanic gets executed on container startup, applies your migration which migrates the state in your volumes, then container startup proceeds. So you can roll out adjustments to external volumes with new container versions and containers and volumes stay in sync.
-
-## Features
-
-### Pros
-* Evolve your servers step by step.
-* Write server migrations in your favorite language.
-* Use the standard tools developed for the job, e.g. apt, yum, dnf.
-* Focus on the migrations instead of developing reusable plugins.
-* Minimal overhead, no central server required.
-
-### Cons
-* List of migrations can get very long for new installs.
 
 ## Status
 
