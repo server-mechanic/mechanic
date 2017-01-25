@@ -4,6 +4,7 @@
 from mechanic.Mechanic import Mechanic
 from mechanic.MechanicCommandArgs import MechanicCommandArgs
 from mechanic.MigrationFailedException import MigrationFailedException
+from mechanic.MechanicException import MechanicException
 from mechanic.FollowUpCommandFailedException import FollowUpCommandFailedException
 import sys
 
@@ -23,11 +24,14 @@ class MechanicCommand:
       else:
         self.mechanic.getDefaultCommand()(self.mechanic).run(self.args)
     except MigrationFailedException as e:
-      self.logger.error(e)
+      self.logger.error(e.message)
       return 2
     except FollowUpCommandFailedException as e:
-      self.logger.error(e)
+      self.logger.error(e.message)
       return 3
+    except MechanicException as e:
+      self.logger.error(e.message)
+      return 1
     except Exception as e:
       self.logger.error(e)
       return 1

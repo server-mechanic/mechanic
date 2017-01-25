@@ -13,6 +13,8 @@ class Config:
     self.configFile = "${MECHANIC_ROOT_DIR}/etc/mechanic.conf"
     self.logFile = "${MECHANIC_ROOT_DIR}/var/log/mechanic.log"
     self.migrationDirs = ["${MECHANIC_ROOT_DIR}/etc/mechanic/migration.d", "${MECHANIC_ROOT_DIR}/var/lib/mechanic/migration.d"]
+    self.preMigrationDirs = ["${MECHANIC_ROOT_DIR}/etc/mechanic/pre-migration.d", "${MECHANIC_ROOT_DIR}/var/lib/mechanic/pre-migration.d"]
+    self.postMigrationDirs = ["${MECHANIC_ROOT_DIR}/etc/mechanic/post-migration.d", "${MECHANIC_ROOT_DIR}/var/lib/mechanic/post-migration.d"]
     self.inventoryDbFile = "${MECHANIC_ROOT_DIR}/var/lib/mechanic/state/inventory.db"
     self.migrationTmpDir = "${MECHANIC_ROOT_DIR}/var/lib/mechanic/tmp/"
   
@@ -28,9 +30,23 @@ class Config:
   def __expand(self, path):
     return path.replace("${MECHANIC_ROOT_DIR}", self.mechanicRootDir)
 
+  def getPreMigrationDirs(self):
+    dirs = []
+    for dir in self.preMigrationDirs:
+      dirs.append(self.__expand(dir))
+
+    return dirs
+
   def getMigrationDirs(self):
     dirs = []
     for dir in self.migrationDirs:
+      dirs.append(self.__expand(dir))
+
+    return dirs
+
+  def getPostMigrationDirs(self):
+    dirs = []
+    for dir in self.postMigrationDirs:
       dirs.append(self.__expand(dir))
 
     return dirs

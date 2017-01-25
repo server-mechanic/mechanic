@@ -21,9 +21,20 @@ class MigrateCommand:
     migrations = self.inventory.listUnappliedMigrations()
     self.logger.debug("%s migration(s) found." % len(migrations))
     if len(migrations) > 0:
+      preMigrations = self.inventory.listPreMigrations()
+      postMigrations = self.inventory.listPostMigrations()
+
       makedirs(self.config.getMigrationTmpDir())
+      for migration in preMigrations:
+        self.logger.info("Applying pre migration %s..." % migration.getName())
+        self.migrationExecutor.applyMigration(migration)
+
       for migration in migrations:
         self.logger.info("Applying migration %s..." % migration.getName())
+        self.migrationExecutor.applyMigration(migration)
+
+      for migration in postMigrations:
+        self.logger.info("Applying post migration %s..." % migration.getName())
         self.migrationExecutor.applyMigration(migration)
 
     if args.followUpCommand is not None:
@@ -31,7 +42,6 @@ class MigrateCommand:
 
   def __execFollowUpCommand(self, followUpCommand):
     try:
-      print "executing %s" % followUpCommand[0]
       environment = { "MECHANIC_ROOT_DIR": self.config.mechanicRootDir }
       exitCode = os.execve(followUpCommand[0], followUpCommand, environment)
       if exitCode != 0:

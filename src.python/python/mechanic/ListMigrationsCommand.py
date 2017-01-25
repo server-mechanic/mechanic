@@ -3,6 +3,7 @@
 
 from mechanic.Config import Config
 from mechanic.Inventory import Inventory
+from mechanic.MechanicException import MechanicException
 
 class ListMigrationsCommand:
   description = "List migrations."
@@ -12,5 +13,9 @@ class ListMigrationsCommand:
     self.inventory = mechanic.getInventory()
 
   def run(self, args):
-    for migration in self.inventory.listMigrations():
+    orderBy = args.getSubOpt("order-by", "start_date")
+    if orderBy != "start_date" and orderBy != "id":
+      raise MechanicException("Invalid --order-by value: %s." % (orderBy))
+
+    for migration in self.inventory.listMigrations(orderBy):
       print "%d\t%s\t%s\t%s\t%s" % (migration.getId(), migration.getName(), migration.getStartTime(), migration.getEndTime(), migration.getStatus())

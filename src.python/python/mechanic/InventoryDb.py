@@ -31,9 +31,16 @@ class InventoryDb:
     succeeded = count > 0
     return succeeded
 
-  def listMigrations(self):
+  def listMigrations(self, orderBy):
     migrations = []
-    for row in self.cursor.execute("SELECT id, name, start_time, end_time, status FROM migration ORDER BY id asc"):
+    if orderBy == 'id':
+      sql = "SELECT id, name, start_time, end_time, status FROM migration ORDER BY id asc"
+    elif orderBy == 'start_date':
+      sql = "SELECT id, name, start_time, end_time, status FROM migration ORDER BY start_time asc"
+    else:
+      sql = "SELECT id, name, start_time, end_time, status FROM migration ORDER BY id asc"
+
+    for row in self.cursor.execute(sql):
       id=row[0]
       file=None
       name=row[1]

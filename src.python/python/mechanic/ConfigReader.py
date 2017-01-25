@@ -22,6 +22,8 @@ class ConfigReader:
     loader.add_section("main")
     loader.set("main", "log_file", config.logFile)
     loader.set("main", "migration_dirs", join(config.migrationDirs, ":"))
+    loader.set("main", "pre_migration_dirs", join(config.preMigrationDirs, ":"))
+    loader.set("main", "post_migration_dirs", join(config.postMigrationDirs, ":"))
     loader.read(configFile)
 
     config.logFile = loader.get("main", "log_file")
