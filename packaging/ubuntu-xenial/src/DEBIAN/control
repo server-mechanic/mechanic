@@ -4,7 +4,7 @@ Section: system
 Priority: optional
 Architecture: amd64
 Essential: no
-Depends: sqlite3 
+Depends: bash, python2.7, sqlite3
 Pre-Depends:
 Recommends:
 Suggests:
