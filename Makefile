@@ -15,65 +15,44 @@ PACKAGE_VERSION := 0.4
 BUILD_NUMBER := 4
 SCM_VERSION = $(shell git rev-parse HEAD)
 
-default:	clean generate compile tests bundle integration-tests
+default:	clean build integration-tests
 
-prerequisites:
-	if [ -f /etc/fedora-release ]; then \
-		sudo dnf -y install splint make gcc sqlite-devel; \
-	elif [ -f /etc/debian-version ]; then \
-		sudo apt-get update && \
-		apt-get install -y git gcc splint build-essential sqlite3 libsqlite3-dev; \
-	fi
-
-all:	clean generate compile tests bundle integration-tests coverage packages
+all:	patch default packages
 
 .PHONY:	clean
 clean:
 	@echo "Cleaning up..."; \
-	rm -rf target/ ${PWD}/src/*.o
+	rm -rf target/ $$(find . -name "*.pyc" -or -name "*.pyo")
 
-generate:
-	@echo "Generating metadata..."; \
-	cat ${PWD}/src/include/metadata.h.in \
-	| sed -r 's,^(.*VERSION\s*\")([^"]*)(\".*)$$,\1$(PACKAGE_VERSION)-$(BUILD_NUMBER)\3,g' \
-	| sed -r 's,^(.*SCM_VERSION\s*\")([^"]*)(\".*)$$,\1$(SCM_VERSION)\3,g' \
-	> ${PWD}/src/include/metadata.h
-	
-compile:	
-	@mkdir -p ${PWD}/target/bin/ && \
-	cd src && \
-	echo "Compiling..." && \
-	gcc -pedantic -Wall -g -I ./include/ -c *.c && \
-	echo "Linking..." && \
-	gcc $$(find . -name "*.o" | grep -v _test.o) -lm -lsqlite3 -o ../target/bin/mechanic && \
-	for i in $$(find . -name "*_test.c"); do \
-		echo "Linking Test $$(basename $$i .c)..." && \
-		gcc $$(basename $$i .c).o $$(find . -name "*.o" | grep -v _test.o | grep -v mechanic.o) -lm -lsqlite3 -o ../target/bin/$$(basename $$i .c); \
-	done
+patch:
+	echo "Adding metadata to code..." && \
+	perl -i -pe 's#(packageVersion\s*\=\s*)\"[^\"]+\"(.*$$)#\1\"$(PACKAGE_VERSION)-$(BUILD_NUMBER)\"\2#g' ${PWD}/src/python/mechanic/MechanicVersionInfo.py && \
+	perl -i -pe 's#(scmVersion\s*\=\s*)\"[^\"]+\"(.*$$)#\1\"$(SCM_VERSION)\"\2#g' ${PWD}/src/python/mechanic/MechanicVersionInfo.py
+
+build:
+	@echo "Compiling python files..." && \
+	python -m compileall ${PWD}/src/python/mechanic/ && \
+	mkdir -p ${PWD}/target/ && \
+	echo "Copying..." && \
+	cp -R ${PWD}/src/bundle ${PWD}/target/bundle && \
+	mkdir -p ${PWD}/target/bundle/usr/sbin && \
+	cp ${PWD}/src/bash/* ${PWD}/target/bundle/usr/sbin/ && \
+	mkdir -p ${PWD}/target/bundle/usr/lib/python2.7/site-packages/ && \
+	cp -R ${PWD}/src/python/* ${PWD}/target/bundle/usr/lib/python2.7/site-packages/ && \
+	cd ${PWD}/target/bundle && tar czf ../bundle.tgz .
 
 tests:
 	@echo "Running tests..."; \
-	for i in $$(find ${PWD}/target/bin/ -name "*_test"); do \
+	for i in $$(find ${PWD}/target/ -name "*_test"); do \
 		echo $$(basename $$i); \
-		$$i; \
 	done
-
-bundle:
-	@echo "Preparing bundle..." && \
-	cp -R ${PWD}/src/bundle ${PWD}/target/ && \
-	mkdir -p ${PWD}/target/bundle/usr/sbin/ && \
-	cp ${PWD}/target/bin/mechanic ${PWD}/target/bundle/usr/sbin/ && \
-	cd ${PWD}/target/bundle && tar czf ../bundle.tgz .
 
 .PHONY:	integration-tests
 integration-tests:
 	@echo "Running integration tests..."; \
 	${PWD}/scripts/run-integration-tests.sh
 
-coverage:
-	splint -weak -f ${PWD}/splintrc -I ${PWD}/include/ $$(find ${PWD}/cli/src -name "*.c" | grep -v _test.c | grep -v log.c)
-
-packages:	debian-jessie ubuntu-xenial ubuntu-yakkety fedora-25 centos-7
+packages:	debian-jessie ubuntu-xenial ubuntu-yakkety
 
 debian-jessie:
 	${PWD}/scripts/build-package.sh debian-jessie $(PACKAGE_VERSION)-${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
