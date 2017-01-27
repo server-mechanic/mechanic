@@ -15,7 +15,7 @@ PACKAGE_VERSION := 0.5
 BUILD_NUMBER := 2
 SCM_VERSION = $(shell git rev-parse HEAD)
 
-default:	clean build integration-tests
+default:	clean build tests integration-tests
 
 all:	patch default packages
 
