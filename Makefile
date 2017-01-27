@@ -43,9 +43,7 @@ build:
 
 tests:
 	@echo "Running tests..."; \
-	for i in $$(find ${PWD}/target/ -name "*_test"); do \
-		echo $$(basename $$i); \
-	done
+	PYTHONPATH=${PWD}/src/python/ python -m unittest discover -s ${PWD}/src/python/ -v -p '*Test.py'
 
 .PHONY:	integration-tests
 integration-tests:
