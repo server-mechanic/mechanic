@@ -1,5 +1,9 @@
 # History
 
+## 0.5 (2017-01-27)
+* Complete rewrite in python.
+* Added support for pre and post migrations.
+
 ## 0.4-3 (2017-01-14)
 * Seperate run dir and state dir.
 * Fixes for config.
