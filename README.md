@@ -64,7 +64,9 @@ VOLUME /mechanic.volume
 # /etc/mechanic.conf
 [main]
 log_file=/mechanic.volume/log/mechanic.log
+pre_migration_dirs=/var/lib/mechanic/pre-migration.d/
 migration_dirs=/var/lib/mechanic/migration.d/
+post_migration_dirs=/var/lib/mechanic/post-migration.d/
 run_dir=/mechanic.volume/tmp/
 state_dir=/mechanic.volume/state
 ```
