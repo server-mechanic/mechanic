@@ -23,6 +23,16 @@ class ConfigTest(unittest.TestCase):
       self.assertEqual(migrationDirs[0], "_ROOT_/etc/mechanic/migration.d")
       self.assertEqual(migrationDirs[1], "_ROOT_/var/lib/mechanic/migration.d")
 
+    def testGetPreMigrationDirsIsExpanded(self):
+      migrationDirs = self.config.getPreMigrationDirs()
+      self.assertEqual(migrationDirs[0], "_ROOT_/etc/mechanic/pre-migration.d")
+      self.assertEqual(migrationDirs[1], "_ROOT_/var/lib/mechanic/pre-migration.d")
+
+    def testGetPostMigrationDirsIsExpanded(self):
+      migrationDirs = self.config.getPostMigrationDirs()
+      self.assertEqual(migrationDirs[0], "_ROOT_/etc/mechanic/post-migration.d")
+      self.assertEqual(migrationDirs[1], "_ROOT_/var/lib/mechanic/post-migration.d")
+
     def tearDown(self):
       self.config = None
 
