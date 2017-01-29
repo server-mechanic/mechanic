@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from mechanic.Mechanic import Mechanic
-from mechanic.MechanicCommandArgs import MechanicCommandArgs
+from command_line import CommandLine
 from mechanic.MigrationFailedException import MigrationFailedException
 from mechanic.MechanicException import MechanicException
 from mechanic.FollowUpCommandFailedException import FollowUpCommandFailedException
@@ -10,7 +10,7 @@ import sys
 
 class MechanicCommand:
   def __init__(self, args):
-    self.args = MechanicCommandArgs(args)
+    self.args = CommandLine(args)
     self.mechanic = Mechanic(args) 
     self.logger = self.mechanic.getLogger()
     self.logger.setVerbose(self.args.verbose)

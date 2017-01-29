@@ -4,7 +4,7 @@
 from re import compile, match, findall
 from mechanic.MechanicException import MechanicException
 
-class MechanicCommandArgs:
+class CommandLine:
   KEY_VALUE_PATTERN = compile("--([\\w\\-_]+)=(.*)")
 
   def __init__(self, args):
@@ -32,7 +32,7 @@ class MechanicCommandArgs:
     doubleDashSeen = False
     commandSeen = False
     for arg in args:
-      matchResult = findall(MechanicCommandArgs.KEY_VALUE_PATTERN, arg)
+      matchResult = findall(CommandLine.KEY_VALUE_PATTERN, arg)
       if "--" == arg:
         doubleDashSeen = True
         self.followUpCommand = []

@@ -2,14 +2,14 @@
 # -*- coding: UTF-8 -*-
 
 import unittest
-from mechanic.MechanicCommandArgs import MechanicCommandArgs
+from command_line import CommandLine
 
-class MechanicCommandArgsTest(unittest.TestCase):
+class CommandLineTest(unittest.TestCase):
     def setUp(self):
-      self.args = MechanicCommandArgs(["-v", "sub", "--sub-flag=sub_val", "--", "followUp", "followUpFlag"])
+      self.args = CommandLine(["-v", "sub", "--sub-flag=sub_val", "--", "followUp", "followUpFlag"])
 
     def __givenArgsOf(self, args):
-      self.args = MechanicCommandArgs(args)
+      self.args = CommandLine(args)
 
     def testCommandNameRecognized(self):
       self.assertEqual(self.args.commandName, "sub")
