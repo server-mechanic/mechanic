@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
   
 from os.path import isfile, isdir, join, basename
-from mechanic.InventoryDb import InventoryDb
+from inventory_db import InventoryDb
 from mechanic.Migration import Migration
 from mechanic.file_util import collectfiles
 

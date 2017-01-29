@@ -3,7 +3,7 @@
 
 import unittest
 import tempfile
-from mechanic.InventoryDb import InventoryDb
+from inventory_db import InventoryDb
 
 class InventoryDbTest(unittest.TestCase):
     def setUp(self):
