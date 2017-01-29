@@ -15,6 +15,9 @@ class MigrationExecutor:
     self.inventory = inventory;
 
   def applyMigration(self, migration):
+    if not os.access(migration.getFile(), os.X_OK):
+      raise MigrationFailedException("Migration %s is not executable." % migration.getName())
+
     self.inventory.markMigrationAsStarted(migration.getName())
     migrationTmpDir = os.path.join( self.config.getMigrationTmpDir(), migration.getName() + ".tmp" )
     logFile = os.path.join(migrationTmpDir, "log")
