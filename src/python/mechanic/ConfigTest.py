@@ -39,6 +39,3 @@ class ConfigTest(unittest.TestCase):
     def tearDown(self):
       self.config = None
 
-if __name__ == '__main__':
-    unittest.main()
-

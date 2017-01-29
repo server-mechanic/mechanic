@@ -26,6 +26,3 @@ class InventoryDbTest(unittest.TestCase):
       self.db.close()
       self.db = None
 
-if __name__ == '__main__':
-    unittest.main()
-
