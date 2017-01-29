@@ -2,10 +2,10 @@
 # -*- coding: UTF-8 -*-
 
 from logger import MechanicLogger
-from mechanic.MigrateCommand import MigrateCommand
-from mechanic.ListMigrationsCommand import ListMigrationsCommand
-from mechanic.HelpCommand import HelpCommand
-from mechanic.VersionCommand import VersionCommand
+from migrate_command import MigrateCommand
+from list_migrations_command import ListMigrationsCommand
+from help_command import HelpCommand
+from version_command import VersionCommand
 from inventory import Inventory
 from config import Config
 from config_reader import ConfigReader
