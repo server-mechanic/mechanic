@@ -8,16 +8,10 @@ class MechanicException(Exception):
   def __str__(self):
     return self.message 
 
-class MigrationFailedException(Exception):
+class MigrationFailedException(MechanicException):
   def __init__(self, message):
-    self.message = message
+    super(MigrationFailedException, self).__init__(message)
 
-  def __str__(self):
-    return self.message 
-
-class FollowUpCommandFailedException(Exception):
+class FollowUpCommandFailedException(MechanicException):
   def __init__(self, message):
-    self.message = message
-
-  def __str__(self):
-    return self.message 
+    super(FollowUpCommandFailedException, self).__init__(message)
