@@ -4,7 +4,7 @@
 
 ![Server Mechanic](https://server-mechanic.github.io/website/images/mechanic_small.png "Server Mechanic")
 
-#### Evolve your containers and virtual machines more easily.
+#### Evolve your servers more easily.
 
 ## Features
 
