@@ -10,8 +10,9 @@ class ConfigReader:
   def __init__(self, logger):
     self.logger = logger
 
-  def loadConfig(self):
-    config = Config()
+  def loadConfig(self, config=None):
+    if config is None:
+      config = Config()
     configFile = config.getConfigFile()
     if not isfile(configFile):
       self.logger.debug("Config file %s does not exist. Using defaults." % configFile)
