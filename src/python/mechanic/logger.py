@@ -7,7 +7,7 @@ import inspect
 import traceback
 import re
 
-class MechanicLogger:
+class Logger:
   def __init__(self):
     self.verbose = False
 

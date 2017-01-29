@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from logger import MechanicLogger
+from logger import Logger
 from migrate_command import MigrateCommand
 from list_migrations_command import ListMigrationsCommand
 from help_command import HelpCommand
@@ -18,7 +18,7 @@ class Mechanic:
       'help':HelpCommand }
 
   def __init__(self, args):
-    self.logger = MechanicLogger()
+    self.logger = Logger()
     self.config = self.__loadConfig()
     self.inventory = Inventory(self.logger, self.config)
 
