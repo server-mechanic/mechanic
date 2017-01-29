@@ -6,9 +6,9 @@ from mechanic.MechanicCommandArgs import MechanicCommandArgs
 
 class MechanicCommandArgsTest(unittest.TestCase):
     def setUp(self):
-      self.args = MechanicCommandArgs(["-v", "sub", "--sub-flag=sub_val"])
+      self.args = MechanicCommandArgs(["-v", "sub", "--sub-flag=sub_val", "--", "followUp", "followUpFlag"])
 
-    def givenArgsOf(self, args):
+    def __givenArgsOf(self, args):
       self.args = MechanicCommandArgs(args)
 
     def testCommandNameRecognized(self):
@@ -18,8 +18,15 @@ class MechanicCommandArgsTest(unittest.TestCase):
       self.assertTrue(self.args.verbose)
 
     def testVerboseFalseRecognized(self):
-      self.givenArgsOf(["sub"])
+      self.__givenArgsOf(["sub"])
       self.assertFalse(self.args.verbose)
+
+    def testFollowUpRecognized(self):
+      self.assertEquals(self.args.followUpCommand, ["followUp", "followUpFlag"])
+
+    def testFollowUpEmptyWhenNonePassedIn(self):
+      self.__givenArgsOf(["sub"])
+      self.assertEquals(self.args.followUpCommand, None)
 
     def tearDown(self):
       self.args = None
