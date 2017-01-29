@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from mechanic.MechanicVersionInfo import MechanicVersionInfo
+from version_info import MechanicVersionInfo
 
 class VersionCommand:
   name = 'version'

@@ -26,8 +26,8 @@ clean:
 
 patch:
 	echo "Adding metadata to code..." && \
-	perl -i -pe 's#(packageVersion\s*\=\s*)\"[^\"]+\"(.*$$)#\1\"$(PACKAGE_VERSION)-$(BUILD_NUMBER)\"\2#g' ${PWD}/src/python/mechanic/MechanicVersionInfo.py && \
-	perl -i -pe 's#(scmVersion\s*\=\s*)\"[^\"]+\"(.*$$)#\1\"$(SCM_VERSION)\"\2#g' ${PWD}/src/python/mechanic/MechanicVersionInfo.py
+	perl -i -pe 's#(packageVersion\s*\=\s*)\"[^\"]+\"(.*$$)#\1\"$(PACKAGE_VERSION)-$(BUILD_NUMBER)\"\2#g' ${PWD}/src/python/mechanic/version_info.py && \
+	perl -i -pe 's#(scmVersion\s*\=\s*)\"[^\"]+\"(.*$$)#\1\"$(SCM_VERSION)\"\2#g' ${PWD}/src/python/mechanic/version_info.py
 
 build:
 	@echo "Compiling python files..." && \
