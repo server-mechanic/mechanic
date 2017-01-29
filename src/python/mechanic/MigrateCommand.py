@@ -3,7 +3,7 @@
 
 from config import Config
 from inventory import Inventory
-from mechanic.MigrationExecutor import MigrationExecutor
+from migration_executor import MigrationExecutor
 from mechanic.file_util import makeparentdirs, makedirs
 import os
 
