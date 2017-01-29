@@ -16,6 +16,9 @@ class CommandLine:
     self.subOpts = {}
     self.__process(args)
 
+  def hasGlobalOpt(self, key):
+    return self.globalOpts.has_key(key)
+
   def hasSubOpt(self, key):
     return self.subOpts.has_key(key)
 
@@ -46,7 +49,7 @@ class CommandLine:
         self.subOpts[matchResult[0][0]] = matchResult[0][1]
       elif not arg.startswith("-"):
         if commandSeen:
-          raise exceptions("Only single command allowed. (Already %s.)" % self.commandName)
+          raise MechanicException("Only single command allowed. (Already %s.)" % self.commandName)
         self.commandName = arg
         commandSeen = True
     if self.followUpCommand is not None and len(self.followUpCommand) == 0:

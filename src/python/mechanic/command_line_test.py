@@ -3,10 +3,11 @@
 
 import unittest
 from command_line import CommandLine
+from exceptions import MechanicException
 
 class CommandLineTest(unittest.TestCase):
     def setUp(self):
-      self.args = CommandLine(["-v", "sub", "--sub-flag=sub_val", "--", "followUp", "followUpFlag"])
+      self.args = CommandLine(["-v", "--global-flag=global_val", "sub", "--sub-flag=sub_val", "--", "followUp", "followUpFlag"])
 
     def __givenArgsOf(self, args):
       self.args = CommandLine(args)
@@ -17,15 +18,34 @@ class CommandLineTest(unittest.TestCase):
     def testVerboseTrueRecognized(self):
       self.assertTrue(self.args.verbose)
 
+    def testDuplicateCommandDetected(self):
+      try:
+        CommandLine(["help", "version"])
+        self.fail("Duplicate command not detected.")
+      except MechanicException as e: 
+        pass
+
     def testVerboseFalseRecognized(self):
       self.__givenArgsOf(["sub"])
       self.assertFalse(self.args.verbose)
 
+    def testSubFlagRecognized(self):
+      self.assertTrue(self.args.hasSubOpt('sub-flag'))
+      self.assertEquals(self.args.subOpts['sub-flag'], 'sub_val')
+
+    def testGlobalFlagRecognized(self):
+      self.assertTrue(self.args.hasGlobalOpt('global-flag'))
+      self.assertEquals(self.args.globalOpts['global-flag'], 'global_val')
+
     def testFollowUpRecognized(self):
       self.assertEquals(self.args.followUpCommand, ["followUp", "followUpFlag"])
 
-    def testFollowUpEmptyWhenNonePassedIn(self):
+    def testFollowUpAbsentWhenNonePassedIn(self):
       self.__givenArgsOf(["sub"])
+      self.assertEquals(self.args.followUpCommand, None)
+
+    def testFollowUpAbsentWhenEmptyPassedIn(self):
+      self.__givenArgsOf(["sub", "--"])
       self.assertEquals(self.args.followUpCommand, None)
 
     def tearDown(self):
