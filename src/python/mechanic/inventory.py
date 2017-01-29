@@ -3,7 +3,7 @@
   
 from os.path import isfile, isdir, join, basename
 from inventory_db import InventoryDb
-from mechanic.Migration import Migration
+from migration import Migration
 from mechanic.file_util import collectfiles
 
 class Inventory:

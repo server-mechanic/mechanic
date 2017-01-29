@@ -4,7 +4,7 @@
 import sqlite3
 import os
 from mechanic.file_util import makeparentdirs
-from mechanic.Migration import Migration
+from migration import Migration
 
 class InventoryDb:
   def __init__(self, dbFile):
