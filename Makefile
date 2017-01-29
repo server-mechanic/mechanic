@@ -43,7 +43,7 @@ build:
 
 tests:
 	@echo "Running tests..."; \
-	PYTHONPATH=${PWD}/src/python/ coverage run -m unittest discover -s ${PWD}/src/python/ -v -p '*Test.py'
+	PYTHONPATH=${PWD}/src/python/ coverage run -m unittest discover -s ${PWD}/src/python/ -v -p '*_test.py'
 
 .PHONY:	integration-tests
 integration-tests:
