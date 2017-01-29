@@ -10,6 +10,7 @@ import re
 class Logger:
   def __init__(self):
     self.verbose = False
+    self.file = None
 
   def setVerbose(self, verbose):
     self.verbose = verbose

@@ -23,7 +23,7 @@ def makedirs(filename):
     try:
       os.makedirs(filename)
     except OSError as exc:
-      if exc.errno != errno.EEXIST:
+      if exc.errno != os.errno.EEXIST:
           raise
 
 def makeparentdirs(filename):

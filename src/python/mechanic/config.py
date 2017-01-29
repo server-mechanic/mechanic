@@ -14,11 +14,11 @@ class Config:
     self.migrationDirs = ["${MECHANIC_ROOT_DIR}/etc/mechanic/migration.d", "${MECHANIC_ROOT_DIR}/var/lib/mechanic/migration.d"]
     self.preMigrationDirs = ["${MECHANIC_ROOT_DIR}/etc/mechanic/pre-migration.d", "${MECHANIC_ROOT_DIR}/var/lib/mechanic/pre-migration.d"]
     self.postMigrationDirs = ["${MECHANIC_ROOT_DIR}/etc/mechanic/post-migration.d", "${MECHANIC_ROOT_DIR}/var/lib/mechanic/post-migration.d"]
-    self.inventoryDbFile = "${MECHANIC_ROOT_DIR}/var/lib/mechanic/state/inventory.db"
-    self.migrationTmpDir = "${MECHANIC_ROOT_DIR}/var/lib/mechanic/tmp/"
+    self.stateDir = "${MECHANIC_ROOT_DIR}/var/lib/mechanic/state"
+    self.runDir = "${MECHANIC_ROOT_DIR}/var/lib/mechanic/tmp"
   
   def getMigrationTmpDir(self):
-    return self.__expand(self.migrationTmpDir)
+    return self.__expand(self.runDir)
   
   def getLogFile(self):
     return self.__expand(self.logFile)
@@ -51,5 +51,5 @@ class Config:
     return dirs
 
   def getInventoryDbFile(self):
-    return self.__expand(self.inventoryDbFile)
+    return self.__expand(self.stateDir+"/inventory.db")
 

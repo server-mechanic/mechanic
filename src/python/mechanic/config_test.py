@@ -10,7 +10,7 @@ class ConfigTest(unittest.TestCase):
       self.config.mechanicRootDir = "_ROOT_"
 
     def testGetMigrationTmpDirIsExpanded(self):
-      self.assertEqual(self.config.getMigrationTmpDir(), "_ROOT_/var/lib/mechanic/tmp/")
+      self.assertEqual(self.config.getMigrationTmpDir(), "_ROOT_/var/lib/mechanic/tmp")
 
     def testGetInventoryDbFileIsExpanded(self):
       self.assertEqual(self.config.getInventoryDbFile(), "_ROOT_/var/lib/mechanic/state/inventory.db")

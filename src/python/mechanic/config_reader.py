@@ -15,7 +15,7 @@ class ConfigReader:
       config = Config()
     configFile = config.getConfigFile()
     if not isfile(configFile):
-      self.logger.debug("Config file %s does not exist. Using defaults." % configFile)
+      self.logger.info("Config file %s does not exist. Using defaults." % configFile)
       return config
 
     self.logger.debug("Loading config from %s." % configFile)
@@ -25,9 +25,15 @@ class ConfigReader:
     loader.set("main", "migration_dirs", join(config.migrationDirs, ":"))
     loader.set("main", "pre_migration_dirs", join(config.preMigrationDirs, ":"))
     loader.set("main", "post_migration_dirs", join(config.postMigrationDirs, ":"))
+    loader.set("main", "state_dir", config.stateDir)
+    loader.set("main", "run_dir", config.runDir)
     loader.read(configFile)
 
     config.logFile = loader.get("main", "log_file")
     config.migrationDirs = split(loader.get("main", "migration_dirs"), ":")
+    config.preMigrationDirs = split(loader.get("main", "pre_migration_dirs"), ":")
+    config.postMigrationDirs = split(loader.get("main", "post_migration_dirs"), ":")
+    config.stateDir = loader.get("main", "state_dir")
+    config.runDir = loader.get("main", "run_dir")
 
     return config
