@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from mechanic.Mechanic import Mechanic
+from context import Mechanic
 from command_line import CommandLine
 from exceptions import MigrationFailedException
 from exceptions import MechanicException
