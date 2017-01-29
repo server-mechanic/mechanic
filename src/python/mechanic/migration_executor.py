@@ -10,9 +10,10 @@ import shutil
 import subprocess
 
 class MigrationExecutor:
-  def __init__(self, config, inventory):
+  def __init__(self, config, inventory, logger):
     self.config = config
-    self.inventory = inventory;
+    self.inventory = inventory
+    self.logger = logger
 
   def applyMigration(self, migration):
     if not os.access(migration.file, os.X_OK):
@@ -23,7 +24,7 @@ class MigrationExecutor:
     logFile = os.path.join(migrationTmpDir, "log")
     try:
       makedirs(migrationTmpDir)
-      logFileFd = open(os.path.join(migrationTmpDir, "log"), 'wa')
+      logFileFd = open(logFile, 'wa')
       migrationProcess = subprocess.Popen([migration.file],bufsize=0,stdout=logFileFd,stderr=logFileFd,stdin=None,shell=False,env=None,)
       exitCode = migrationProcess.wait()
       if exitCode != 0:
@@ -37,3 +38,12 @@ class MigrationExecutor:
     except Exception as e:
       self.inventory.markMigrationAsFailed(migration.name)
       raise e
+    finally:
+      self.__copyMigrationOutput(migration, logFile)
+
+  def __copyMigrationOutput(self, migration, logFile):
+      if os.path.isfile(logFile):
+        with open(logFile) as f:
+          for line in f:
+            self.logger.info("%s: %s" % (migration.name, line.strip()))
+

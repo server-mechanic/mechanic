@@ -14,7 +14,7 @@ class MigrateCommand:
   def __init__(self, mechanic):
     self.inventory = mechanic.getInventory()
     self.config = mechanic.getConfig()
-    self.migrationExecutor = MigrationExecutor(mechanic.getConfig(), mechanic.getInventory())
+    self.migrationExecutor = MigrationExecutor(mechanic.getConfig(), mechanic.getInventory(), mechanic.getLogger())
     self.logger = mechanic.getLogger()
 
   def run(self, args):
