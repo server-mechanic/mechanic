@@ -86,7 +86,7 @@ ENTRYPOINT ["/usr/sbin/mechanic", "migrate", "--", "PUT", "ACTUAL", "ENTRYPOINT"
 Server Mechanic is an open source project, and contributions are welcome! Feel free to raise an issue or submit a pull request.
 
 ## License
-Copyright (c) 2016 by the [Server Mechanic Team](https://github.com/orgs/server-mechanic/people).
+Copyright (c) 2016,2017 by the [Server Mechanic Team](https://github.com/orgs/server-mechanic/people).
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
