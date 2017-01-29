@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from re import compile, match, findall
-from mechanic.MechanicException import MechanicException
+from exceptions import MechanicException
 
 class CommandLine:
   KEY_VALUE_PATTERN = compile("--([\\w\\-_]+)=(.*)")
@@ -46,7 +46,7 @@ class CommandLine:
         self.subOpts[matchResult[0][0]] = matchResult[0][1]
       elif not arg.startswith("-"):
         if commandSeen:
-          raise mechanic.MechanicException("Only single command allowed. (Already %s.)" % self.commandName)
+          raise exceptions("Only single command allowed. (Already %s.)" % self.commandName)
         self.commandName = arg
         commandSeen = True
     if self.followUpCommand is not None and len(self.followUpCommand) == 0:

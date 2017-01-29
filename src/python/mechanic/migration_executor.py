@@ -3,7 +3,7 @@
 
 from config import Config
 from inventory import Inventory
-from mechanic.MigrationFailedException import MigrationFailedException
+from exceptions import MigrationFailedException
 from mechanic.file_util import makedirs
 import os
 import shutil

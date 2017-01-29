@@ -3,9 +3,9 @@
 
 from mechanic.Mechanic import Mechanic
 from command_line import CommandLine
-from mechanic.MigrationFailedException import MigrationFailedException
-from mechanic.MechanicException import MechanicException
-from mechanic.FollowUpCommandFailedException import FollowUpCommandFailedException
+from exceptions import MigrationFailedException
+from exceptions import MechanicException
+from exceptions import FollowUpCommandFailedException
 import sys
 
 class MechanicCommand:

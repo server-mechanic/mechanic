@@ -3,7 +3,7 @@
 
 from config import Config
 from inventory import Inventory
-from mechanic.MechanicException import MechanicException
+from exceptions import MechanicException
 
 class ListMigrationsCommand:
   description = "List migrations."
