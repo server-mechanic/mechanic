@@ -27,7 +27,7 @@ Server Mechanic is considered a lightweight alternative to tools like puppet, an
 
 ## Server Mechanic for Docker containers
 
-Docker already utilizes the step by step approach with the commands in your Dockerfile. These commands are run at container image build time. So you have full access to the container's internal state. But external volumes injected into a container instance cannot be manipulated by Dockerfile commands. Here Server Mechanic comes into play.
+Docker already utilizes the step by step approach with the commands in your Dockerfile. These commands are run at container image build time. So you have full access to the container's internal state. But external volumes cannot be manipulated by Dockerfile commands. Here Server Mechanic comes into play.
 
 Server Mechanic gets executed on container startup, applies your migration which migrates the state in your volumes, then container startup proceeds. So you can roll out adjustments to external volumes with new container versions and containers and volumes stay in sync.
 
