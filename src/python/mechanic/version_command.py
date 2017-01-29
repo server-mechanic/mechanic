@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from version_info import MechanicVersionInfo
+from version_info import VersionInfo
 
 class VersionCommand:
   name = 'version'
@@ -11,4 +11,4 @@ class VersionCommand:
     self.mechanic = mechanic
 
   def run(self, args):
-    print "Version: %s SCM-Version: %s" % (MechanicVersionInfo.packageVersion, MechanicVersionInfo.scmVersion)
+    print "Version: %s SCM-Version: %s" % (VersionInfo.packageVersion, VersionInfo.scmVersion)
