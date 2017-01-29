@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from mechanic.MechanicLogger import MechanicLogger
+from logger import MechanicLogger
 from mechanic.MigrateCommand import MigrateCommand
 from mechanic.ListMigrationsCommand import ListMigrationsCommand
 from mechanic.HelpCommand import HelpCommand

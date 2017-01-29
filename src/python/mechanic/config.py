@@ -5,7 +5,6 @@ from os.path import isfile
 from os import getenv
 import ConfigParser
 from string import join, split
-from mechanic.MechanicLogger import MechanicLogger
 
 class Config:
   def __init__(self):
