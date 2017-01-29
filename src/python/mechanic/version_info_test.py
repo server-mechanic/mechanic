@@ -8,3 +8,8 @@ class VersionInfoTest(unittest.TestCase):
     def setUp(self):
       self.versionInfo = VersionInfo()
 
+    def testPackageVersionDefined(self):
+      self.assertIsNotNone(VersionInfo.packageVersion)
+
+    def testScmVersionDefined(self):
+      self.assertIsNotNone(VersionInfo.scmVersion)
