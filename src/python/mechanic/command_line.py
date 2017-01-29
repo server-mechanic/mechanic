@@ -22,9 +22,6 @@ class CommandLine:
   def hasSubOpt(self, key):
     return self.subOpts.has_key(key)
 
-  def getSubOpts(self):
-    return self.subOpts
-
   def getSubOpt(self, key, defaultValue = None):
     if self.subOpts.has_key(key):
       return self.subOpts.get(key)

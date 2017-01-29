@@ -30,6 +30,9 @@ class CommandLineTest(unittest.TestCase):
     def testSubFlagRecognized(self):
       self.assertTrue(self.args.hasSubOpt('sub-flag'))
       self.assertEquals(self.args.subOpts['sub-flag'], 'sub_val')
+      self.assertEquals(self.args.getSubOpt('sub-flag'), 'sub_val')
+      self.assertEquals(self.args.getSubOpt('absent-sub-flag'), None)
+      self.assertEquals(self.args.getSubOpt('absent-sub-flag', 'absent_val'), 'absent_val')
 
     def testGlobalFlagRecognized(self):
       self.assertTrue(self.args.hasGlobalOpt('global-flag'))
