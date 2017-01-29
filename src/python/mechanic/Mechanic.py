@@ -7,7 +7,7 @@ from mechanic.ListMigrationsCommand import ListMigrationsCommand
 from mechanic.HelpCommand import HelpCommand
 from mechanic.VersionCommand import VersionCommand
 from mechanic.Inventory import Inventory
-from mechanic.Config import Config
+from config import Config
 from config_reader import ConfigReader
 
 class Mechanic:

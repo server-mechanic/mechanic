@@ -3,7 +3,7 @@
 
 from os.path import isfile
 import ConfigParser
-from mechanic.Config import Config
+from config import Config
 from string import join, split
 
 class ConfigReader:

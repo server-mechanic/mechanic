@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import unittest
-from mechanic.Config import Config
+from config import Config
 
 class ConfigTest(unittest.TestCase):
     def setUp(self):

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from mechanic.Config import Config
+from config import Config
 from mechanic.Inventory import Inventory
 from mechanic.MechanicException import MechanicException
 
