@@ -1,4 +1,4 @@
-from mechanic.MechanicCommand import MechanicCommand
+from mechanic_command import MechanicCommand
 import sys
 
 if __name__ == '__main__':
