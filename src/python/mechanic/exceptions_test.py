@@ -2,9 +2,14 @@
 # -*- coding: UTF-8 -*-
 
 import unittest
-from exceptions import MechanicException
+from exceptions import *
 
-class MechanicExceptionTest(unittest.TestCase):
-    def setUp(self):
-      self.exception = MechanicException()
+class ExceptionsTest(unittest.TestCase):
+    def testMechanicException(self):
+      self.assertEqual("test", MechanicException("test").message)
 
+    def testMigrationFailedException(self):
+      self.assertEqual("test", MigrationFailedException("test").message)
+
+    def testFollowUpCommandFailedException(self):
+      self.assertEqual("test", FollowUpCommandFailedException("test").message)
