@@ -6,5 +6,8 @@ from version_command import VersionCommand
 
 class VersionCommandTest(unittest.TestCase):
     def setUp(self):
-      self.command = VersionCommand()
+      mechanic = None
+      self.command = VersionCommand(mechanic)
 
+    def testRun(self):
+      self.command.run([])
