@@ -19,11 +19,9 @@ class CommandLineTest(unittest.TestCase):
       self.assertTrue(self.args.verbose)
 
     def testDuplicateCommandDetected(self):
-      try:
+      with self.assertRaises(Exception) as context:
         CommandLine(["help", "version"])
-        self.fail("Duplicate command not detected.")
-      except MechanicException as e: 
-        pass
+      self.assertTrue('Only single command allowed.' in str(context.exception))
 
     def testVerboseFalseRecognized(self):
       self.__givenArgsOf(["sub"])
