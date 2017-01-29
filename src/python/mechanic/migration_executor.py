@@ -16,10 +16,10 @@ class MigrationExecutor:
 
   def applyMigration(self, migration):
     if not os.access(migration.getFile(), os.X_OK):
-      raise MigrationFailedException("Migration %s is not executable." % migration.getName())
+      raise MigrationFailedException("Migration %s is not executable." % migration.name)
 
-    self.inventory.markMigrationAsStarted(migration.getName())
-    migrationTmpDir = os.path.join( self.config.getMigrationTmpDir(), migration.getName() + ".tmp" )
+    self.inventory.markMigrationAsStarted(migration.name)
+    migrationTmpDir = os.path.join( self.config.getMigrationTmpDir(), migration.name + ".tmp" )
     logFile = os.path.join(migrationTmpDir, "log")
     try:
       makedirs(migrationTmpDir)
@@ -27,13 +27,13 @@ class MigrationExecutor:
       migrationProcess = subprocess.Popen([migration.getFile()],bufsize=0,stdout=logFileFd,stderr=logFileFd,stdin=None,shell=False,env=None,)
       exitCode = migrationProcess.wait()
       if exitCode != 0:
-        raise MigrationFailedException("Migration %s failed with exit code %d." % (migration.getName(), exitCode) )
+        raise MigrationFailedException("Migration %s failed with exit code %d." % (migration.name, exitCode) )
 
-      self.inventory.markMigrationAsSucceeded(migration.getName())
+      self.inventory.markMigrationAsSucceeded(migration.name)
       shutil.rmtree(migrationTmpDir)
     except MigrationFailedException as e:
-      self.inventory.markMigrationAsFailed(migration.getName())
+      self.inventory.markMigrationAsFailed(migration.name)
       raise e
     except Exception as e:
-      self.inventory.markMigrationAsFailed(migration.getName())
+      self.inventory.markMigrationAsFailed(migration.name)
       raise e

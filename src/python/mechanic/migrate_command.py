@@ -26,15 +26,15 @@ class MigrateCommand:
 
       makedirs(self.config.getMigrationTmpDir())
       for migration in preMigrations:
-        self.logger.info("Applying pre migration %s..." % migration.getName())
+        self.logger.info("Applying pre migration %s..." % migration.name)
         self.migrationExecutor.applyMigration(migration)
 
       for migration in migrations:
-        self.logger.info("Applying migration %s..." % migration.getName())
+        self.logger.info("Applying migration %s..." % migration.name)
         self.migrationExecutor.applyMigration(migration)
 
       for migration in postMigrations:
-        self.logger.info("Applying post migration %s..." % migration.getName())
+        self.logger.info("Applying post migration %s..." % migration.name)
         self.migrationExecutor.applyMigration(migration)
 
     if args.followUpCommand is not None:

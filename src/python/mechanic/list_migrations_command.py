@@ -18,4 +18,4 @@ class ListMigrationsCommand:
       raise MechanicException("Invalid --order-by value: %s." % (orderBy))
 
     for migration in self.inventory.listMigrations(orderBy):
-      print "%d\t%s\t%s\t%s\t%s" % (migration.getId(), migration.getName(), migration.getStartTime(), migration.getEndTime(), migration.getStatus())
+      print "%d\t%s\t%s\t%s\t%s" % (migration.id, migration.name, migration.startTime, migration.endTime, migration.status)

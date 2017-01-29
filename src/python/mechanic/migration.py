@@ -11,21 +11,3 @@ class Migration:
     self.status = status
     self.startTime = startTime
     self.endTime = endTime
-
-  def getStartTime(self):
-    return self.startTime
-
-  def getEndTime(self):
-    return self.endTime
-
-  def getId(self):
-    return self.id
-
-  def getName(self):
-    return self.name
-
-  def getFile(self):
-    return self.file
-
-  def getStatus(self):
-    return self.status
