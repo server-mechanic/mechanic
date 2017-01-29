@@ -3,8 +3,12 @@
 
 import unittest
 from help_command import HelpCommand
+from context import Mechanic
 
 class HelpCommandTest(unittest.TestCase):
     def setUp(self):
-      self.command = HelpCommand()
+      mechanic = Mechanic()
+      self.command = HelpCommand(mechanic)
 
+    def testRun(self):
+      self.command.run([])

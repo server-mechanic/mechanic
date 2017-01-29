@@ -12,15 +12,15 @@ from config_reader import ConfigReader
 
 class Mechanic:
   commands = { 
-      'migrate': MigrateCommand,
-      'list-migrations': ListMigrationsCommand,
-      'version': VersionCommand,
-      'help':HelpCommand }
+    'migrate': MigrateCommand,
+    'list-migrations': ListMigrationsCommand,
+    'version': VersionCommand,
+    'help':HelpCommand }
 
-  def __init__(self, args):
+  def __init__(self):
     self.logger = Logger()
     self.config = self.__loadConfig()
-    self.inventory = Inventory(self.logger, self.config)
+    self.inventory = None
 
   def __loadConfig(self):
     configReader = ConfigReader(self.logger)
@@ -42,5 +42,7 @@ class Mechanic:
     return self.config;
 
   def getInventory(self):
+    if self.inventory is None:
+       self.inventory = Inventory(self.logger, self.config)
     return self.inventory
 

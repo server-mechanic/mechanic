@@ -11,7 +11,7 @@ import sys
 class MechanicCommand:
   def __init__(self, args):
     self.args = CommandLine(args)
-    self.mechanic = Mechanic(args) 
+    self.mechanic = Mechanic() 
     self.logger = self.mechanic.getLogger()
     self.logger.setVerbose(self.args.verbose)
     self.logger.setLogFile(self.mechanic.getConfig().getLogFile() )

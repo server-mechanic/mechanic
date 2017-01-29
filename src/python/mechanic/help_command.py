@@ -11,5 +11,5 @@ class HelpCommand:
   def run(self, args):
     print "usage: mechanic [ -v ] <command> [ <args> ]"
     print "\ncommands:"
-    for commandName, commandClass in self.mechanic.getCommands().iteritems():
+    for commandName, commandClass in self.mechanic.commands.iteritems():
       print "  %s - %s" % ( commandName, commandClass.description )
