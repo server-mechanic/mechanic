@@ -8,7 +8,7 @@ from mechanic.HelpCommand import HelpCommand
 from mechanic.VersionCommand import VersionCommand
 from mechanic.Inventory import Inventory
 from mechanic.Config import Config
-from mechanic.ConfigReader import ConfigReader
+from config_reader import ConfigReader
 
 class Mechanic:
   commands = { 
