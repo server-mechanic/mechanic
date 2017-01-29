@@ -1,5 +1,8 @@
 # History
 
+## 0.5-2 (2017-01-29)
+* Bug fixes.
+
 ## 0.5 (2017-01-27)
 * Complete rewrite in python.
 * Added support for pre and post migrations.
