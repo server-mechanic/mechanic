@@ -6,7 +6,7 @@ from mechanic.MigrateCommand import MigrateCommand
 from mechanic.ListMigrationsCommand import ListMigrationsCommand
 from mechanic.HelpCommand import HelpCommand
 from mechanic.VersionCommand import VersionCommand
-from mechanic.Inventory import Inventory
+from inventory import Inventory
 from config import Config
 from config_reader import ConfigReader
 

@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 from config import Config
-from mechanic.Inventory import Inventory
+from inventory import Inventory
 from mechanic.MechanicException import MechanicException
 
 class ListMigrationsCommand:
