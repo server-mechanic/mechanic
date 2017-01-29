@@ -15,7 +15,7 @@ class MigrationExecutor:
     self.inventory = inventory;
 
   def applyMigration(self, migration):
-    if not os.access(migration.getFile(), os.X_OK):
+    if not os.access(migration.file, os.X_OK):
       raise MigrationFailedException("Migration %s is not executable." % migration.name)
 
     self.inventory.markMigrationAsStarted(migration.name)
@@ -24,7 +24,7 @@ class MigrationExecutor:
     try:
       makedirs(migrationTmpDir)
       logFileFd = open(os.path.join(migrationTmpDir, "log"), 'wa')
-      migrationProcess = subprocess.Popen([migration.getFile()],bufsize=0,stdout=logFileFd,stderr=logFileFd,stdin=None,shell=False,env=None,)
+      migrationProcess = subprocess.Popen([migration.file],bufsize=0,stdout=logFileFd,stderr=logFileFd,stdin=None,shell=False,env=None,)
       exitCode = migrationProcess.wait()
       if exitCode != 0:
         raise MigrationFailedException("Migration %s failed with exit code %d." % (migration.name, exitCode) )
