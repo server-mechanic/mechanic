@@ -12,9 +12,9 @@ class MechanicCommand:
   def __init__(self, args):
     self.args = CommandLine(args)
     self.mechanic = Mechanic() 
-    self.logger = self.mechanic.getLogger()
+    self.logger = self.mechanic.logger
     self.logger.setVerbose(self.args.verbose)
-    self.logger.setLogFile(self.mechanic.getConfig().getLogFile() )
+    self.logger.setLogFile(self.mechanic.config.getLogFile() )
 
   def run(self):
     commandClass = self.mechanic.commands.get(self.args.commandName)
@@ -22,7 +22,7 @@ class MechanicCommand:
       if commandClass is not None:
         commandClass(self.mechanic).run(self.args)
       else:
-        self.mechanic.getDefaultCommand()(self.mechanic).run(self.args)
+        self.mechanic.defaultCommand(self.mechanic).run(self.args)
     except MigrationFailedException as e:
       self.logger.error(e.message)
       return 2

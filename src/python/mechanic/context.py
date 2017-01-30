@@ -16,6 +16,7 @@ class Mechanic:
     'list-migrations': ListMigrationsCommand,
     'version': VersionCommand,
     'help':HelpCommand }
+  defaultCommand = HelpCommand
 
   def __init__(self):
     self.logger = Logger()
@@ -25,21 +26,6 @@ class Mechanic:
   def __loadConfig(self):
     configReader = ConfigReader(self.logger)
     return configReader.loadConfig()
-
-  def getLogger(self):
-    return self.logger
-
-  def getCommand(self, commandName):
-    return Mechanic.commands.get(commandName)
-
-  def getDefaultCommand(self):
-    return Mechanic.commands.get("help")
-
-  def getCommands(self):
-    return Mechanic.commands
-
-  def getConfig(self):
-    return self.config;
 
   def getInventory(self):
     if self.inventory is None:

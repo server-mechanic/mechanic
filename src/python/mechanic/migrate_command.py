@@ -14,10 +14,10 @@ class MigrateCommand:
 
   def __init__(self, mechanic):
     self.inventory = mechanic.getInventory()
-    self.config = mechanic.getConfig()
-    self.migrationExecutor = MigrationExecutor(mechanic.getConfig(), mechanic.getInventory(), mechanic.getLogger())
-    self.logger = mechanic.getLogger()
-    self.followUpCommandExecutor = FollowUpCommandExecutor(mechanic.getConfig())
+    self.config = mechanic.config
+    self.migrationExecutor = MigrationExecutor(mechanic.config, mechanic.getInventory(), mechanic.logger)
+    self.logger = mechanic.logger
+    self.followUpCommandExecutor = FollowUpCommandExecutor(mechanic.config)
 
   def run(self, args):
     migrations = self.inventory.listUnappliedMigrations()
