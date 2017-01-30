@@ -17,5 +17,6 @@ class ListMigrationsCommand:
     if orderBy != "start_date" and orderBy != "id":
       raise MechanicException("Invalid --order-by value: %s." % (orderBy))
 
-    for migration in self.inventory.listMigrations(orderBy):
+    migrations = self.inventory.listMigrations(orderBy)
+    for migration in migrations:
       print "%d\t%s\t%s\t%s\t%s" % (migration.id, migration.name, migration.startTime, migration.endTime, migration.status)

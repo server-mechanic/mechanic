@@ -36,6 +36,3 @@ class ConfigTest(unittest.TestCase):
       self.assertEqual(migrationDirs[0], "_ROOT_/etc/mechanic/post-migration.d")
       self.assertEqual(migrationDirs[1], "_ROOT_/var/lib/mechanic/post-migration.d")
 
-    def tearDown(self):
-      self.config = None
-

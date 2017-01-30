@@ -13,12 +13,12 @@ def collectfiles(dirs):
         file = join(dir, file)
         if isfile(file):
           files.append(file)
-
   files.sort(key=lambda f: basename(f))
-
   return files
 
 def makedirs(filename):
+  if os.path.isfile(filename):
+    raise OSError("Cannot make dir. %s already is a file." % filename)
   if not os.path.exists(filename):
     try:
       os.makedirs(filename)
@@ -27,10 +27,4 @@ def makedirs(filename):
           raise
 
 def makeparentdirs(filename):
-  if not os.path.exists(os.path.dirname(filename)):
-    try:
-      os.makedirs(os.path.dirname(filename))
-    except OSError as exc:
-      if exc.errno != os.errno.EEXIST:
-          raise
-
+  makedirs(os.path.dirname(filename))
