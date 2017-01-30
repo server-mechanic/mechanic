@@ -31,6 +31,9 @@ function runTest() {
   #find $TEST_TMP_DIR
   for i in 1 2; do
     echo "Run #$i"
+    TEST_ROOT=$TEST_TMP_DIR \
+	MECHANIC_ROOT_DIR=$TEST_TMP_DIR \
+  	$TEST_TMP_DIR/usr/sbin/mechanic list-migrations --order-by=id | cut --delimiter='	' -f 1,2,5 >> $TEST_TMP_RESULT
     if [[ ! -f "$TEST_DIR/run-test.sh" ]]; then
       TEST_ROOT=$TEST_TMP_DIR \
 	MECHANIC_ROOT_DIR=$TEST_TMP_DIR \
