@@ -21,14 +21,9 @@ class Mechanic:
   def __init__(self):
     self.logger = Logger()
     self.config = self.__loadConfig()
-    self.inventory = None
+    self.inventory = Inventory(self.logger, self.config)
 
   def __loadConfig(self):
     configReader = ConfigReader(self.logger)
     return configReader.loadConfig()
-
-  def getInventory(self):
-    if self.inventory is None:
-       self.inventory = Inventory(self.logger, self.config)
-    return self.inventory
 

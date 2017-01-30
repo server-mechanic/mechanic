@@ -13,9 +13,9 @@ class MigrateCommand:
   name = "migrate"
 
   def __init__(self, mechanic):
-    self.inventory = mechanic.getInventory()
+    self.inventory = mechanic.inventory
     self.config = mechanic.config
-    self.migrationExecutor = MigrationExecutor(mechanic.config, mechanic.getInventory(), mechanic.logger)
+    self.migrationExecutor = MigrationExecutor(mechanic.config, mechanic.inventory, mechanic.logger)
     self.logger = mechanic.logger
     self.followUpCommandExecutor = FollowUpCommandExecutor(mechanic.config)
 

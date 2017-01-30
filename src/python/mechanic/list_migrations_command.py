@@ -10,7 +10,7 @@ class ListMigrationsCommand:
   name = 'list-migrations'
 
   def __init__(self, mechanic):
-    self.inventory = mechanic.getInventory()
+    self.inventory = mechanic.inventory
 
   def run(self, args):
     orderBy = args.getSubOpt("order-by", "start_date")
