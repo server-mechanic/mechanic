@@ -4,6 +4,7 @@
 from config import Config
 from inventory import Inventory
 from migration_executor import MigrationExecutor
+from follow_up_command_executor import FollowUpCommandExecutor
 from mechanic.file_util import makeparentdirs, makedirs
 import os
 
@@ -16,6 +17,7 @@ class MigrateCommand:
     self.config = mechanic.getConfig()
     self.migrationExecutor = MigrationExecutor(mechanic.getConfig(), mechanic.getInventory(), mechanic.getLogger())
     self.logger = mechanic.getLogger()
+    self.followUpCommandExecutor = FollowUpCommandExecutor(mechanic.getConfig())
 
   def run(self, args):
     migrations = self.inventory.listUnappliedMigrations()
@@ -38,13 +40,5 @@ class MigrateCommand:
         self.migrationExecutor.applyMigration(migration)
 
     if args.followUpCommand is not None:
-      self.__execFollowUpCommand(args.followUpCommand)
+      self.followUpCommandExecutor.executeFollowUpCommand(args.followUpCommand)
 
-  def __execFollowUpCommand(self, followUpCommand):
-    try:
-      environment = { "MECHANIC_ROOT_DIR": self.config.mechanicRootDir }
-      exitCode = os.execve(followUpCommand[0], followUpCommand, environment)
-      if exitCode != 0:
-        raise FollowUpCommandFailedException("Follow up command failed with exit code %s." % exitCode )
-    except Exception as e:
-      raise FollowUpCommandFailedException("Follow up command failed. %s" % e.message)
