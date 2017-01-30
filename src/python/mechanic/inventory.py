@@ -9,8 +9,8 @@ from mechanic.file_util import collectfiles
 class Inventory:
   def __init__(self, logger, config):
     self.config = config
-    self.inventoryDb = InventoryDb(config.getInventoryDbFile())
-    self.logger = logger;
+    self.inventoryDb = None
+    self.logger = logger
 
   def listUnappliedMigrations(self):
     migrationDirs = self.config.getMigrationDirs()
@@ -31,26 +31,30 @@ class Inventory:
     files = collectfiles(migrationDirs)
     migrations = []
     for file in files:
-      if not checkIfApplied or not self.inventoryDb.hasMigrationSucceeded(file):
+      if not checkIfApplied or not self.__getInventoryDb().hasMigrationSucceeded(file):
         migrations.append(Migration(None,file,basename(file)))
       else:
         self.logger.debug("Migration %s already applied." % file)
-
     return migrations
 
   def markMigrationAsStarted(self, migrationName):
-    self.inventoryDb.markMigrationAsStarted(migrationName)
+    self.__getInventoryDb().markMigrationAsStarted(migrationName)
 
   def markMigrationAsFailed(self, migrationName):
-    self.inventoryDb.markMigrationAsFailed(migrationName)
+    self.__getInventoryDb().markMigrationAsFailed(migrationName)
   
   def markMigrationAsSucceeded(self, migrationName):
-    self.inventoryDb.markMigrationAsSucceeded(migrationName)
+    self.__getInventoryDb().markMigrationAsSucceeded(migrationName)
 
   def listMigrations(self, orderBy):
-    return self.inventoryDb.listMigrations(orderBy)
+    return self.__getInventoryDb().listMigrations(orderBy)
 
   def close(self):
-    self.inventoryDb.close()
+    if self.inventoryDb is not None:
+      self.inventoryDb.close()
     self.inventoryDb = None
-    self.config = None
+
+  def __getInventoryDb(self):
+    if self.inventoryDb is None:
+      self.inventoryDb = InventoryDb(self.config.getInventoryDbFile())
+    return self.inventoryDb
