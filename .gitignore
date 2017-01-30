@@ -1,3 +1,4 @@
+htmlcov/
 .coverage
 *.gcno
 *.gcov
