@@ -9,20 +9,21 @@ from exceptions import FollowUpCommandFailedException
 import sys
 
 class MechanicCommand:
-  def __init__(self, args):
-    self.args = CommandLine(args)
-    self.mechanic = Mechanic() 
-    self.logger = self.mechanic.logger
-    self.logger.setVerbose(self.args.verbose)
+  def __init__(self, mechanic):
+    self.mechanic = mechanic
+    self.logger = mechanic.logger
+
+  def run(self, args):
+    args = CommandLine(args)
+    self.logger.setVerbose(args.verbose)
     self.logger.setLogFile(self.mechanic.config.getLogFile() )
 
-  def run(self):
-    commandClass = self.mechanic.commands.get(self.args.commandName)
+    command = self.mechanic.commands.get(args.commandName)
     try:
-      if commandClass is not None:
-        commandClass(self.mechanic).run(self.args)
+      if command is not None:
+        command.run(args)
       else:
-        self.mechanic.defaultCommand(self.mechanic).run(self.args)
+        self.mechanic.defaultCommand.run(args)
     except MigrationFailedException as e:
       self.logger.error(e.message)
       return 2

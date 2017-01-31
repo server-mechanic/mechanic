@@ -11,17 +11,18 @@ from config import Config
 from config_reader import ConfigReader
 
 class Mechanic:
-  commands = { 
-    'migrate': MigrateCommand,
-    'list-migrations': ListMigrationsCommand,
-    'version': VersionCommand,
-    'help':HelpCommand }
-  defaultCommand = HelpCommand
-
-  def __init__(self):
-    self.logger = Logger()
+  def __init__(self, logger=None):
+    if logger is None:
+      logger = Logger()
+    self.logger = logger
     self.config = self.__loadConfig()
-    self.inventory = Inventory(self.logger, self.config)
+    self.inventory = Inventory(logger, self.config)
+    self.commands = { 
+      'migrate': MigrateCommand(self),
+      'list-migrations': ListMigrationsCommand(self),
+      'version': VersionCommand(self),
+      'help':HelpCommand(self) }
+    self.defaultCommand = HelpCommand(self)
 
   def __loadConfig(self):
     configReader = ConfigReader(self.logger)
