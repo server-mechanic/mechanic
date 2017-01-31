@@ -4,10 +4,11 @@
 import unittest
 from help_command import HelpCommand
 from context import Mechanic
+from mock import MagicMock
 
 class HelpCommandTest(unittest.TestCase):
     def setUp(self):
-      mechanic = Mechanic()
+      mechanic = MagicMock()
       self.command = HelpCommand(mechanic)
 
     def testRun(self):
