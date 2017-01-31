@@ -16,10 +16,15 @@ class Logger:
     self.verbose = verbose
 
   def setLogFile(self, file):
-    if file is not None:
-      makeparentdirs(file)
-    self.file = open(file, "wa")
-
+    if file is not None and file != "":
+      try:
+        if file is not None:
+          makeparentdirs(file)
+        self.file = open(file, "wa")
+      except Exception as e:
+        self.error("Cannot open log file: %s" % file, e)
+        raise
+ 
   def debug(self, a, b = None):
     if self.verbose:
       self.__write("DEBUG", a, b)

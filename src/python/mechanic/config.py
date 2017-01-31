@@ -10,7 +10,7 @@ class Config:
   def __init__(self):
     self.mechanicRootDir = getenv("MECHANIC_ROOT_DIR", "")
     self.configFile = "${MECHANIC_ROOT_DIR}/etc/mechanic.conf"
-    self.logFile = "${MECHANIC_ROOT_DIR}/var/log/mechanic.log"
+    self.logFile = ""
     self.migrationDirs = ["${MECHANIC_ROOT_DIR}/etc/mechanic/migration.d", "${MECHANIC_ROOT_DIR}/var/lib/mechanic/migration.d"]
     self.preMigrationDirs = ["${MECHANIC_ROOT_DIR}/etc/mechanic/pre-migration.d", "${MECHANIC_ROOT_DIR}/var/lib/mechanic/pre-migration.d"]
     self.postMigrationDirs = ["${MECHANIC_ROOT_DIR}/etc/mechanic/post-migration.d", "${MECHANIC_ROOT_DIR}/var/lib/mechanic/post-migration.d"]

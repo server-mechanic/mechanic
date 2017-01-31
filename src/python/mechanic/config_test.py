@@ -16,7 +16,7 @@ class ConfigTest(unittest.TestCase):
       self.assertEqual(self.config.getInventoryDbFile(), "_ROOT_/var/lib/mechanic/state/inventory.db")
 
     def testGetLogFileIsExpanded(self):
-      self.assertEqual(self.config.getLogFile(), "_ROOT_/var/log/mechanic.log")
+      self.assertEqual(self.config.getLogFile(), "")
 
     def testGetConfigFileIsExpanded(self):
       self.assertEqual(self.config.getConfigFile(), "_ROOT_/etc/mechanic.conf")
