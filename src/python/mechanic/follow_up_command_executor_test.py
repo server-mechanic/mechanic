@@ -4,7 +4,7 @@
 import unittest
 from follow_up_command_executor import FollowUpCommandExecutor
 from mock import MagicMock
-from exceptions import MigrationFailedException
+from exceptions import FollowUpCommandFailedException
 
 class FollowUpCommandExecutorTest(unittest.TestCase):
   def setUp(self):
@@ -18,6 +18,7 @@ class FollowUpCommandExecutorTest(unittest.TestCase):
     self.executor.execve.assert_called_once()
 
   def testExecFailure(self):
-    self.executor.execve.return_value = 1
-    self.executor.executeFollowUpCommand(["/bin/false"])
-    self.executor.execve.assert_called_once()
+    self.executor.execve.return_value = 13
+    with self.assertRaises(FollowUpCommandFailedException) as context:
+      self.executor.executeFollowUpCommand(["/bin/false"])
+    self.assertTrue('failed with exit code 13' in str(context.exception))
