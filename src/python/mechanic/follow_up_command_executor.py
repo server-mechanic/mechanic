@@ -2,16 +2,18 @@
 # -*- coding: UTF-8 -*-
 
 from config import Config
+from exceptions import FollowUpCommandFailedException
 import os
 
 class FollowUpCommandExecutor:
   def __init__(self, config):
     self.config = config
+    self.execve = os.execve
 
   def executeFollowUpCommand(self, followUpCommand):
     try:
       environment = { "MECHANIC_ROOT_DIR": self.config.mechanicRootDir }
-      exitCode = os.execve(followUpCommand[0], followUpCommand, environment)
+      exitCode = self.execve(followUpCommand[0], followUpCommand, environment)
       if exitCode != 0:
         raise FollowUpCommandFailedException("Follow up command failed with exit code %s." % exitCode )
     except Exception as e:
