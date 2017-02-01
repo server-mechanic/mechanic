@@ -4,7 +4,7 @@
 ![Server Mechanic](https://server-mechanic.github.io/website/images/mechanic_small.png "Server Mechanic")
 
 #### Evolve your servers, virtual machines and containers more easily.
-Server Mechanic applies change scripts to your servers in a reliable and reproducable way.
+Server Mechanic is a tool to apply change scripts to your servers in a reliable and reproducable way.
 
 ### Pros
 * You evolve your servers step by step.
