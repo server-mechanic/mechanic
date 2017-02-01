@@ -1,88 +1,41 @@
 # Server Mechanic ![Written in Python](https://img.shields.io/badge/python-2.7-yellow.svg) [![Build Status](https://travis-ci.org/server-mechanic/mechanic.svg)](https://travis-ci.org/server-mechanic/mechanic) [![Test Coverage](https://codecov.io/gh/server-mechanic/mechanic/branch/master/graph/badge.svg)](https://codecov.io/gh/server-mechanic/mechanic) [![Release](https://img.shields.io/github/release/server-mechanic/mechanic.svg)](https://github.com/server-mechanic/mechanic/releases/latest) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ### Server Evolution Made Easy.
-
 ![Server Mechanic](https://server-mechanic.github.io/website/images/mechanic_small.png "Server Mechanic")
 
 #### Evolve your servers, virtual machines and containers more easily.
-
-## Features
+Server Mechanic applies change scripts to your servers in a reliable and reproducable way.
 
 ### Pros
-* Evolve your servers step by step.
-* Write server migrations in your favorite language.
-* Use the standard tools developed for the job, e.g. apt, yum, dnf.
-* Focus on the migrations instead of developing reusable plugins.
-* Minimal overhead, no central server required.
+* You evolve your servers step by step.
+* You author server migrations in your favorite language.
+* No abstractions - you simply use your daily tools (apt, yum, cp, sed, ...)
+* You focus on the changes instead of developing reusable plugins.
 
 ### Cons
 * List of migrations can get very long for new installs.
 
-## What Server Mechanic is for?
-If you want to manage your machines in a traceable and repeatable way one strategy is the creation of "infrastructure as code".
+Server Mechanic is considered as a lightweight alternative to tools like puppet, ansible, etc.
 
-With Server Mechanic you author changes to your machines as scripts in your favorite language, e.g. shell scripts. Server Mechanic collects these migration scripts, executes them and records them as applied in an internal database. Next time only new migrations will be executed. In case of an error you fix the problem and start over.
+[How it works...](doc/HOWITWORKS.md)
 
-Server Mechanic is considered a lightweight alternative to tools like puppet, ansible, etc.
+## Features
 
-## Server Mechanic for Docker containers
-
-Docker already utilizes the step by step approach with the commands in your Dockerfile. These commands are run at container image build time. So you have full access to the container's internal state. But external volumes cannot be manipulated by Dockerfile commands. Here Server Mechanic comes into play.
-
-Server Mechanic gets executed on container startup, applies your migration which migrates the state in your volumes, then container startup proceeds. So you can roll out adjustments to external volumes with new container versions and containers and volumes stay in sync.
+* Tested platforms: Linux
+* Available as platform package for Debian and Ubuntu.
+* Written in Python.
+* Uses battle proof sqlite3 database.
 
 ## Status
-
 Server Mechanic is in an early stage ("unstable"). Use it carefully and expect things to break.
 
 We appreciate any feedback about the tool and your usage scenarios so we can learn and improve Server Mechanic.
 
-## Installation
+## [Installation](doc/INSTALLATION.md)
 
-### Bare metal/ virtual machines
-* Install mechanic
-```
-curl -s https://raw.githubusercontent.com/server-mechanic/packages/master/install-mechanic.sh | sudo bash -s unstable
-```
-* Place your migrations below /var/lib/mechanic/migration.d/ or /etc/mechanic/migration.d/. (Make sure they are executable and exit with 0 in case of success.)
-* Start the Server Mechanic
-```
-mechanic migrate
-```
-
-### Docker container
-* Add installation of mechanic to your Dockerfile
-```
-RUN curl -s https://raw.githubusercontent.com/server-mechanic/packages/master/install-mechanic.sh | sudo bash -s unstable
-```
-* Supposedly you want mechanic state to survice container restarts, so add a volume:
-```
-VOLUME /mechanic.volume
-```
-* Adjust /etc/mechanic.conf so mechanic will put state into the volume:
-```
-# /etc/mechanic.conf
-[main]
-log_file=/mechanic.volume/log/mechanic.log
-pre_migration_dirs=/var/lib/mechanic/pre-migration.d/
-migration_dirs=/var/lib/mechanic/migration.d/
-post_migration_dirs=/var/lib/mechanic/post-migration.d/
-run_dir=/mechanic.volume/tmp/
-state_dir=/mechanic.volume/state
-```
-* Place your migrations below /var/lib/mechanic/migration.d/. (Make sure they are executable and exit with 0 in case of success.)
-* Extend your container entrypoint so, that mechanic migrations will be run on container startup. Mechanic will replace itself with the actual endpoint.
-```
-ENTRYPOINT ["/usr/sbin/mechanic", "migrate", "--", "PUT", "ACTUAL", "ENTRYPOINT", "HERE" ]
-```
-* Don't forget to start your container with the external volume mounted. (-v /path/to/volume:/mechanic.volume).
-
-## History
-
-[History](HISTORY.md)
+## [History](doc/HISTORY.md)
 
 ## Contributing
-
 Server Mechanic is an open source project, and contributions are welcome! Feel free to raise an issue or submit a pull request.
 
 ## License
