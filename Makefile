@@ -15,7 +15,7 @@ PACKAGE_VERSION := 0.5
 BUILD_NUMBER := 3
 SCM_VERSION = $(shell git rev-parse HEAD)
 
-default:	clean build lint tests integration-tests
+default:	clean build tests integration-tests
 
 all:	patch default packages
 
@@ -44,9 +44,6 @@ build:
 tests:
 	@echo "Running tests..."; \
 	PYTHONPATH=${PWD}/src/python/ coverage run -m unittest discover -s ${PWD}/src/python/ -v -p '*_test.py'
-
-lint:
-	pylint -E --ignore-patterns='.*_test.py' src/python/mechanic
 
 coverage: tests
 	coverage html
