@@ -1,0 +1,19 @@
+0
+.
+./etc
+./etc/mechanic
+./etc/mechanic.conf
+./etc/mechanic/migration.d
+./etc/mechanic/migration.d/ok
+./etc/mechanic/migration.d/ok/ok.dat
+./etc/mechanic/migration.d/ok/run
+./ok.dat
+./var
+./var/lib
+./var/lib/mechanic
+./var/lib/mechanic/state
+./var/lib/mechanic/state/inventory.db
+./var/lib/mechanic/tmp
+./var/log
+./var/log/mechanic.log
+1	ok	SUCCESS

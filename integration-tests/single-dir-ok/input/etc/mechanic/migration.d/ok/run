@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cp ./*.dat $TEST_ROOT
+
+exit 0

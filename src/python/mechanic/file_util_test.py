@@ -6,30 +6,15 @@ import file_util
 import os
 import tempfile
 
-class CollectfilesTest(unittest.TestCase):
-  def setUp(self):
-    self.tempDir = tempfile.mkdtemp()
-
-  def testCollectingFromEmptyListGivesEmptyList(self):
-    files = file_util.collectfiles([])
-    self.assertEqual(files, [])
-
-  def testNonExistentDirsIgnored(self):
-    files = file_util.collectfiles(["/doesNotExist", "/thisToo"])
-    self.assertEqual(files, [])
-
-  def testCollectingFromEmptyDirGivesEmptyList(self):
-    files = file_util.collectfiles([self.tempDir])
-    self.assertEqual(files, [])
-
-  def testCollectingFromDirGivesFileList(self):
-    tempFile = tempfile.mkstemp(dir=self.tempDir)[1]
-    files = file_util.collectfiles([self.tempDir])
-    self.assertEqual(files, [tempFile])
-
 class MakedirsTest(unittest.TestCase):
   def setUp(self):
     self.tempDir = tempfile.mkdtemp()
+
+  def testTouchCreatesFile(self):
+    tempFile = os.path.join(self.tempDir, "file")
+    self.assertFalse(os.path.isfile(tempFile))
+    file_util.touch(tempFile)
+    self.assertTrue(os.path.isfile(tempFile))
 
   def testMakeDirsIsQuietIfDirAlreadyExists(self):
     files = file_util.makedirs(self.tempDir)

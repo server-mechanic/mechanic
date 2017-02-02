@@ -25,7 +25,7 @@ class MigrationExecutor:
     try:
       makedirs(migrationTmpDir)
       logFileFd = open(logFile, 'wa')
-      migrationProcess = subprocess.Popen([migration.file],bufsize=0,stdout=logFileFd,stderr=logFileFd,stdin=None,shell=False,env=None,)
+      migrationProcess = subprocess.Popen([migration.file],bufsize=0,stdout=logFileFd,stderr=logFileFd,stdin=None,shell=False,env=None,cwd=os.path.dirname(migration.file))
       exitCode = migrationProcess.wait()
       if exitCode != 0:
         raise MigrationFailedException("Migration %s failed with exit code %d." % (migration.name, exitCode) )

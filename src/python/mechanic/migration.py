@@ -11,3 +11,6 @@ class Migration:
     self.status = status
     self.startTime = startTime
     self.endTime = endTime
+
+  def __str__(self):
+    return "Migration(id=%s,name=%s)" % (self.id, self.name)
