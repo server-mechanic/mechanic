@@ -55,6 +55,9 @@ integration-tests:
 
 packages:	debian-jessie ubuntu-xenial ubuntu-yakkety
 
+debian-wheezy:
+	${PWD}/scripts/build-package.sh debian-wheezy $(PACKAGE_VERSION)-${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
+
 debian-jessie:
 	${PWD}/scripts/build-package.sh debian-jessie $(PACKAGE_VERSION)-${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
 
