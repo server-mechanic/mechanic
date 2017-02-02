@@ -1,5 +1,8 @@
 # History
 
+## 0.5-3 (2017-02-02)
+* Added package for debian wheezy.
+
 ## 0.5-2 (2017-01-29)
 * Bug fixes.
 
