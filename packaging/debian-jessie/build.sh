@@ -3,7 +3,7 @@
 PACKAGE_VERSION=$1
 BUILD_DIR=/build/target/
 PACKAGE_BUILD_DIR=/build/target/debian-jessie
-PACKAGE_FILE=$BUILD_DIR/mechanic_${PACKAGE_VERSION}_amd64.deb
+PACKAGE_FILE=$BUILD_DIR/mechanic_${PACKAGE_VERSION}_all.deb
 PACKAGE_COMMON_SRC_DIR=/build/packaging/common/src
 PACKAGE_SRC_DIR=/build/packaging/debian-jessie/src
 

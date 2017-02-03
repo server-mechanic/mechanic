@@ -2,14 +2,14 @@ Package: mechanic
 Version: REPLACEME
 Section: system
 Priority: optional
-Architecture: amd64
+Architecture: all
 Essential: no
 Depends: bash, python2.7, sqlite3
 Pre-Depends:
 Recommends:
 Suggests:
 Installed-Size: 1866
-Maintainer: Cornelius Buschka <c.buschka@gmx.de>
+Maintainer: Cornelius Buschka <cornelius.buschka@gmail.com>
 Conflicts:
 Replaces:
 Provides: 

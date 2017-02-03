@@ -2,10 +2,10 @@
 
 PACKAGE_VERSION=$1
 BUILD_DIR=/build/target/
-PACKAGE_BUILD_DIR=/build/target/debian-wheezy
+PACKAGE_BUILD_DIR=/build/target/debian-sid
 PACKAGE_FILE=$BUILD_DIR/mechanic_${PACKAGE_VERSION}_all.deb
 PACKAGE_COMMON_SRC_DIR=/build/packaging/common/src
-PACKAGE_SRC_DIR=/build/packaging/debian-wheezy/src
+PACKAGE_SRC_DIR=/build/packaging/debian-sid/src
 
 rm -rf $PACKAGE_BUILD_DIR && mkdir -p $PACKAGE_BUILD_DIR
 
