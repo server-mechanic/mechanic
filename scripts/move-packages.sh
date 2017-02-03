@@ -12,9 +12,14 @@ if [ ! -d "$MECHANIC_PROJECT_DIR/target/" ]; then
   exit 1
 fi
 
-mv $MECHANIC_PROJECT_DIR/target/*ubuntu-yakkety* $PACKAGES_PROJECT_DIR/apt/ubuntu/dists/yakkety/unstable/binary-all/
-mv $MECHANIC_PROJECT_DIR/target/*ubuntu-xenial* $PACKAGES_PROJECT_DIR/apt/ubuntu/dists/xenial/unstable/binary-all/
-mv $MECHANIC_PROJECT_DIR/target/*wheezy* $PACKAGES_PROJECT_DIR/apt/debian/dists/wheezy/unstable/binary-all/
-mv $MECHANIC_PROJECT_DIR/target/*jessie* $PACKAGES_PROJECT_DIR/apt/debian/dists/jessie/unstable/binary-all/
-mv $MECHANIC_PROJECT_DIR/target/*sid* $PACKAGES_PROJECT_DIR/apt/debian/dists/sid/unstable/binary-all/
+cp $MECHANIC_PROJECT_DIR/target/*ubuntu-yakkety*.deb $PACKAGES_PROJECT_DIR/apt/ubuntu/dists/yakkety/unstable/binary-amd64/
+cp $MECHANIC_PROJECT_DIR/target/*ubuntu-yakkety*.deb $PACKAGES_PROJECT_DIR/apt/ubuntu/dists/yakkety/unstable/binary-i386/
+cp $MECHANIC_PROJECT_DIR/target/*ubuntu-xenial*.deb $PACKAGES_PROJECT_DIR/apt/ubuntu/dists/xenial/unstable/binary-amd64/
+cp $MECHANIC_PROJECT_DIR/target/*ubuntu-xenial*.deb $PACKAGES_PROJECT_DIR/apt/ubuntu/dists/xenial/unstable/binary-i386/
+cp $MECHANIC_PROJECT_DIR/target/*wheezy*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists/wheezy/unstable/binary-amd64/
+cp $MECHANIC_PROJECT_DIR/target/*wheezy*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists/wheezy/unstable/binary-i386/
+cp $MECHANIC_PROJECT_DIR/target/*jessie*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists/jessie/unstable/binary-amd64/
+cp $MECHANIC_PROJECT_DIR/target/*jessie*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists/jessie/unstable/binary-i386/
+cp $MECHANIC_PROJECT_DIR/target/*sid* $PACKAGES_PROJECT_DIR/apt/debian/dists/sid/unstable/binary-amd64/
+cp $MECHANIC_PROJECT_DIR/target/*sid* $PACKAGES_PROJECT_DIR/apt/debian/dists/sid/unstable/binary-i386/
 
