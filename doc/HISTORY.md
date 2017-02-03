@@ -1,6 +1,9 @@
 # History
 
-## 0.6 (2017-02-03)
+## 0.6-2 (2017-02-03)
+* Fixed package arch of ubuntu packages.
+
+## 0.6-1 (2017-02-03)
 * Changed versioning scheme of debian packages.
 
 ## 0.5-4 (2017-02-03)
