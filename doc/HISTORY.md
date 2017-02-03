@@ -1,5 +1,8 @@
 # History
 
+## 0.6 (2017-02-03)
+* Changed versioning scheme of debian packages.
+
 ## 0.5-4 (2017-02-03)
 * Switched arch of debian/ubuntu packages from amd64 to all.
 

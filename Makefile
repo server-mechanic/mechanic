@@ -11,8 +11,8 @@
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 
-PACKAGE_VERSION := 0.5
-BUILD_NUMBER := 5
+PACKAGE_VERSION := 0.6
+BUILD_NUMBER := 0
 SCM_VERSION = $(shell git rev-parse HEAD)
 
 default:	clean build tests integration-tests
