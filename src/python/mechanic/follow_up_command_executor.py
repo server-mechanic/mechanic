@@ -12,8 +12,7 @@ class FollowUpCommandExecutor:
 
   def executeFollowUpCommand(self, followUpCommand):
     try:
-      environment = { "MECHANIC_ROOT_DIR": self.config.mechanicRootDir }
-      exitCode = self.execve(followUpCommand[0], followUpCommand, environment)
+      exitCode = self.execve(followUpCommand[0], followUpCommand, os.environ)
       if exitCode != 0:
         raise FollowUpCommandFailedException("Follow up command failed with exit code %s." % exitCode )
     except Exception as e:

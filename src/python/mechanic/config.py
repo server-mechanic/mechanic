@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from os.path import isfile
+from os.path import expandvars, isfile
 from os import getenv
 import ConfigParser
 from string import join, split
@@ -27,7 +27,9 @@ class Config:
     return self.__expand(self.configFile)
 
   def __expand(self, path):
-    return path.replace("${MECHANIC_ROOT_DIR}", self.mechanicRootDir)
+    path = path.replace("${MECHANIC_ROOT_DIR}", self.mechanicRootDir)
+    path = expandvars(path)
+    return path
 
   def getPreMigrationDirs(self):
     dirs = []
