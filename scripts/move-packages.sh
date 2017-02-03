@@ -20,6 +20,6 @@ cp $MECHANIC_PROJECT_DIR/target/*wheezy*.deb $PACKAGES_PROJECT_DIR/apt/debian/di
 cp $MECHANIC_PROJECT_DIR/target/*wheezy*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists/wheezy/unstable/binary-i386/
 cp $MECHANIC_PROJECT_DIR/target/*jessie*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists/jessie/unstable/binary-amd64/
 cp $MECHANIC_PROJECT_DIR/target/*jessie*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists/jessie/unstable/binary-i386/
-cp $MECHANIC_PROJECT_DIR/target/*sid* $PACKAGES_PROJECT_DIR/apt/debian/dists/sid/unstable/binary-amd64/
-cp $MECHANIC_PROJECT_DIR/target/*sid* $PACKAGES_PROJECT_DIR/apt/debian/dists/sid/unstable/binary-i386/
+cp $MECHANIC_PROJECT_DIR/target/*sid*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists/sid/unstable/binary-amd64/
+cp $MECHANIC_PROJECT_DIR/target/*sid*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists/sid/unstable/binary-i386/
 
