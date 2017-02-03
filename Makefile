@@ -12,7 +12,7 @@
 #
 
 PACKAGE_VERSION := 0.5
-BUILD_NUMBER := 4
+BUILD_NUMBER := 5
 SCM_VERSION = $(shell git rev-parse HEAD)
 
 default:	clean build tests integration-tests

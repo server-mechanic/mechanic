@@ -1,5 +1,8 @@
 # History
 
+## 0.5-4 (2017-02-03)
+* Switched arch of debian/ubuntu packages from amd64 to all.
+
 ## 0.5-3 (2017-02-02)
 * Added package for debian wheezy.
 
