@@ -12,7 +12,7 @@ python:
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -y python2.7 sqlite3
+  - sudo apt-get install -y sqlite3
   - sudo pip install mock coverage
 
 script:
