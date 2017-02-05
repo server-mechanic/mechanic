@@ -19,4 +19,4 @@ class ListMigrationsCommand:
 
     migrations = self.inventory.listMigrations(orderBy)
     for migration in migrations:
-      print "%d\t%s\t%s\t%s\t%s" % (migration.id, migration.name, migration.startTime, migration.endTime, migration.status)
+      print("%d\t%s\t%s\t%s\t%s" % (migration.id, migration.name, migration.startTime, migration.endTime, migration.status))

@@ -53,5 +53,5 @@ class Logger:
     
   def __write2(self, output):
     if self.file is not None:
-      print >> self.file, output
-    print output
+      self.file.write(output)
+    print(output)

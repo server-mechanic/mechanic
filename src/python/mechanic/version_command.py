@@ -11,4 +11,4 @@ class VersionCommand:
     self.mechanic = mechanic
 
   def run(self, args):
-    print "Version: %s SCM-Version: %s" % (VersionInfo.packageVersion, VersionInfo.scmVersion)
+    print("Version: %s SCM-Version: %s" % (VersionInfo.packageVersion, VersionInfo.scmVersion))

@@ -39,7 +39,7 @@ class MakedirsTest(unittest.TestCase):
     self.assertTrue('already is a file' in str(context.exception))
   
   def testMakeDirsFailsWhenParentNotWritable(self):
-    os.chmod(self.tempDir,0500)
+    os.chmod(self.tempDir,0o0500)
     with self.assertRaises(Exception) as context:
       file_util.makedirs(os.path.join(self.tempDir,"sub"))
     self.assertTrue('ermission denied' in str(context.exception))
