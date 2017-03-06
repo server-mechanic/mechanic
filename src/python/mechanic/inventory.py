@@ -25,7 +25,7 @@ class Inventory:
 
   def listPostMigrations(self):
     migrationDirs = self.config.getPostMigrationDirs()
-    self.logger.debug("Scanning for pre migrations (dirs: %s)..." % migrationDirs)
+    self.logger.debug("Scanning for post migrations (dirs: %s)..." % migrationDirs)
     return self.migrationCollector.collectMigrationsFrom(migrationDirs)
 
   def markMigrationAsStarted(self, migrationName):
