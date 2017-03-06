@@ -15,3 +15,4 @@ profile.out
 /src/include/metadata.h
 __pycache__
 *.pyc
+*.pyo
