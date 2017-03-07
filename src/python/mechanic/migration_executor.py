@@ -25,10 +25,16 @@ class MigrationExecutor:
     try:
       makedirs(migrationTmpDir)
       logFileFd = open(logFile, 'wa')
-      migrationProcess = subprocess.Popen([migration.file],bufsize=0,stdout=logFileFd,stderr=logFileFd,stdin=None,shell=False,cwd=os.path.dirname(migration.file))
+      migrationProcess = subprocess.Popen([migration.file],bufsize=0,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,stdin=None,shell=False,cwd=os.path.dirname(migration.file))
+      while True:
+        line = migrationProcess.stdout.readline()
+        if not line:
+          break;
+        self.logger.info("%s: %s" % (migration.name, line.strip()))
+        print >> logFileFd, line.strip()
       exitCode = migrationProcess.wait()
       if exitCode != 0:
-        raise MigrationFailedException("Migration %s failed with exit code %d." % (migration.name, exitCode) )
+        raise MigrationFailedException("Migration %s failed with exit code %s." % (migration.name, exitCode) )
 
       self.inventory.markMigrationAsSucceeded(migration.name)
       shutil.rmtree(migrationTmpDir)
@@ -38,12 +44,3 @@ class MigrationExecutor:
     except Exception as e:
       self.inventory.markMigrationAsFailed(migration.name)
       raise e
-    finally:
-      self.__copyMigrationOutput(migration, logFile)
-
-  def __copyMigrationOutput(self, migration, logFile):
-      if os.path.isfile(logFile):
-        with open(logFile) as f:
-          for line in f:
-            self.logger.info("%s: %s" % (migration.name, line.strip()))
-
