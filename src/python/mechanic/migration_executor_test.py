@@ -5,7 +5,6 @@ import unittest
 from migration_executor import MigrationExecutor
 from migration import Migration
 from config import Config
-from logger import Logger
 from inventory import Inventory
 import mock
 import tempfile

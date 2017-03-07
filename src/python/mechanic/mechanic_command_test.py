@@ -9,7 +9,12 @@ from mock import MagicMock
 class MechanicCommandTest(unittest.TestCase):
     def setUp(self):
       self.mechanic = MagicMock()
+      self.mechanic.config = MagicMock()
+      self.mechanic.config.logFile = ""
+      self.mechanic.config.getLogFile = MagicMock()
+      self.mechanic.config.getLogFile.return_value = ""
       self.mechanic.logger = MagicMock()
+      self.mechanic.logger.addHandler = MagicMock()
       self.mechanic.commands = {}
       self.mechanic.defaultCommand = MagicMock()
       self.command = MechanicCommand(self.mechanic)

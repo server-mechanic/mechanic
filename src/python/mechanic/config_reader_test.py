@@ -3,13 +3,13 @@
 
 import unittest
 from config_reader import ConfigReader
-from logger import Logger
+import logging
 from config import Config
 import tempfile
 
 class ConfigReaderTest(unittest.TestCase):
     def setUp(self):
-      logger = Logger()
+      logger = logging.getLogger()
       self.configReader = ConfigReader(logger)
 
       self.tempFile = tempfile.NamedTemporaryFile(delete=False)

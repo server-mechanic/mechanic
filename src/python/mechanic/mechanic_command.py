@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from mechanic.file_util import makeparentdirs
+import logging
 from context import Mechanic
 from command_line import CommandLine
 from exceptions import MigrationFailedException
@@ -15,8 +17,10 @@ class MechanicCommand:
 
   def run(self, args):
     args = CommandLine(args)
-    self.logger.setVerbose(args.verbose)
-    self.logger.setLogFile(self.mechanic.config.getLogFile() )
+    self.logger.setLevel(logging.DEBUG if args.verbose else logging.INFO)
+    if not self.mechanic.config.getLogFile() in [ "", "/dev/stderr", "stderr" ]:
+      makeparentdirs(self.mechanic.config.getLogFile()) 
+      self.logger.addHandler(logging.FileHandler(self.mechanic.config.getLogFile()))
 
     command = self.mechanic.commands.get(args.commandName)
     try:
@@ -36,5 +40,7 @@ class MechanicCommand:
     except Exception as e:
       self.logger.error(e)
       return 1
+    finally:
+      logging.shutdown()
     return 0
 

@@ -8,7 +8,6 @@ import help_command
 import inventory_db
 import inventory
 import list_migrations_command
-import logger
 import mechanic_command
 import migrate_command
 import migration_executor

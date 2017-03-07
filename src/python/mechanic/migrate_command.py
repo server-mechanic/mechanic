@@ -7,6 +7,7 @@ from migration_executor import MigrationExecutor
 from follow_up_command_executor import FollowUpCommandExecutor
 from mechanic.file_util import makeparentdirs, makedirs
 import os
+import logging
 
 class MigrateCommand:
   description = "Apply pending migrations."
@@ -39,6 +40,11 @@ class MigrateCommand:
         self.logger.info("Applying post migration %s..." % migration.name)
         self.migrationExecutor.applyMigration(migration)
 
+    self.__flushLoggers()
     if args.followUpCommand is not None:
       self.followUpCommandExecutor.executeFollowUpCommand(args.followUpCommand)
 
+  def __flushLoggers(self):
+    handlers = logging.getLogger().handlers
+    for handler in handlers:
+      handler.flush() 

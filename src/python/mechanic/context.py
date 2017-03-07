@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from logger import Logger
+import logging
 from migrate_command import MigrateCommand
 from list_migrations_command import ListMigrationsCommand
 from help_command import HelpCommand
@@ -13,7 +13,10 @@ from config_reader import ConfigReader
 class Mechanic:
   def __init__(self, logger=None):
     if logger is None:
-      logger = Logger()
+      logging.basicConfig(format="%(asctime)-15s %(levelname)s [%(filename)s:%(lineno)d-%(thread)d] %(message)s")
+      logger = logging.getLogger()
+      logger.setLevel(logging.INFO)
+      logger.addHandler(logging.StreamHandler())
     self.logger = logger
     self.config = self.__loadConfig()
     self.inventory = Inventory(logger, self.config)
