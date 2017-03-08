@@ -12,7 +12,7 @@ from exceptions import MigrationFailedException
 
 class MigrationExecutorTest(unittest.TestCase):
   def setUp(self):
-    config = Config()
+    config = Config(mode="SYSTEM")
     self.inventory = mock.MagicMock()
     logger = mock.MagicMock()
     self.executor = MigrationExecutor(config, self.inventory, logger)

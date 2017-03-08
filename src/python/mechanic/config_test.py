@@ -6,7 +6,7 @@ from config import Config
 
 class ConfigTest(unittest.TestCase):
     def setUp(self):
-      self.config = Config()
+      self.config = Config(mode="SYSTEM")
       self.config.mechanicRootDir = "_ROOT_"
 
     def testGetMigrationTmpDirIsExpanded(self):

@@ -1,22 +1,32 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from os.path import expandvars, isfile
+from os.path import expanduser,expandvars, isfile
 from os import getenv
 import ConfigParser
 from string import join, split
 
 class Config:
-  def __init__(self):
+  def __init__(self, mode):
+    self.mode = mode
     self.mechanicRootDir = getenv("MECHANIC_ROOT_DIR", "")
-    self.configFile = "${MECHANIC_ROOT_DIR}/etc/mechanic.conf"
-    self.logFile = ""
-    self.migrationDirs = ["${MECHANIC_ROOT_DIR}/etc/mechanic/migration.d", "${MECHANIC_ROOT_DIR}/var/lib/mechanic/migration.d"]
-    self.preMigrationDirs = ["${MECHANIC_ROOT_DIR}/etc/mechanic/pre-migration.d", "${MECHANIC_ROOT_DIR}/var/lib/mechanic/pre-migration.d"]
-    self.postMigrationDirs = ["${MECHANIC_ROOT_DIR}/etc/mechanic/post-migration.d", "${MECHANIC_ROOT_DIR}/var/lib/mechanic/post-migration.d"]
-    self.stateDir = "${MECHANIC_ROOT_DIR}/var/lib/mechanic/state"
-    self.runDir = "${MECHANIC_ROOT_DIR}/var/lib/mechanic/tmp"
-  
+    if mode != "USER":
+      self.configFile = "${MECHANIC_ROOT_DIR}/etc/mechanic.conf"
+      self.logFile = ""
+      self.migrationDirs = ["${MECHANIC_ROOT_DIR}/etc/mechanic/migration.d", "${MECHANIC_ROOT_DIR}/var/lib/mechanic/migration.d"]
+      self.preMigrationDirs = ["${MECHANIC_ROOT_DIR}/etc/mechanic/pre-migration.d", "${MECHANIC_ROOT_DIR}/var/lib/mechanic/pre-migration.d"]
+      self.postMigrationDirs = ["${MECHANIC_ROOT_DIR}/etc/mechanic/post-migration.d", "${MECHANIC_ROOT_DIR}/var/lib/mechanic/post-migration.d"]
+      self.stateDir = "${MECHANIC_ROOT_DIR}/var/lib/mechanic/state"
+      self.runDir = "${MECHANIC_ROOT_DIR}/var/lib/mechanic/tmp"
+    else:
+      self.configFile = "${HOME}/.mechanic/mechanic.conf"
+      self.logFile = ""
+      self.migrationDirs = ["${HOME}/.mechanic/migration.d"]
+      self.preMigrationDirs = ["${HOME}/.mechanic/pre-migration.d"]
+      self.postMigrationDirs = ["${HOME}/.mechanic/post-migration.d"]
+      self.stateDir = "${HOME}/.mechanic/state"
+      self.runDir = "${HOME}/.mechanic/tmp"
+
   def getMigrationTmpDir(self):
     return self.__expand(self.runDir)
   
@@ -28,6 +38,7 @@ class Config:
 
   def __expand(self, path):
     path = path.replace("${MECHANIC_ROOT_DIR}", self.mechanicRootDir)
+    path = expanduser(path)
     path = expandvars(path)
     return path
 

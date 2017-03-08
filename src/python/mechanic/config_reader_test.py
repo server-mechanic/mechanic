@@ -24,7 +24,7 @@ state_dir=${MECHANIC_ROOT_DIR}/stateDir
 """)
 
     def testWorksWithoutConfigFile(self):
-      config = Config()
+      config = Config(mode="SYSTEM")
       config.mechanicRootDir = "__ROOT__"
       config.configFile = self.tempFile.name
       configRead = self.configReader.loadConfig(config)
