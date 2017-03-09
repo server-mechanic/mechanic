@@ -25,8 +25,16 @@ build:
 	mkdir -p ${PWD}/target/bundle/usr/sbin && \
 	cp ${PWD}/src/bash/* ${PWD}/target/bundle/usr/sbin/ && \
 	mkdir -p ${PWD}/target/bundle/usr/lib/python2.7/site-packages/ && \
+	mkdir -p ${PWD}/target/bundle/etc/mechanic/pre-migration.d && \
+	mkdir -p ${PWD}/target/bundle/etc/mechanic/migration.d && \
+	mkdir -p ${PWD}/target/bundle/etc/mechanic/post-migration.d && \
+	mkdir -p ${PWD}/target/bundle/var/lib/mechanic/pre-migration.d && \
+	mkdir -p ${PWD}/target/bundle/var/lib/mechanic/migration.d && \
+	mkdir -p ${PWD}/target/bundle/var/lib/mechanic/post-migration.d && \
+	mkdir -p ${PWD}/target/bundle/var/lib/mechanic/state && \
+	mkdir -p ${PWD}/target/bundle/var/lib/mechanic/tmp && \
 	cp -R ${PWD}/src/python/* ${PWD}/target/bundle/usr/lib/python2.7/site-packages/ && \
-	cd ${PWD}/target/bundle && tar czf ../bundle.tgz .
+	cd ${PWD}/target/bundle && tar czf ../bundle.tgz --exclude='*__pycache__*' --exclude='*.pyc' --exclude='*.pyo' .
 
 tests:
 	@echo "Running tests..."; \

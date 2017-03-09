@@ -7,11 +7,15 @@
 ./etc/mechanic/migration.d/001_first.sh
 ./etc/mechanic/migration.d/003_nowme2.sh
 ./etc/mechanic/migration.d/004_stderr.sh
+./etc/mechanic/post-migration.d
+./etc/mechanic/pre-migration.d
 ./var
 ./var/lib
 ./var/lib/mechanic
 ./var/lib/mechanic/migration.d
 ./var/lib/mechanic/migration.d/002_nowme.sh
+./var/lib/mechanic/post-migration.d
+./var/lib/mechanic/pre-migration.d
 ./var/lib/mechanic/state
 ./var/lib/mechanic/state/inventory.db
 ./var/lib/mechanic/tmp

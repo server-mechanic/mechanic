@@ -7,10 +7,15 @@
 ./etc/mechanic/migration.d/ok
 ./etc/mechanic/migration.d/ok/ok.dat
 ./etc/mechanic/migration.d/ok/run
+./etc/mechanic/post-migration.d
+./etc/mechanic/pre-migration.d
 ./ok.dat
 ./var
 ./var/lib
 ./var/lib/mechanic
+./var/lib/mechanic/migration.d
+./var/lib/mechanic/post-migration.d
+./var/lib/mechanic/pre-migration.d
 ./var/lib/mechanic/state
 ./var/lib/mechanic/state/inventory.db
 ./var/lib/mechanic/tmp
