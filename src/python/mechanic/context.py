@@ -17,8 +17,8 @@ class Mechanic:
       logging.basicConfig(format="%(asctime)-15s %(levelname)s [%(filename)s:%(lineno)d-%(thread)d] %(message)s")
       logger = logging.getLogger()
       logger.setLevel(logging.DEBUG)
-      logger.addHandler(logging.StreamHandler())
     self.logger = logger
+
     self.mode = self.__detectMode(mode)
     self.config = self.__loadConfig()
     self.inventory = Inventory(logger, self.config)
