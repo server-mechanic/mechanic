@@ -13,13 +13,13 @@ from config_reader import ConfigReader
 
 class Mechanic:
   def __init__(self, logger=None, mode=None):
-    self.mode = self.__detectMode(mode)
     if logger is None:
       logging.basicConfig(format="%(asctime)-15s %(levelname)s [%(filename)s:%(lineno)d-%(thread)d] %(message)s")
       logger = logging.getLogger()
-      logger.setLevel(logging.INFO)
+      logger.setLevel(logging.DEBUG)
       logger.addHandler(logging.StreamHandler())
     self.logger = logger
+    self.mode = self.__detectMode(mode)
     self.config = self.__loadConfig()
     self.inventory = Inventory(logger, self.config)
     self.commands = { 
@@ -30,11 +30,12 @@ class Mechanic:
     self.defaultCommand = HelpCommand(self)
 
   def __detectMode(self, mode=None):
-    self.mode = mode
-    if self.mode is None:
-      self.mode = "SYSTEM"
+    if mode is None:
+      mode = "SYSTEM"
       if os.getenv("MECHANIC_ROOT_DIR") is None and os.getuid() != 0:
-        self.mode = "USER"
+        mode = "USER"
+    self.logger.info("Running in %s mode." % (mode))
+    return mode
 
   def __loadConfig(self):
     configReader = ConfigReader(self.logger)

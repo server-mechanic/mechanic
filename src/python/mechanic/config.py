@@ -20,7 +20,7 @@ class Config:
       self.runDir = "${MECHANIC_ROOT_DIR}/var/lib/mechanic/tmp"
     else:
       self.configFile = "${HOME}/.mechanic/mechanic.conf"
-      self.logFile = ""
+      self.logFile = "stderr"
       self.migrationDirs = ["${HOME}/.mechanic/migration.d"]
       self.preMigrationDirs = ["${HOME}/.mechanic/pre-migration.d"]
       self.postMigrationDirs = ["${HOME}/.mechanic/post-migration.d"]

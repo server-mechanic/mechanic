@@ -17,7 +17,10 @@ class MechanicCommand:
 
   def run(self, args):
     args = CommandLine(args)
-    self.logger.setLevel(logging.DEBUG if args.verbose else logging.INFO)
+    if args.verbose:
+      self.logger.setLevel(logging.DEBUG)
+    else:
+      self.logger.setLevel(logging.INFO)
     if not self.mechanic.config.getLogFile() in [ "", "/dev/stderr", "stderr" ]:
       makeparentdirs(self.mechanic.config.getLogFile()) 
       self.logger.addHandler(logging.FileHandler(self.mechanic.config.getLogFile()))
