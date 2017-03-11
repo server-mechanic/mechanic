@@ -23,6 +23,10 @@ $PACKAGE_FILE
 
 /usr/sbin/mechanic version
 
+
+echo "Uninstalling via uninstaller..."
+/var/lib/mechanic/uninstall.sh
+
 echo "Done."
 
 exit 0
