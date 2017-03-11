@@ -12,6 +12,12 @@ if [ ! -d "$MECHANIC_PROJECT_DIR/target/" ]; then
   exit 1
 fi
 
+mkdir -p $PACKAGES_PROJECT_DIR/bash-installer/unstable/
+for i in $MECHANIC_PROJECT_DIR/target/bash-installer*.sh; do
+  cp $i $PACKAGES_PROJECT_DIR/bash-installer/unstable/
+  rm -f $PACKAGES_PROJECT_DIR/bash-installer/unstable/latest.sh
+  ln -s $(basename $i) $PACKAGES_PROJECT_DIR/bash-installer/unstable/latest.sh
+done
 cp $MECHANIC_PROJECT_DIR/target/*ubuntu-yakkety*.deb $PACKAGES_PROJECT_DIR/apt/ubuntu/dists/yakkety/unstable/binary-amd64/
 cp $MECHANIC_PROJECT_DIR/target/*ubuntu-yakkety*.deb $PACKAGES_PROJECT_DIR/apt/ubuntu/dists/yakkety/unstable/binary-i386/
 cp $MECHANIC_PROJECT_DIR/target/*ubuntu-xenial*.deb $PACKAGES_PROJECT_DIR/apt/ubuntu/dists/xenial/unstable/binary-amd64/
