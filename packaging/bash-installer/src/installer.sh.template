@@ -1,0 +1,71 @@
+#!/bin/bash -e
+
+if [[ "$UID" != "0" ]]; then
+ echo "Must be run as root."
+ exit 1
+fi
+
+UNINSTALLER_TMP_FILE=$(mktemp)
+UNINSTALLER_FILE=/var/lib/mechanic/uninstall.sh
+
+function streamTar() {
+  (cat - | base64 -d | gzip -d ) <<EOB
+BUNDLE_DATA_HERE
+EOB
+}
+
+function checkPreconditions() {
+  echo "Checking preconditions..."
+  streamTar | tar tf - | sed -r 's#\./(.*)$#/\\1#g' | (while read file; do
+    if [[ "$file" =~ ^.*[^/]$ ]]; then
+      if [[ -f "$file" ]]; then
+        echo "$file already exists; aborting."
+        exit 1
+      else
+        echo "$file - ok"
+      fi
+    else
+      echo "$file - ok"
+    fi
+  done)
+}
+
+function unpack() {
+  echo "Unpacking..."
+  streamTar | tar xvf -
+}
+
+function generateUninstaller() {
+  echo "Generating uninstaller..."
+  streamTar | tar tf - | sort -r | sed -r 's#\./(.*)$#/\\1#g' | (cat - <<EOB
+#!/bin/bash -xe
+
+echo "Uninstalling..."
+EOB
+while read file; do
+    if [[ "$file" =~ ^.*/$ ]]; then
+      if [[ ! -d "$file" ]]; then
+        echo "rm -r \"$file\""
+      fi
+    else
+      echo "rm \"$file\"";
+    fi
+  done; cat - <<EOB
+echo "Done."
+
+exit 0
+EOB
+) >$UNINSTALLER_TMP_FILE
+}
+
+function relocateUninstaller() {
+  mv $UNINSTALLER_TMP_FILE $UNINSTALLER_FILE
+  chmod +x $UNINSTALLER_FILE
+}
+
+checkPreconditions
+generateUninstaller
+unpack
+relocateUninstaller
+
+exit 0

@@ -48,7 +48,10 @@ integration-tests:
 	@echo "Running integration tests..."; \
 	${PWD}/scripts/run-integration-tests.sh
 
-packages:	debian-wheezy debian-jessie debian-sid ubuntu-xenial ubuntu-yakkety
+packages:	bash-installer debian-wheezy debian-jessie debian-sid ubuntu-xenial ubuntu-yakkety
+
+bash-installer:
+	${PWD}/scripts/build-package.sh bash-installer $(PACKAGE_VERSION)_${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
 
 debian-wheezy:
 	${PWD}/scripts/build-package.sh debian-wheezy $(PACKAGE_VERSION)-0wheezy${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
