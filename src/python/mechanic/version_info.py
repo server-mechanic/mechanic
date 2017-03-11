@@ -2,5 +2,5 @@
 # -*- coding: UTF-8 -*-
 
 class VersionInfo:
-  packageVersion = "0.5-3"
-  scmVersion = "f76c0edfad86c782c61f23a666f4c8af69a3d254"
+  packageVersion = "0.7-0"
+  scmVersion = "b3e29d483122705c937e8fe83dc44d1d64ee2a88"
