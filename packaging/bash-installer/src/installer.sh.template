@@ -8,6 +8,19 @@ fi
 UNINSTALLER_TMP_FILE=$(mktemp)
 UNINSTALLER_FILE=/var/lib/mechanic/uninstall.sh
 
+function checkForTools() {
+  local path=""
+  local tool=""
+
+  for tool in $*; do
+    path=$(which $tool)
+    if [[ -z "$path" ]]; then
+      echo "$tool not found."
+      exit 1 
+    fi
+  done
+}
+
 function streamTar() {
   (cat - | base64 -d | gzip -d ) <<EOB
 BUNDLE_DATA_HERE
@@ -16,6 +29,7 @@ EOB
 
 function checkPreconditions() {
   echo "Checking preconditions..."
+  checkForTools cat tar base64 gzip mktemp sed mv rmdir rm
   streamTar | tar tf - | sed -r 's#\./(.*)$#/\\1#g' | (while read file; do
     if [[ "$file" =~ ^.*[^/]$ ]]; then
       if [[ -f "$file" ]]; then
