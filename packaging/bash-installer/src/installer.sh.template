@@ -46,7 +46,7 @@ function checkPreconditions() {
 
 function unpack() {
   echo "Unpacking..."
-  streamTar | tar xvf -
+  streamTar | tar xvf - -C /
 }
 
 function generateUninstaller() {
