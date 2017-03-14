@@ -15,8 +15,8 @@ class MechanicCommand:
     self.mechanic = mechanic
     self.logger = mechanic.logger
 
-  def run(self, args):
-    args = CommandLine(args)
+  def run(self):
+    args = self.mechanic.commandLine
     if args.verbose:
       self.logger.setLevel(logging.DEBUG)
     else:

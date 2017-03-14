@@ -6,7 +6,7 @@ from context import Mechanic
 
 class MechanicTest(unittest.TestCase):
     def setUp(self):
-      self.context = Mechanic()
+      self.context = Mechanic([])
 
     def testLoggerInitialized(self):
       self.assertIsNotNone(self.context.logger)

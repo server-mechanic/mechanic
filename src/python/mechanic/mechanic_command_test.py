@@ -20,11 +20,13 @@ class MechanicCommandTest(unittest.TestCase):
       self.command = MechanicCommand(self.mechanic)
 
     def testRunWithNoArgsExecutedDefaultCommand(self):
-      self.command.run([])
+      self.command.run()
       self.mechanic.defaultCommand.run.assert_called()
 
     def testRunWithCommandName(self):
       fooCommand = MagicMock()
+      self.mechanic.commandLine = MagicMock()
+      self.mechanic.commandLine.commandName = "foo"
       self.mechanic.commands["foo"] = fooCommand
-      self.command.run(["foo"])
+      self.command.run()
       fooCommand.run.assert_called()

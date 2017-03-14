@@ -10,9 +10,11 @@ from version_command import VersionCommand
 from inventory import Inventory
 from config import Config
 from config_reader import ConfigReader
+from command_line import CommandLine
 
 class Mechanic:
-  def __init__(self, logger=None, mode=None):
+  def __init__(self, args, logger=None, mode=None):
+    self.commandLine = CommandLine(args) 
     if logger is None:
       logging.basicConfig(format="%(asctime)-15s %(levelname)s [%(filename)s:%(lineno)d-%(thread)d] %(message)s")
       logger = logging.getLogger()
