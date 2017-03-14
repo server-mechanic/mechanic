@@ -34,6 +34,6 @@ chown ${FIX_OWNER_UID} -R $PACKAGE_BUILD_DIR $BUILD_DIR/mechanic-${PACKAGE_VERSI
 
 rpm --install $BUILD_DIR/mechanic-${PACKAGE_VERSION}-0.x86_64.rpm
 
-/usr/sbin/mechanic version
+/usr/bin/mechanic version
 
 

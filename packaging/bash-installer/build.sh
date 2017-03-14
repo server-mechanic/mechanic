@@ -21,7 +21,7 @@ chmod 755 $PACKAGE_FILE
 echo "Installing via $PACKAGE_FILE..."
 $PACKAGE_FILE
 
-/usr/sbin/mechanic version
+/usr/bin/mechanic version
 
 
 echo "Uninstalling via uninstaller..."

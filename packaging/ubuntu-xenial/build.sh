@@ -22,6 +22,6 @@ dpkg -b $PACKAGE_BUILD_DIR $PACKAGE_FILE
 chown ${FIX_OWNER_UID} -R $PACKAGE_BUILD_DIR $PACKAGE_FILE
 
 dpkg --install $PACKAGE_FILE
-/usr/sbin/mechanic version 
-/usr/sbin/mechanic -v migrate -- /bin/true
+/usr/bin/mechanic version 
+/usr/bin/mechanic -v migrate -- /bin/true
 

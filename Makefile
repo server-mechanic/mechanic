@@ -22,8 +22,8 @@ build:
 	mkdir -p ${PWD}/target/ && \
 	echo "Copying..." && \
 	cp -R ${PWD}/src/bundle ${PWD}/target/bundle && \
-	mkdir -p ${PWD}/target/bundle/usr/sbin && \
-	cp ${PWD}/src/bash/* ${PWD}/target/bundle/usr/sbin/ && \
+	mkdir -p ${PWD}/target/bundle/usr/bin && \
+	cp ${PWD}/src/bash/* ${PWD}/target/bundle/usr/bin/ && \
 	mkdir -p ${PWD}/target/bundle/usr/lib/python2.7/site-packages/ && \
 	mkdir -p ${PWD}/target/bundle/etc/mechanic/pre-migration.d && \
 	mkdir -p ${PWD}/target/bundle/etc/mechanic/migration.d && \
@@ -34,7 +34,7 @@ build:
 	mkdir -p ${PWD}/target/bundle/var/lib/mechanic/state && \
 	mkdir -p ${PWD}/target/bundle/var/lib/mechanic/tmp && \
 	cp -R ${PWD}/src/python/* ${PWD}/target/bundle/usr/lib/python2.7/site-packages/ && \
-	cd ${PWD}/target/bundle && tar czf ../bundle.tgz --exclude='*__pycache__*' --exclude='*.pyc' --exclude='*.pyo' .
+	cd ${PWD}/target/bundle && tar czf ../bundle.tgz --owner=0 --group=0 --exclude='*__pycache__*' --exclude='*.pyc' --exclude='*.pyo' .
 
 tests:
 	@echo "Running tests..."; \

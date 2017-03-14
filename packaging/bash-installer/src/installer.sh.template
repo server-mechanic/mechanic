@@ -59,7 +59,7 @@ EOB
 while read file; do
     if [[ "$file" =~ ^.*/$ ]]; then
       if [[ ! -d "$file" ]]; then
-        echo "rm -r \"$file\""
+        echo "rmdir \"$file\""
       fi
     else
       echo "rm \"$file\"";

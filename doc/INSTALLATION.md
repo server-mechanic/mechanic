@@ -34,6 +34,6 @@ state_dir=/mechanic.volume/state
 * Place your migrations below /var/lib/mechanic/migration.d/. (Make sure they are executable and exit with 0 in case of success.)
 * Extend your container entrypoint so, that mechanic migrations will be run on container startup. Mechanic will replace itself with the actual endpoint.
 ```
-ENTRYPOINT ["/usr/sbin/mechanic", "migrate", "--", "PUT", "ACTUAL", "ENTRYPOINT", "HERE" ]
+ENTRYPOINT ["/usr/bin/mechanic", "migrate", "--", "PUT", "ACTUAL", "ENTRYPOINT", "HERE" ]
 ```
 * Don't forget to start your container with the external volume mounted. (-v /path/to/volume:/mechanic.volume).

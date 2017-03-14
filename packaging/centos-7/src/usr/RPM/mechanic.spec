@@ -15,11 +15,11 @@ Simple server migration tool.
 install -m 0755 -d $RPM_BUILD_ROOT/etc/mechanic
 install -m 0755 -d $RPM_BUILD_ROOT/etc/mechanic/migration.d
 install -m 0755 -d $RPM_BUILD_ROOT/usr/sbin/
-install -m 0755 $RPM_BUILD_ROOT/../../BUILD/mechanic $RPM_BUILD_ROOT/usr/sbin/mechanic 
+install -m 0755 $RPM_BUILD_ROOT/../../BUILD/mechanic $RPM_BUILD_ROOT/usr/bin/mechanic 
 %clean
 rm -rf $RPM_BUILD_ROOT
 %post
 %files
 %dir /etc/mechanic
 %dir /etc/mechanic/migration.d
-/usr/sbin/mechanic
+/usr/bin/mechanic

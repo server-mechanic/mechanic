@@ -21,11 +21,11 @@ function runTest() {
     echo "Run #$i"
     TEST_ROOT=$TEST_TMP_DIR \
 	MECHANIC_ROOT_DIR=$TEST_TMP_DIR \
-  	$TEST_TMP_DIR/usr/sbin/mechanic list-migrations --order-by=id | cut --delimiter='	' -f 1,2,5 >> $TEST_TMP_RESULT
+  	$TEST_TMP_DIR/usr/bin/mechanic list-migrations --order-by=id | cut --delimiter='	' -f 1,2,5 >> $TEST_TMP_RESULT
     if [[ ! -f "$TEST_DIR/run-test.sh" ]]; then
       TEST_ROOT=$TEST_TMP_DIR \
 	MECHANIC_ROOT_DIR=$TEST_TMP_DIR \
-  	$TEST_TMP_DIR/usr/sbin/mechanic -v migrate -- /bin/true
+  	$TEST_TMP_DIR/usr/bin/mechanic -v migrate -- /bin/true
       TEST_EXIT_CODE=$?
     else
       TEST_ROOT=$TEST_TMP_DIR \
@@ -38,7 +38,7 @@ function runTest() {
     find . | grep -v /usr | sort -V >> $TEST_TMP_RESULT
     TEST_ROOT=$TEST_TMP_DIR \
 	MECHANIC_ROOT_DIR=$TEST_TMP_DIR \
-  	$TEST_TMP_DIR/usr/sbin/mechanic list-migrations --order-by=id | cut --delimiter='	' -f 1,2,5 >> $TEST_TMP_RESULT
+  	$TEST_TMP_DIR/usr/bin/mechanic list-migrations --order-by=id | cut --delimiter='	' -f 1,2,5 >> $TEST_TMP_RESULT
     #cat $TEST_TMP_RESULT
     diff $TEST_DIR/output $TEST_TMP_RESULT
     DIFF_EXIT_CODE=$?

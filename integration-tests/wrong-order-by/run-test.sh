@@ -1,3 +1,3 @@
 #!/bin/bash
 
-${MECHANIC_ROOT_DIR}/usr/sbin/mechanic list-migrations --order-by=invalid
+${MECHANIC_ROOT_DIR}/usr/bin/mechanic list-migrations --order-by=invalid
