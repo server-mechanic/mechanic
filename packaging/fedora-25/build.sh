@@ -18,13 +18,15 @@ cat > $HOME/.rpmmacros <<EOB
 %_tmppath $RPM_TMP_DIR
 EOB
 
-cp $SRC_DIR/RPM/mechanic.spec $RPM_SPECS_DIR/
+$SRC_DIR/RPM/mechanic.spec.sh $BUILD_DIR/bundle.tgz > $RPM_SPECS_DIR/mechanic.spec
+cat $RPM_SPECS_DIR/mechanic.spec
 sed -i "s,Version: .*,Version: $PACKAGE_VERSION," $RPM_SPECS_DIR/mechanic.spec
 
 cd /build
 tar cv src Makefile --exclude=.git --exclude=target | gzip -c > $RPM_SOURCES_DIR/mechanic-sources.tar.gz
 
 cp -R $SRC_DIR/* $RPM_BUILD_DIR
+echo "Extracting bundle to $RPM_BUILD_DIR"
 tar xvfz $BUILD_DIR/bundle.tgz -C $RPM_BUILD_DIR
 cd $PACKAGE_BUILD_DIR/rpm
 rpmbuild -bb SPECS/mechanic.spec
