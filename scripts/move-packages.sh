@@ -30,3 +30,5 @@ cp $MECHANIC_PROJECT_DIR/target/*sid*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists
 cp $MECHANIC_PROJECT_DIR/target/*sid*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists/sid/unstable/binary-i386/
 cp $MECHANIC_PROJECT_DIR/target/mechanic-*fedora25*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/fedora/25/unstable/x86_64/repodata/
 cp $MECHANIC_PROJECT_DIR/target/mechanic-*fedora25*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/fedora/25/unstable/i686/repodata/
+cp $MECHANIC_PROJECT_DIR/target/mechanic-*centos7*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/centos/7/unstable/x86_64/repodata/
+cp $MECHANIC_PROJECT_DIR/target/mechanic-*centos7*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/centos/7/unstable/i686/repodata/
