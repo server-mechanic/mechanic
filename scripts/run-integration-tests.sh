@@ -12,7 +12,7 @@ function runTest() {
   echo "Running test $TEST_NAME... (TEST_TMP_DIR: $TEST_TMP_DIR)"
   TEST_TMP_RESULT=$BUILD_DIR/$(mktemp -u --suffix=-mechanic-it)
   mkdir -p $(dirname $TEST_TMP_DIR)
-  tar xfz $BUILD_DIR/bundle.tgz -C $TEST_TMP_DIR
+  tar xfz $BUILD_DIR/bundle.tgz --exclude='*bash_completion*' -C $TEST_TMP_DIR
   if [ -d $TEST_DIR/input/ ]; then
     cp -R $TEST_DIR/input/* $TEST_TMP_DIR
   fi

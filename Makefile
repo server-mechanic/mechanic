@@ -23,7 +23,7 @@ build:
 	echo "Copying..." && \
 	cp -R ${PWD}/src/bundle ${PWD}/target/bundle && \
 	mkdir -p ${PWD}/target/bundle/usr/bin && \
-	cp ${PWD}/src/bash/* ${PWD}/target/bundle/usr/bin/ && \
+	cp -R ${PWD}/src/bash/* ${PWD}/target/bundle/ && \
 	mkdir -p ${PWD}/target/bundle/usr/lib/python2.7/site-packages/ && \
 	mkdir -p ${PWD}/target/bundle/etc/mechanic/pre-migration.d && \
 	mkdir -p ${PWD}/target/bundle/etc/mechanic/migration.d && \
