@@ -72,6 +72,6 @@ centos-7:
 	${PWD}/scripts/build-package.sh centos-7 $(PACKAGE_VERSION).centos7.${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
 
 fedora-25:
-	${PWD}/scripts/build-package.sh fedora-25 $(PACKAGE_VERSION).fedora25.${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
+	${PWD}/scripts/build-package.sh fedora-25 $(PACKAGE_VERSION).fedora25-${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
 
 

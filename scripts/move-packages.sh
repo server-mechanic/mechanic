@@ -28,4 +28,5 @@ cp $MECHANIC_PROJECT_DIR/target/*jessie*.deb $PACKAGES_PROJECT_DIR/apt/debian/di
 cp $MECHANIC_PROJECT_DIR/target/*jessie*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists/jessie/unstable/binary-i386/
 cp $MECHANIC_PROJECT_DIR/target/*sid*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists/sid/unstable/binary-amd64/
 cp $MECHANIC_PROJECT_DIR/target/*sid*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists/sid/unstable/binary-i386/
-
+cp $MECHANIC_PROJECT_DIR/target/mechanic-*fedora25*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/fedora/25/unstable/x86_64/repodata/
+cp $MECHANIC_PROJECT_DIR/target/mechanic-*fedora25*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/fedora/25/unstable/i686/repodata/
