@@ -1,6 +1,20 @@
 #!/bin/bash -e
 
-if [[ "$UID" != "0" ]]; then
+force="no"
+function parseOpts() {
+  for i in $*; do
+    case $i in
+      -f|--force)
+        force="yes"
+      ;;
+      *)
+        echo "Unknown flag $i; $0 [-f|--force]" >&2
+        exit 1
+    esac
+  done
+}
+
+if [[ "$force" != "yes" && "$UID" != "0" ]]; then
  echo "Must be run as root."
  exit 1
 fi
