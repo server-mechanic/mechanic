@@ -7,10 +7,13 @@ from exceptions import MechanicException
 
 class CommandLineTest(unittest.TestCase):
     def setUp(self):
-      self.args = CommandLine(["-v", "--global-flag=global_val", "sub", "--sub-flag=sub_val", "--", "followUp", "followUpFlag"])
+      self.args = CommandLine(["-v", "-o", "foo=bar", "--global-flag=global_val", "sub", "--sub-flag=sub_val", "--", "followUp", "followUpFlag"])
 
     def __givenArgsOf(self, args):
       self.args = CommandLine(args)
+
+    def testOverrideRecognized(self):
+      self.assertEqual(self.args.overrideOpts["foo"], "bar")
 
     def testCommandNameRecognized(self):
       self.assertEqual(self.args.commandName, "sub")
@@ -22,6 +25,47 @@ class CommandLineTest(unittest.TestCase):
       with self.assertRaises(Exception) as context:
         CommandLine(["help", "version"])
       self.assertTrue('Only single command allowed.' in str(context.exception))
+
+    def testMissingArgumentToDashM(self):
+      with self.assertRaises(Exception) as context:
+        CommandLine(["-m"])
+      self.assertTrue('-m requires' in str(context.exception))
+
+    def testInvalidArgumentToDashM(self):
+      with self.assertRaises(Exception) as context:
+        CommandLine(["-m", "invalid"])
+      self.assertTrue('-m requires' in str(context.exception))
+
+    def testUserMode(self):
+      self.args = CommandLine(["-m", "user"])
+      self.assertEquals("USER", self.args.mode)
+
+    def testSystemMode(self):
+      self.args = CommandLine(["-m", "system"])
+      self.assertEquals("SYSTEM", self.args.mode)
+
+    def testMissingConfigFileArg(self):
+      with self.assertRaises(Exception) as context:
+        CommandLine(["-c"])
+      self.assertTrue('-c requires' in str(context.exception))
+
+    def testConfigFile(self):
+      self.args = CommandLine(["-c", "anotherConfigFile"])
+      self.assertEquals("anotherConfigFile", self.args.configFile)
+
+    def testMissingArgumentToDashO(self):
+      with self.assertRaises(Exception) as context:
+        CommandLine(["-o"])
+      self.assertTrue('-o requires key=value' in str(context.exception))
+
+    def testInvalidArgumentToDashO(self):
+      with self.assertRaises(Exception) as context:
+        CommandLine(["-o", "key"])
+      self.assertTrue('-o requires key=value' in str(context.exception))
+
+    def testOverrfideLogFile(self):
+      self.args = CommandLine(["-o", "main.log_file=anotherLogFile"])
+      self.assertEquals("anotherLogFile", self.args.overrideOpts["main.log_file"])
 
     def testVerboseFalseRecognized(self):
       self.__givenArgsOf(["sub"])
@@ -51,4 +95,3 @@ class CommandLineTest(unittest.TestCase):
 
     def tearDown(self):
       self.args = None
-
