@@ -1,0 +1,16 @@
+Package: mechanic
+Version: REPLACEME
+Section: system
+Priority: optional
+Architecture: all
+Essential: no
+Depends: bash, python2.7, sqlite3
+Pre-Depends:
+Recommends:
+Suggests:
+Installed-Size: 1866
+Maintainer: Cornelius Buschka <cornelius.buschka@gmail.com>
+Conflicts:
+Replaces:
+Provides: 
+Description: Server Mechanic: Server Evolution Made Easy. See http://www.server-mechanic.org.

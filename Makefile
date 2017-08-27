@@ -2,7 +2,9 @@ PACKAGE_VERSION := 0.7
 BUILD_NUMBER := 1
 SCM_VERSION = $(shell git rev-parse HEAD)
 
-default:	clean build tests integration-tests
+default:	bundle
+
+bundle:	clean build tests integration-tests
 
 all:	patch default packages
 
@@ -48,30 +50,38 @@ integration-tests:
 	@echo "Running integration tests..."; \
 	${PWD}/scripts/run-integration-tests.sh
 
-packages:	bash-installer debian-wheezy debian-jessie debian-sid ubuntu-xenial ubuntu-yakkety
+packages:	bash-installer debian-wheezy debian-jessie debian-stretch debian-sid ubuntu-xenial ubuntu-yakkety ubuntu-zesty fedora-25 fedora-26 centos-7
 
-bash-installer:
+bash-installer:	bundle
 	${PWD}/scripts/build-package.sh bash-installer $(PACKAGE_VERSION)_${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
 
-debian-wheezy:
+debian-wheezy:	bundle
 	${PWD}/scripts/build-package.sh debian-wheezy $(PACKAGE_VERSION)-0wheezy${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
 
-debian-sid:
+debian-sid:	bundle
 	${PWD}/scripts/build-package.sh debian-sid $(PACKAGE_VERSION)-0sid${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
 
-debian-jessie:
+debian-jessie:	bundle
 	${PWD}/scripts/build-package.sh debian-jessie $(PACKAGE_VERSION)-0jessie${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
 
-ubuntu-xenial:
+debian-stretch:	bundle
+	${PWD}/scripts/build-package.sh debian-stretch $(PACKAGE_VERSION)-0stretch${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
+
+ubuntu-xenial:	bundle
 	${PWD}/scripts/build-package.sh ubuntu-xenial $(PACKAGE_VERSION)-0ubuntu-xenial${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
 
-ubuntu-yakkety:
+ubuntu-yakkety:	bundle
 	${PWD}/scripts/build-package.sh ubuntu-yakkety $(PACKAGE_VERSION)-0ubuntu-yakkety${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
 
-centos-7:
+ubuntu-zesty:	bundle
+	${PWD}/scripts/build-package.sh ubuntu-zesty $(PACKAGE_VERSION)-0ubuntu-zesty${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
+
+centos-7:	bundle
 	${PWD}/scripts/build-package.sh centos-7 $(PACKAGE_VERSION).centos7-${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
 
-fedora-25:
+fedora-25:	bundle
 	${PWD}/scripts/build-package.sh fedora-25 $(PACKAGE_VERSION).fedora25-${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
 
+fedora-26:	bundle
+	${PWD}/scripts/build-package.sh fedora-26 $(PACKAGE_VERSION).fedora26-${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
 
