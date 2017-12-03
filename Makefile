@@ -50,7 +50,7 @@ integration-tests:
 	@echo "Running integration tests..."; \
 	${PWD}/scripts/run-integration-tests.sh
 
-packages:	bash-installer debian-wheezy debian-jessie debian-stretch debian-sid ubuntu-xenial ubuntu-yakkety ubuntu-zesty fedora-25 fedora-26 centos-7
+packages:	bash-installer debian-wheezy debian-jessie debian-stretch debian-sid ubuntu-xenial ubuntu-yakkety ubuntu-zesty fedora-25 fedora-26 centos-7 fedora-27
 
 bash-installer:	bundle
 	${PWD}/scripts/build-package.sh bash-installer $(PACKAGE_VERSION)_${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
