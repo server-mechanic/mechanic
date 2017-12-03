@@ -37,5 +37,7 @@ cp $MECHANIC_PROJECT_DIR/target/mechanic-*fedora25*.noarch.rpm $PACKAGES_PROJECT
 cp $MECHANIC_PROJECT_DIR/target/mechanic-*fedora25*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/fedora/25/unstable/i686/repodata/
 cp $MECHANIC_PROJECT_DIR/target/mechanic-*fedora26*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/fedora/26/unstable/x86_64/repodata/
 cp $MECHANIC_PROJECT_DIR/target/mechanic-*fedora26*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/fedora/26/unstable/i686/repodata/
+cp $MECHANIC_PROJECT_DIR/target/mechanic-*fedora27*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/fedora/27/unstable/x86_64/repodata/
+cp $MECHANIC_PROJECT_DIR/target/mechanic-*fedora27*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/fedora/27/unstable/i686/repodata/
 cp $MECHANIC_PROJECT_DIR/target/mechanic-*centos7*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/centos/7/unstable/x86_64/repodata/
 cp $MECHANIC_PROJECT_DIR/target/mechanic-*centos7*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/centos/7/unstable/i686/repodata/

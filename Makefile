@@ -85,3 +85,6 @@ fedora-25:	bundle
 fedora-26:	bundle
 	${PWD}/scripts/build-package.sh fedora-26 $(PACKAGE_VERSION).fedora26-${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
 
+fedora-27:	bundle
+	${PWD}/scripts/build-package.sh fedora-27 $(PACKAGE_VERSION).fedora26-${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
+
