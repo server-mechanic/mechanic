@@ -1,4 +1,4 @@
-# Server Mechanic ![Written in Python](https://img.shields.io/badge/python-2.7,%203.2,%203.3,%203.4,%203.5-blue.svg) [![Build Status](https://travis-ci.org/server-mechanic/mechanic.svg)](https://travis-ci.org/server-mechanic/mechanic) [![Test Coverage](https://codecov.io/gh/server-mechanic/mechanic/branch/master/graph/badge.svg)](https://codecov.io/gh/server-mechanic/mechanic) [![Release](https://img.shields.io/github/release/server-mechanic/mechanic.svg)](https://github.com/server-mechanic/mechanic/releases/latest) [![License](https://img.shields.io/badge/License-GPL%203-yellow.svg)](http://www.gnu.org/licenses/)
+# Server Mechanic ![Written in Python](https://img.shields.io/badge/python-2.7,%203.2,%203.3,%203.4,%203.5,%203.6-blue.svg) [![Build Status](https://travis-ci.org/server-mechanic/mechanic.svg)](https://travis-ci.org/server-mechanic/mechanic) [![Test Coverage](https://codecov.io/gh/server-mechanic/mechanic/branch/master/graph/badge.svg)](https://codecov.io/gh/server-mechanic/mechanic) [![Release](https://img.shields.io/github/release/server-mechanic/mechanic.svg)](https://github.com/server-mechanic/mechanic/releases/latest) [![License](https://img.shields.io/badge/License-GPL%203-yellow.svg)](http://www.gnu.org/licenses/)
 
 ### Server Evolution Made Easy.
 ![Server Mechanic](https://server-mechanic.github.io/website/images/mechanic_small.png "Server Mechanic")
@@ -42,7 +42,7 @@ Server Mechanic is an open source project, and contributions are welcome! Feel f
 
 ## License
 
-Copyright (c) 2016, 2017 by the [Server Mechanic Team](https://github.com/orgs/server-mechanic/people).
+Copyright (c) 2016-2018 by the [Server Mechanic Team](https://github.com/orgs/server-mechanic/people).
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
