@@ -50,7 +50,7 @@ integration-tests:
 	@echo "Running integration tests..."; \
 	${PWD}/scripts/run-integration-tests.sh
 
-packages:	bash-installer debian-wheezy debian-jessie debian-stretch debian-sid ubuntu-xenial ubuntu-yakkety ubuntu-zesty ubuntu-artful ubuntu-bionic fedora-25 fedora-26 centos-7 fedora-27 fedora-28
+packages:	bash-installer debian-wheezy debian-jessie debian-stretch debian-sid ubuntu-xenial ubuntu-yakkety ubuntu-zesty ubuntu-artful ubuntu-bionic fedora-26 centos-7 fedora-27 fedora-28
 
 bash-installer:	bundle
 	${PWD}/scripts/build-package.sh bash-installer $(PACKAGE_VERSION)_${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
@@ -84,9 +84,6 @@ ubuntu-bionic:	bundle
 
 centos-7:	bundle
 	${PWD}/scripts/build-package.sh centos-7 $(PACKAGE_VERSION).centos7-${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
-
-fedora-25:	bundle
-	${PWD}/scripts/build-package.sh fedora-25 $(PACKAGE_VERSION).fedora25-${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
 
 fedora-26:	bundle
 	${PWD}/scripts/build-package.sh fedora-26 $(PACKAGE_VERSION).fedora26-${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}

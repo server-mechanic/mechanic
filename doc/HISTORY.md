@@ -1,5 +1,19 @@
 # History
 
+0.7-3 (not released yet)
+* Added support for fedora 28, ubuntu artful, bionic.
+* Removed support for fedora 25.
+
+0.7-2
+* Moved mechanic from /usr/sbin to /usr/bin.
+* Added centos 7 support.
+* Added simple basic completion.
+* Added cli opts -c, -m and -o.
+* Added support for fedora 26, 27, ubuntu zesty and debian stretch.
+
+## 0.7-1
+* Fixed bash installer bug with cwd.
+
 ## 0.6-2 (2017-02-03)
 * Fixed package arch of ubuntu packages.
 

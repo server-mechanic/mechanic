@@ -25,6 +25,10 @@ cp $MECHANIC_PROJECT_DIR/target/*ubuntu-xenial*.deb $PACKAGES_PROJECT_DIR/apt/ub
 cp $MECHANIC_PROJECT_DIR/target/*ubuntu-xenial*.deb $PACKAGES_PROJECT_DIR/apt/ubuntu/dists/xenial/unstable/binary-i386/
 cp $MECHANIC_PROJECT_DIR/target/*ubuntu-zesty*.deb $PACKAGES_PROJECT_DIR/apt/ubuntu/dists/zesty/unstable/binary-amd64/
 cp $MECHANIC_PROJECT_DIR/target/*ubuntu-zesty*.deb $PACKAGES_PROJECT_DIR/apt/ubuntu/dists/zesty/unstable/binary-i386/
+cp $MECHANIC_PROJECT_DIR/target/*ubuntu-artful*.deb $PACKAGES_PROJECT_DIR/apt/ubuntu/dists/artful/unstable/binary-amd64/
+cp $MECHANIC_PROJECT_DIR/target/*ubuntu-artful*.deb $PACKAGES_PROJECT_DIR/apt/ubuntu/dists/artful/unstable/binary-i386/
+cp $MECHANIC_PROJECT_DIR/target/*ubuntu-bionic*.deb $PACKAGES_PROJECT_DIR/apt/ubuntu/dists/bionic/unstable/binary-amd64/
+cp $MECHANIC_PROJECT_DIR/target/*ubuntu-bionic*.deb $PACKAGES_PROJECT_DIR/apt/ubuntu/dists/bionic/unstable/binary-i386/
 cp $MECHANIC_PROJECT_DIR/target/*wheezy*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists/wheezy/unstable/binary-amd64/
 cp $MECHANIC_PROJECT_DIR/target/*wheezy*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists/wheezy/unstable/binary-i386/
 cp $MECHANIC_PROJECT_DIR/target/*jessie*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists/jessie/unstable/binary-amd64/
@@ -33,11 +37,11 @@ cp $MECHANIC_PROJECT_DIR/target/*stretch*.deb $PACKAGES_PROJECT_DIR/apt/debian/d
 cp $MECHANIC_PROJECT_DIR/target/*stretch*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists/stretch/unstable/binary-i386/
 cp $MECHANIC_PROJECT_DIR/target/*sid*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists/sid/unstable/binary-amd64/
 cp $MECHANIC_PROJECT_DIR/target/*sid*.deb $PACKAGES_PROJECT_DIR/apt/debian/dists/sid/unstable/binary-i386/
-cp $MECHANIC_PROJECT_DIR/target/mechanic-*fedora25*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/fedora/25/unstable/x86_64/repodata/
-cp $MECHANIC_PROJECT_DIR/target/mechanic-*fedora25*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/fedora/25/unstable/i686/repodata/
 cp $MECHANIC_PROJECT_DIR/target/mechanic-*fedora26*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/fedora/26/unstable/x86_64/repodata/
 cp $MECHANIC_PROJECT_DIR/target/mechanic-*fedora26*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/fedora/26/unstable/i686/repodata/
 cp $MECHANIC_PROJECT_DIR/target/mechanic-*fedora27*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/fedora/27/unstable/x86_64/repodata/
 cp $MECHANIC_PROJECT_DIR/target/mechanic-*fedora27*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/fedora/27/unstable/i686/repodata/
+cp $MECHANIC_PROJECT_DIR/target/mechanic-*fedora28*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/fedora/28/unstable/x86_64/repodata/
+cp $MECHANIC_PROJECT_DIR/target/mechanic-*fedora28*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/fedora/28/unstable/i686/repodata/
 cp $MECHANIC_PROJECT_DIR/target/mechanic-*centos7*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/centos/7/unstable/x86_64/repodata/
 cp $MECHANIC_PROJECT_DIR/target/mechanic-*centos7*.noarch.rpm $PACKAGES_PROJECT_DIR/rpm/centos/7/unstable/i686/repodata/
