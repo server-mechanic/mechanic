@@ -11,7 +11,7 @@ all:	patch default packages
 .PHONY:	clean
 clean:
 	@echo "Cleaning up..."; \
-	rm -rf target/ $$(find . -name "*.pyc" -or -name "*.pyo")
+	rm -rf target/ $$(find . -name "*.pyc" -or -name "*.pyo" -or -name "__pycache__")
 
 patch:
 	echo "Adding metadata to code..." && \
