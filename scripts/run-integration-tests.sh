@@ -1,6 +1,12 @@
 #!/bin/bash
 
 PROJECT_DIR=$(cd `dirname $0`/..; pwd)
+
+if [ "${PY_VENV_VERSION}x" != "x" ]; then
+  virtualenv-${PY_VENV_VERSION} ${PROJECT_DIR}/.py_venv/${PY_VENV_VERSION} && \
+	source ${PROJECT_DIR}/.py_venv/${PY_VENV_VERSION}/bin/activate
+fi
+
 TESTS_DIR=$PROJECT_DIR/integration-tests
 BUILD_DIR=$PROJECT_DIR/target
 

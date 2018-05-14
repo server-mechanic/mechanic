@@ -49,6 +49,10 @@ tests:	init
 coverage: tests
 	coverage html
 
+integration-tests-for-all-python-versions:	init
+	@PY_VENV_VERSION=2.7 $(PROJECT_DIR)/scripts/run-integration-tests.sh && \
+	PY_VENV_VERSION=3.6 $(PROJECT_DIR)/scripts/run-integration-tests.sh
+
 .PHONY:	integration-tests
 integration-tests:	init
 	@echo "Running integration tests..."; \
