@@ -14,7 +14,7 @@ python:
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y sqlite3
-  - sudo pip install mock coverage
+  - sudo make install-prerequesites
 
 script:
   - make

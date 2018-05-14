@@ -12,6 +12,9 @@ all:	patch default packages
 init:
 	@echo "Project dir is $(PROJECT_DIR)."
 
+install-prerequesites:	init
+	@pip install -r requirements.txt -r requirements-test.txt -r requirements-dev.txt
+
 .PHONY:	clean
 clean:	init
 	@echo "Cleaning up..."; \
