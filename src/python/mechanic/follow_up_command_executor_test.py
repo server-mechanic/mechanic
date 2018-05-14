@@ -1,10 +1,12 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
 import unittest
-from follow_up_command_executor import FollowUpCommandExecutor
+from mechanic.follow_up_command_executor import FollowUpCommandExecutor
 from mock import MagicMock
-from exceptions import FollowUpCommandFailedException
+from mechanic.exceptions import FollowUpCommandFailedException
 
 class FollowUpCommandExecutorTest(unittest.TestCase):
   def setUp(self):

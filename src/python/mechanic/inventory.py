@@ -1,10 +1,12 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
   
+from __future__ import absolute_import
+from __future__ import unicode_literals
 from os.path import isfile, isdir, join, basename
-from inventory_db import InventoryDb
-from migration import Migration
-from migration_collector import MigrationCollector
+from mechanic.inventory_db import InventoryDb
+from mechanic.migration import Migration
+from mechanic.migration_collector import MigrationCollector
 
 class Inventory:
   def __init__(self, logger, config):

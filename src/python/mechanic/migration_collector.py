@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from inventory_db import InventoryDb
-from migration import Migration
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from mechanic.inventory_db import InventoryDb
+from mechanic.migration import Migration
 from os import listdir
 from os.path import isfile, isdir, dirname, basename, join
 

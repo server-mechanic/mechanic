@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from version_info import VersionInfo
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from mechanic.version_info import VersionInfo
 
 class VersionCommand:
   name = 'version'

@@ -1,14 +1,16 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
 import unittest
-from migration_collector import MigrationCollector
+from mechanic.migration_collector import MigrationCollector
 import os
 from os.path import basename
 import tempfile
-import file_util
+from mechanic import file_util
 from mock import MagicMock
-from migration import Migration
+from mechanic.migration import Migration
 
 class CollectMigrationsTest(unittest.TestCase):
   def setUp(self):

@@ -1,13 +1,15 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
 from mechanic.file_util import makeparentdirs
 import logging
-from context import Mechanic
-from command_line import CommandLine
-from exceptions import MigrationFailedException
-from exceptions import MechanicException
-from exceptions import FollowUpCommandFailedException
+from mechanic.context import Mechanic
+from mechanic.command_line import CommandLine
+from mechanic.exceptions import MigrationFailedException
+from mechanic.exceptions import MechanicException
+from mechanic.exceptions import FollowUpCommandFailedException
 import sys
 
 class MechanicCommand:

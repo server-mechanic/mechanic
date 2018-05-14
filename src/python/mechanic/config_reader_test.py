@@ -1,10 +1,12 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
 import unittest
-from config_reader import ConfigReader
+from mechanic.config_reader import ConfigReader
 import logging
-from config import Config
+from mechanic.config import Config
 import tempfile
 
 class ConfigReaderTest(unittest.TestCase):

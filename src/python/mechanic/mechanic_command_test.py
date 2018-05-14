@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from mechanic_command import MechanicCommand
-from command_line import CommandLine
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from mechanic.mechanic_command import MechanicCommand
+from mechanic.command_line import CommandLine
 import unittest
 from mock import MagicMock
 

@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
 import unittest
-from context import Mechanic
+from mechanic.context import Mechanic
 
 class MechanicTest(unittest.TestCase):
     def setUp(self):

@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
 import unittest
-from version_info import VersionInfo
+from mechanic.version_info import VersionInfo
 
 class VersionInfoTest(unittest.TestCase):
     def setUp(self):

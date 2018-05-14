@@ -1,9 +1,11 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from config import Config
-from inventory import Inventory
-from exceptions import MechanicException
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from mechanic.config import Config
+from mechanic.inventory import Inventory
+from mechanic.exceptions import MechanicException
 
 class ListMigrationsCommand:
   description = "List migrations."

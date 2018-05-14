@@ -1,10 +1,12 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from config import Config
-from inventory import Inventory
-from migration_executor import MigrationExecutor
-from follow_up_command_executor import FollowUpCommandExecutor
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from mechanic.config import Config
+from mechanic.inventory import Inventory
+from mechanic.migration_executor import MigrationExecutor
+from mechanic.follow_up_command_executor import FollowUpCommandExecutor
 from mechanic.file_util import makeparentdirs, makedirs
 import os
 import logging

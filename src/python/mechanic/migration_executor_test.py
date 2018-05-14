@@ -1,14 +1,16 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
 import unittest
-from migration_executor import MigrationExecutor
-from migration import Migration
-from config import Config
-from inventory import Inventory
+from mechanic.migration_executor import MigrationExecutor
+from mechanic.migration import Migration
+from mechanic.config import Config
+from mechanic.inventory import Inventory
 import mock
 import tempfile
-from exceptions import MigrationFailedException
+from mechanic.exceptions import MigrationFailedException
 
 class MigrationExecutorTest(unittest.TestCase):
   def setUp(self):

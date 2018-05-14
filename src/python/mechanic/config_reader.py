@@ -1,9 +1,11 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
 from os.path import isfile
 import ConfigParser
-from config import Config
+from mechanic.config import Config
 from string import join, split
 
 class ConfigReader:

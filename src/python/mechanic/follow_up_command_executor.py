@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from config import Config
-from exceptions import FollowUpCommandFailedException
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from mechanic.config import Config
+from mechanic.exceptions import FollowUpCommandFailedException
 import os
 
 class FollowUpCommandExecutor:

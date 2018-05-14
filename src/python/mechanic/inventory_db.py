@@ -1,10 +1,12 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
 import sqlite3
 import os
 from mechanic.file_util import makeparentdirs
-from migration import Migration
+from mechanic.migration import Migration
 
 class InventoryDb:
   def __init__(self, dbFile):

@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
 from os.path import expanduser,expandvars, isfile
 from os import getenv
 import ConfigParser

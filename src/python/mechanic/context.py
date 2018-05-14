@@ -1,16 +1,18 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
 import logging
 import os
-from migrate_command import MigrateCommand
-from list_migrations_command import ListMigrationsCommand
-from help_command import HelpCommand
-from version_command import VersionCommand
-from inventory import Inventory
-from config import Config
-from config_reader import ConfigReader
-from command_line import CommandLine
+from mechanic.migrate_command import MigrateCommand
+from mechanic.list_migrations_command import ListMigrationsCommand
+from mechanic.help_command import HelpCommand
+from mechanic.version_command import VersionCommand
+from mechanic.inventory import Inventory
+from mechanic.config import Config
+from mechanic.config_reader import ConfigReader
+from mechanic.command_line import CommandLine
 
 class Mechanic:
   def __init__(self, args, logger=None, mode=None):

@@ -1,12 +1,14 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
 import unittest
-from list_migrations_command import ListMigrationsCommand
+from mechanic.list_migrations_command import ListMigrationsCommand
 from mock import MagicMock
 import tempfile
-from command_line import CommandLine
-from exceptions import MechanicException
+from mechanic.command_line import CommandLine
+from mechanic.exceptions import MechanicException
 
 class ListMigrationsCommandTest(unittest.TestCase):
     def setUp(self):

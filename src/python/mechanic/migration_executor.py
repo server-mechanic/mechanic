@@ -1,9 +1,11 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from config import Config
-from inventory import Inventory
-from exceptions import MigrationFailedException
+from __future__ import absolute_import
+from __future__ import unicode_literals
+from mechanic.config import Config
+from mechanic.inventory import Inventory
+from mechanic.exceptions import MigrationFailedException
 from mechanic.file_util import makedirs
 import os
 import shutil

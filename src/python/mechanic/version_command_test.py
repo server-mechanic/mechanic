@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
 import unittest
-from version_command import VersionCommand
+from mechanic.version_command import VersionCommand
 
 class VersionCommandTest(unittest.TestCase):
     def setUp(self):

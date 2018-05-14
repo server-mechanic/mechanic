@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
 from re import compile, match, findall
-from exceptions import MechanicException
+from mechanic.exceptions import MechanicException
 
 class CommandLine:
   KEY_VALUE_OPT_PATTERN = compile("--([\\w\\-_]+)=(.*)")

@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from __future__ import absolute_import
+from __future__ import unicode_literals
 import unittest
-from config import Config
+from mechanic.config import Config
 
 class ConfigTest(unittest.TestCase):
     def setUp(self):
