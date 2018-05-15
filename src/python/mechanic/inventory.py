@@ -17,17 +17,17 @@ class Inventory:
   def listUnappliedMigrations(self):
     migrationDirs = self.config.getMigrationDirs()
     self.logger.debug("Scanning for migrations (dirs: %s)..." % migrationDirs)
-    return self.migrationCollector.collectMigrationsFrom(migrationDirs, lambda file: self.__getInventoryDb().hasMigrationSucceeded(file))
+    return self.migrationCollector.collectMigrationsFrom(migrationDirs, lambda file: self.__getInventoryDb().hasMigrationSucceeded(file), defaultMetadataProps={})
 
   def listPreMigrations(self):
     migrationDirs = self.config.getPreMigrationDirs()
     self.logger.debug("Scanning for pre migrations (dirs: %s)..." % migrationDirs)
-    return self.migrationCollector.collectMigrationsFrom(migrationDirs)
+    return self.migrationCollector.collectMigrationsFrom(migrationDirs, defaultMetadataProps={})
 
   def listPostMigrations(self):
     migrationDirs = self.config.getPostMigrationDirs()
     self.logger.debug("Scanning for post migrations (dirs: %s)..." % migrationDirs)
-    return self.migrationCollector.collectMigrationsFrom(migrationDirs)
+    return self.migrationCollector.collectMigrationsFrom(migrationDirs, defaultMetadataProps={})
 
   def markMigrationAsStarted(self, migrationName):
     self.__getInventoryDb().markMigrationAsStarted(migrationName)

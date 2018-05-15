@@ -13,8 +13,8 @@ class MigrationCollector:
     self.logger = logger
     self.metadataReader = MigrationMetadataReader(logger=logger)
 
-  def collectMigrationsFrom(self, migrationDirs, isAppliedCallback=None):
-    allMigrations = self.__collectmigrations(migrationDirs)
+  def collectMigrationsFrom(self, migrationDirs, isAppliedCallback=None, defaultMetadataProps=None):
+    allMigrations = self.__collectMigrations(migrationDirs, defaultMetadataProps=defaultMetadataProps)
     pendingMigrations = []
     for migration in allMigrations:
       if isAppliedCallback is None or not isAppliedCallback(migration.name):
@@ -23,19 +23,19 @@ class MigrationCollector:
         self.logger.debug("Migration %s already applied." % migration.name)
     return pendingMigrations
 
-  def __collectmigrations(self, dirs):
+  def __collectMigrations(self, dirs, defaultMetadataProps):
     migrations = []
     for dir in dirs:
       if isdir(dir):
         for file in listdir(dir):
           file = join(dir, file)
           if isfile(file):
-            metadata = self.metadataReader.readMetadata(file)
+            metadata = self.metadataReader.readMetadata(file, defaultMetadataProps=defaultMetadataProps)
             migrations.append(Migration(None,file,basename(file),metadata=metadata))
           elif isdir(file):
             runFile = join(file,"run")
             if isfile(runFile):
-              metadata = self.metadataReader.readMetadata(runFile)
+              metadata = self.metadataReader.readMetadata(runFile, defaultMetadataProps=defaultMetadataProps)
               migrations.append(Migration(None,runFile,basename(file),metadata=metadata))
     migrations.sort(key=lambda m: m.name)
     return migrations
