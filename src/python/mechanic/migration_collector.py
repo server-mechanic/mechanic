@@ -4,12 +4,14 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 from mechanic.inventory_db import InventoryDb
 from mechanic.migration import Migration
+from mechanic.migration_metadata_reader import MigrationMetadataReader
 from os import listdir
 from os.path import isfile, isdir, dirname, basename, join
 
 class MigrationCollector:
   def __init__(self, logger):
     self.logger = logger
+    self.metadataReader = MigrationMetadataReader(logger=logger)
 
   def collectMigrationsFrom(self, migrationDirs, isAppliedCallback=None):
     allMigrations = self.__collectmigrations(migrationDirs)
@@ -28,10 +30,12 @@ class MigrationCollector:
         for file in listdir(dir):
           file = join(dir, file)
           if isfile(file):
-            migrations.append(Migration(None,file,basename(file)))
+            metadata = self.metadataReader.readMetadata(file)
+            migrations.append(Migration(None,file,basename(file),metadata=metadata))
           elif isdir(file):
             runFile = join(file,"run")
             if isfile(runFile):
-              migrations.append(Migration(None,runFile,basename(file)))
+              metadata = self.metadataReader.readMetadata(runFile)
+              migrations.append(Migration(None,runFile,basename(file),metadata=metadata))
     migrations.sort(key=lambda m: m.name)
     return migrations
