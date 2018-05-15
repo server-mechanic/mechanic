@@ -15,4 +15,4 @@ class Migration:
     self.metadata = metadata or {}
 
   def __str__(self):
-    return "Migration(id=%s,name=%s)" % (self.id, self.name)
+    return "Migration(id={},name={})".format(self.id, self.name)
