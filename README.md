@@ -1,5 +1,3 @@
-# WE ARE IN THE PROGRESS OF MOVING TO GITLAB BECAUSE MICROSOFT HAS ACQUIRED GITHUB...
-
 # Server Mechanic ![Written in Python](https://img.shields.io/badge/python-2.7,%203.2,%203.3,%203.4,%203.5,%203.6-blue.svg) [![Build Status](https://travis-ci.org/server-mechanic/mechanic.svg)](https://travis-ci.org/server-mechanic/mechanic) [![Test Coverage](https://codecov.io/gh/server-mechanic/mechanic/branch/master/graph/badge.svg)](https://codecov.io/gh/server-mechanic/mechanic) [![Release](https://img.shields.io/github/release/server-mechanic/mechanic.svg)](https://github.com/server-mechanic/mechanic/releases/latest) [![License](https://img.shields.io/badge/License-GPL%203-yellow.svg)](http://www.gnu.org/licenses/)
 
 ### Server Evolution Made Easy.
