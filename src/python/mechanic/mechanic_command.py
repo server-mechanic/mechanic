@@ -10,6 +10,7 @@ from mechanic.exceptions import MigrationFailedException
 from mechanic.exceptions import MechanicException
 from mechanic.exceptions import FollowUpCommandFailedException
 import sys
+import traceback
 
 class MechanicCommand:
   def __init__(self, mechanic):
@@ -23,7 +24,7 @@ class MechanicCommand:
     else:
       self.logger.setLevel(logging.INFO)
     if not self.mechanic.config.getLogFile() in [ "", "/dev/stderr", "stderr" ]:
-      makeparentdirs(self.mechanic.config.getLogFile()) 
+      makeparentdirs(self.mechanic.config.getLogFile())
       self.logger.addHandler(logging.FileHandler(self.mechanic.config.getLogFile()))
 
     command = self.mechanic.commands.get(args.commandName)
@@ -42,6 +43,7 @@ class MechanicCommand:
       self.logger.error(e.message)
       return 1
     except Exception as e:
+      traceback.print_exc()
       self.logger.error(e)
       return 1
     finally:

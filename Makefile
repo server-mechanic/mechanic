@@ -1,5 +1,5 @@
 PACKAGE_VERSION := 0.7
-BUILD_NUMBER := 2
+BUILD_NUMBER := 3
 SCM_VERSION = $(shell git rev-parse HEAD)
 PROJECT_DIR := $(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 

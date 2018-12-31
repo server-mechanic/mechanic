@@ -11,6 +11,7 @@ import mock
 import tempfile
 from mechanic.exceptions import MigrationFailedException
 
+
 class MigrationExecutorTest(unittest.TestCase):
   def setUp(self):
     config = Config(mode="SYSTEM")
@@ -18,21 +19,21 @@ class MigrationExecutorTest(unittest.TestCase):
     logger = mock.MagicMock()
     self.executor = MigrationExecutor(config, self.inventory, logger)
     config.mechanicRootDir = tempfile.mkdtemp()
+    self.migrationMetadata = mock.MagicMock()
 
   def testApplyMigrationWithSuccess(self):
-    self.executor.applyMigration(Migration(1, name="true",file="/bin/true"))
+    self.executor.applyMigration(Migration(1, name="true", file="/bin/true", metadata=self.migrationMetadata))
     self.inventory.markMigrationAsStarted.assert_called_with("true")
     self.inventory.markMigrationAsSucceeded.assert_called_with("true")
 
   def testApplyMigrationWithFailure(self):
     with self.assertRaises(MigrationFailedException) as context:
-      self.executor.applyMigration(Migration(1, name="false",file="/bin/false"))
+      self.executor.applyMigration(Migration(1, name="false", file="/bin/false", metadata=self.migrationMetadata))
     self.inventory.markMigrationAsStarted.assert_called_with("false")
     self.inventory.markMigrationAsFailed.assert_called_with("false")
     self.assertTrue('failed' in str(context.exception))
 
   def testApplyMigrationWithMigrationNotExecutable(self):
     with self.assertRaises(Exception) as context:
-      self.executor.applyMigration(Migration(1, name="doesNotExist",file="/bin/doesNotExist"))
+      self.executor.applyMigration(Migration(1, name="doesNotExist", file="/bin/doesNotExist"))
     self.assertTrue('not executable' in str(context.exception))
-
