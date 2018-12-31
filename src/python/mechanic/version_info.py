@@ -5,4 +5,4 @@ from __future__ import unicode_literals
 
 class VersionInfo:
   packageVersion = "0.7-3"
-  scmVersion = "921923661faa43df2aba3db4b4fb9c84d39473cd"
+  scmVersion = "1c69320ffe6980ba73e344bd8eb8e8d871d43df2"
