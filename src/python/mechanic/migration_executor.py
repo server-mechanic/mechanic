@@ -26,12 +26,7 @@ class MigrationExecutor:
     try:
       makedirs(migrationTmpDir)
       logFileFd = open(logFile, 'wa')
-      user = migration.metadata.getProp('run-as', None)
-      if user is None or len(user) == 0:
-        command = [migration.file]
-      else:
-        command = ["su", user, "-c", migration.file ]
-      migrationProcess = subprocess.Popen(command,bufsize=0,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,stdin=None,shell=False,cwd=os.path.dirname(migration.file))
+      migrationProcess = subprocess.Popen([migration.file],bufsize=0,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,stdin=None,shell=False,cwd=os.path.dirname(migration.file))
       while True:
         line = migrationProcess.stdout.readline()
         if not line:
