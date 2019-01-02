@@ -105,3 +105,5 @@ fedora-27:	bundle
 fedora-28:	bundle
 	$(PROJECT_DIR)/scripts/build-package.sh fedora-28 $(PACKAGE_VERSION).fedora28-${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
 
+fedora-29:	bundle
+	$(PROJECT_DIR)/scripts/build-package.sh fedora-29 $(PACKAGE_VERSION).fedora29-${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
