@@ -61,7 +61,7 @@ integration-tests:	init
 	@echo "Running integration tests..."; \
 	$(PROJECT_DIR)/scripts/run-integration-tests.sh
 
-packages:	bash-installer debian-wheezy debian-jessie debian-stretch debian-sid ubuntu-xenial ubuntu-yakkety ubuntu-zesty ubuntu-artful ubuntu-bionic fedora-26 centos-7 fedora-27 fedora-28
+packages:	bash-installer debian-wheezy debian-jessie debian-stretch debian-sid ubuntu-xenial ubuntu-yakkety ubuntu-zesty ubuntu-artful ubuntu-bionic fedora-26 centos-7 fedora-27 fedora-28 fedora-29
 
 bash-installer:	bundle
 	$(PROJECT_DIR)/scripts/build-package.sh bash-installer $(PACKAGE_VERSION)_${BUILD_NUMBER} $(PACKAGE_VERSION) ${BUILD_NUMBER}
