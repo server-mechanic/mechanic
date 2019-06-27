@@ -26,7 +26,7 @@ Server Mechanic is considered as a lightweight alternative to tools like puppet,
 * Written in Python.
 * Uses battle proof sqlite3 database.
 
-For more information visit [Server Mechanic Website](http://www.server-mechanic.org).
+For more information visit [Server Mechanic Website](https://server-mechanic.github.io).
 
 ## Status
 Server Mechanic is in an early stage ("unstable"). Use it carefully and expect things to break.
